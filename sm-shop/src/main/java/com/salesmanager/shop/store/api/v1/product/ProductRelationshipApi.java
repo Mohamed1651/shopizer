@@ -1,5 +1,6 @@
 package com.salesmanager.shop.store.api.v1.product;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -65,7 +66,7 @@ public class ProductRelationshipApi {
 
       if (product == null) {
         response.sendError(404, "Product id " + id + " does not exists");
-        return null;
+        return Collections.emptyList();
       }
 
       List<ReadableProduct> relatedItems =
@@ -80,7 +81,7 @@ public class ProductRelationshipApi {
       } catch (Exception ignore) {
       }
 
-      return null;
+      return Collections.emptyList();
     }
   }
 

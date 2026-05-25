@@ -346,7 +346,7 @@ public class SearchServiceImpl implements com.salesmanager.core.business.service
 
 	private Map<String, String> variants(ProductVariant variant) {
 		if (variant == null)
-			return null;
+			return Collections.emptyList();
 
 		Map<String, String> variantMap = new HashMap<String, String>();
 		if (variant.getVariation() != null) {

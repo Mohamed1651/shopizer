@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import com.salesmanager.shop.utils.SanitizeUtils;
 
+import java.util.Collections;
+
 /**
  * Cross Site Scripting filter enforcing html encoding of request parameters
  * @author carlsamson
@@ -31,7 +33,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	    public String[] getParameterValues(String parameter) {
 	        String[] values = super.getParameterValues(parameter);
 	        if (values == null) {
-	            return null;
+	            return new String[0];
 	        }
 	        int count = values.length;
 	        String[] encodedValues = new String[count];

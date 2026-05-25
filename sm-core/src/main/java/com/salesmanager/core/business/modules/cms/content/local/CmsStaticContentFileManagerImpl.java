@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -473,7 +474,7 @@ public class CmsStaticContentFileManagerImpl implements ContentAssetsManager {
 	@Override
 	public List<String> listFolders(String merchantStoreCode, Optional<String> folderPath) throws ServiceException {
 		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

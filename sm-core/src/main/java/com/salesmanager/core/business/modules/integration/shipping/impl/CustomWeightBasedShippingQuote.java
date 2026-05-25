@@ -2,6 +2,7 @@ package com.salesmanager.core.business.modules.integration.shipping.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -95,7 +96,7 @@ public class CustomWeightBasedShippingQuote implements ShippingQuoteModule {
 			throws IntegrationException {
 
 		if(StringUtils.isBlank(delivery.getPostalCode())) {
-			return null;
+			return Collections.emptyList();
 		}
 		
 		//get configuration
@@ -146,8 +147,8 @@ public class CustomWeightBasedShippingQuote implements ShippingQuoteModule {
 				options.add(shippingOption);
 				return options;
 			}
-			
-			return null;
+
+			return Collections.emptyList();
 		
 		} catch (Exception e) {
 			throw new IntegrationException(e);

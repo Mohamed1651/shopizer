@@ -2,6 +2,7 @@ package com.salesmanager.core.business.modules.integration.shipping.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -139,7 +140,7 @@ public class DefaultPackagingImpl implements Packaging {
 		}
 
 		if (iterCount == 0) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		int productCount = individualProducts.size();

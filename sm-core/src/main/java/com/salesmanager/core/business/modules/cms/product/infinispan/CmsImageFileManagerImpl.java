@@ -5,10 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.FileNameMap;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.infinispan.tree.Fqn;
@@ -182,7 +179,7 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
       Node<String, Object> merchantNode = this.getNode(nodePath.toString());
 
       if (merchantNode == null) {
-        return null;
+        return Collections.emptyList();
       }
 
 

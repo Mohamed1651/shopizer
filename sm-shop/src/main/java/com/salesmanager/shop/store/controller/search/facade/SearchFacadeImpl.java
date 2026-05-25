@@ -1,5 +1,6 @@
 package com.salesmanager.shop.store.controller.search.facade;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -139,7 +140,7 @@ public class SearchFacadeImpl implements SearchFacade {
 		}
 		**/
 		
-		return null;
+		return Collections.emptyList();
 	}
 
 	private ReadableCategory convertCategoryToReadableCategory(MerchantStore merchantStore, Language language,

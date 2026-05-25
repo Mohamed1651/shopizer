@@ -2,12 +2,7 @@ package com.salesmanager.core.business.services.tax;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import javax.inject.Inject;
 
@@ -93,7 +88,7 @@ public class TaxServiceImpl
 		
 
 		if(customer==null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		List<ShoppingCartItem> items = orderSummary.getProducts();
@@ -140,18 +135,18 @@ public class TaxServiceImpl
 		//do not collect tax on other provinces of same country
 		if(!taxConfiguration.isCollectTaxIfDifferentProvinceOfStoreCountry()) {
 			if((zone!=null && store.getZone()!=null) && (zone.getId().longValue() != store.getZone().getId().longValue())) {
-				return null;
+				return Collections.emptyList();
 			}
 			if(!StringUtils.isBlank(stateProvince)) {
 				if(store.getZone()!=null) {
 					if(!store.getZone().getName().equals(stateProvince)) {
-						return null;
+						return Collections.emptyList();
 					}
 				}
 				else if(!StringUtils.isBlank(store.getStorestateprovince())) {
 
 					if(!store.getStorestateprovince().equals(stateProvince)) {
-						return null;
+						return Collections.emptyList();
 					}
 				}
 			}
@@ -166,7 +161,7 @@ public class TaxServiceImpl
 		}
 		
 		if(zone == null && StringUtils.isBlank(stateProvince)) {
-			return null;
+			return Collections.emptyList();
 		}
 		
 		Map<Long,TaxClass> taxClasses =  new HashMap<Long,TaxClass>();
@@ -284,7 +279,7 @@ public class TaxServiceImpl
 		}
 		
 		if(taxItemsMap.size()==0) {
-			return null;
+			return Collections.emptyList();
 		}
 			
 			
