@@ -250,7 +250,9 @@ public class ZonesLoader {
 			zone = new Zone();
 			Country country = countriesMap.get(list.get("countryCode"));
 			if (country == null) {
-				LOGGER.warn("Country is null for " + zoneCode + " and country code " + list.get("countryCode"));
+				if(LOGGER.isWarnEnabled()){
+					LOGGER.warn("Country is null for {} and country code {}", zoneCode, list.get("countryCode"));
+				}
 				return;
 			}
 			zone.setCountry(country);
@@ -261,7 +263,7 @@ public class ZonesLoader {
 		}
 
 		if (zonesMark.containsKey(l.getCode() + "_" + zoneCode)) {
-			LOGGER.warn("This zone seems to be a duplicate !  " + zoneCode + " and language code " + l.getCode());
+			LOGGER.warn("This zone seems to be a duplicate !  {} and language code {}", zoneCode, l.getCode());
 			return;
 		}
 

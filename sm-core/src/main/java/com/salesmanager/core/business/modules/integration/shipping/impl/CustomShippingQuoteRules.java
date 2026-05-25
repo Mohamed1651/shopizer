@@ -136,10 +136,12 @@ public class CustomShippingQuoteRules implements ShippingQuoteModule {
 			options = new ArrayList<ShippingOption>();
 			quote.setShippingOptions(options);
 		}
-		
-		
-		
-		LOGGER.debug("Setting input parameters " + inputParameters.toString());
+
+
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Setting input parameters {}", inputParameters);
+		}
 		
 		
 		KieSession kieSession=droolsBeanFactory.getKieSession(ResourceFactory.newClassPathResource("com/salesmanager/drools/rules/PriceByDistance.drl"));

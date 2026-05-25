@@ -663,7 +663,7 @@ public class UserFacadeImpl implements UserFacade {
 
 				String currentPrincipalName = authentication.getName();
 
-				LOGGER.info("Principal " + currentPrincipalName);
+				LOGGER.info("Principal {}", currentPrincipalName);
 
 				ReadableUser readableUser = findByUserName(currentPrincipalName, languageService.defaultLanguage());
 				//ReadableUser readableUser =	  findByUserName(currentPrincipalName, store.getCode(), store.getDefaultLanguage());

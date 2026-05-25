@@ -271,7 +271,7 @@ public class S3StaticContentAssetsManagerImpl implements ContentAssetsManager {
 	 */
 	private AmazonS3 s3Client() {
 		String region = regionName();
-		LOGGER.debug("AWS CMS Using region " + region);
+		LOGGER.debug("AWS CMS Using region {} ", region);
 
 		return AmazonS3ClientBuilder.standard().withRegion(region) // The
 																			// first

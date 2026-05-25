@@ -179,7 +179,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
   @Override
   public CustomerEntity getCustomerDataByUserName(final String userName, final MerchantStore store,
       final Language language) throws Exception {
-    LOG.info("Fetching customer with userName" + userName);
+    LOG.info("Fetching customer with userName {}", userName);
     Customer customer = customerService.getByNick(userName);
 
     if (customer != null) {

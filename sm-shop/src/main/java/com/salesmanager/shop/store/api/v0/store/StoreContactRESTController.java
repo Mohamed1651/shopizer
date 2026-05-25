@@ -80,7 +80,7 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code " + store);
+				LOGGER.error("Merchant store is null for code {}", store);
 				response.sendError(503, "Merchant store is null for code " + store);
 				return null;
 			}
@@ -126,7 +126,7 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code " + store);
+				LOGGER.error("Merchant store is null for code {}", store);
 				response.sendError(503, "Merchant store is null for code " + store);
 				return null;
 			}

@@ -1118,7 +1118,7 @@ public class OrderFacadeImpl implements OrderFacade {
 		if (customerId != null) {
 			ReadableCustomer readableCustomer = customerFacade.getCustomerById(customerId, store, language);
 			if (readableCustomer == null) {
-				LOGGER.warn("Customer id " + customerId + " not found in order " + orderId);
+				LOGGER.warn("Customer id {} not found in order {}", customerId, orderId);
 			} else {
 				readableOrder.setCustomer(readableCustomer);
 			}

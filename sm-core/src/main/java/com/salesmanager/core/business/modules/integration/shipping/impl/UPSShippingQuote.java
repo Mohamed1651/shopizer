@@ -372,10 +372,10 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 
 			xmlbuffer.append(xmlhead).append(xml).append(
 					xmldatabuffer.toString());
-			
 
 
-			LOGGER.debug("UPS QUOTE REQUEST " + xmlbuffer.toString());
+
+			LOGGER.debug("UPS QUOTE REQUEST {}", xmlbuffer);
 
 
 			try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
@@ -393,7 +393,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 					HttpEntity entity1 = response.getEntity();
 					return entity1 != null ? EntityUtils.toString(entity1) : null;
 				} else {
-					LOGGER.error("Communication Error with ups quote " + status);
+					LOGGER.error("Communication Error with ups quote {}", status);
 					throw new ClientProtocolException("UPS quote communication error " + status);
 				}
 			};
@@ -407,7 +407,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 				throw new Exception("UPS quote communication error " + result);
 			}*/
 
-			LOGGER.debug("ups quote response " + data);
+			LOGGER.debug("ups quote response {}", data);
 
 			UPSParsedElements parsed = new UPSParsedElements();
 

@@ -122,7 +122,7 @@ public class OrderApi {
 		Customer customer = customerService.getById(id);
 
 		if (customer == null) {
-			LOGGER.error("Customer is null for id " + id);
+			LOGGER.error("Customer is null for id {}", id);
 			response.sendError(404, "Customer is null for id " + id);
 			return null;
 		}
@@ -309,20 +309,20 @@ public class OrderApi {
 		ReadableOrder order = orderFacade.getReadableOrder(id, merchantStore, language);
 
 		if (order == null) {
-			LOGGER.error("Order is null for id " + id);
+			LOGGER.error("Order is null for id {}", id);
 			response.sendError(404, "Order is null for id " + id);
 			return null;
 		}
 
 		if (order.getCustomer() == null) {
-			LOGGER.error("Order is null for customer " + principal);
+			LOGGER.error("Order is null for customer {} ", principal);
 			response.sendError(404, "Order is null for customer " + principal);
 			return null;
 		}
 
 		if (order.getCustomer().getId() != null
 				&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {
-			LOGGER.error("Order is null for customer " + principal);
+			LOGGER.error("Order is null for customer {} ", principal);
 			response.sendError(404, "Order is null for customer " + principal);
 			return null;
 		}

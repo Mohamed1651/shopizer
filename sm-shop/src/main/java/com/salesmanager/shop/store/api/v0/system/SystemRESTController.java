@@ -63,10 +63,10 @@ public class SystemRESTController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		try {
-			
-			
-			
-			LOGGER.debug("Creating or updating an integration module : " + json);
+
+
+
+			LOGGER.debug("Creating or updating an integration module : {}", json);
 			
 			moduleConfigurationService.createOrUpdateModule(json);
 			
@@ -92,7 +92,7 @@ public class SystemRESTController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		try {
-			LOGGER.debug("Creating an optin : " + json);
+			LOGGER.debug("Creating an optin : {}", json);
 			//moduleConfigurationService.createOrUpdateModule(json);
 			response.setStatus(200);
 			resp.setStatus(200);
@@ -115,7 +115,7 @@ public class SystemRESTController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		try {
-			LOGGER.debug("Delete optin : " + code);
+			LOGGER.debug("Delete optin : {}", code);
 			//moduleConfigurationService.createOrUpdateModule(json);
 			response.setStatus(200);
 			resp.setStatus(200);
@@ -138,7 +138,7 @@ public class SystemRESTController {
 		AjaxResponse resp = new AjaxResponse();
 		
 		try {
-			LOGGER.debug("Adding a customer optin : " + code);
+			LOGGER.debug("Adding a customer optin : {}", code);
 			//moduleConfigurationService.createOrUpdateModule(json);
 			response.setStatus(200);
 			resp.setStatus(200);
