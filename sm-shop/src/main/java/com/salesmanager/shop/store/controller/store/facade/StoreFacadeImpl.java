@@ -124,7 +124,7 @@ public class StoreFacadeImpl implements StoreFacade {
 	@Override
 	public ReadableMerchantStore getFullByCode(String code, Language language) {
 		MerchantStore store = getMerchantStoreByCode(code);
-		return convertMerchantStoreToReadableMerchantStoreWithFullDetails(language, store);
+		return convertMerchantStoreToReadableMerchantStore(language, store);
 	}
 
 	@Override
@@ -150,20 +150,6 @@ public class StoreFacadeImpl implements StoreFacade {
 		return readable;
 	}
 
-	private ReadableMerchantStore convertMerchantStoreToReadableMerchantStoreWithFullDetails(Language language, MerchantStore store) {
-		ReadableMerchantStore readable = new ReadableMerchantStore();
-
-
-		/**
-		 * Language is not important for this conversion using default language
-		 */
-		try {
-			readableMerchantStorePopulator.populate(store, readable, store, language);
-		} catch (Exception e) {
-			throw new ConversionRuntimeException("Error while populating MerchantStore " + e.getMessage());
-		}
-		return readable;
-	}
 
 	private MerchantStore getMerchantStoreByCode(String code) {
 		return Optional.ofNullable(get(code))

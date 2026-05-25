@@ -330,7 +330,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			throws IntegrationException {
 
 		com.salesmanager.core.model.payments.PaypalPayment paypalPayment = (com.salesmanager.core.model.payments.PaypalPayment)payment;
-		Validate.notNull(paypalPayment.getPaymentToken(), "A paypal payment token is required to process this transaction");
+		Validate.notNull(paypalPayment.getPaymentToken(), "Authorize AND CAPTURE: A paypal payment token is required to process this transaction");
 		
 		return processTransaction(store, customer, items, amount, paypalPayment, configuration, module);
 

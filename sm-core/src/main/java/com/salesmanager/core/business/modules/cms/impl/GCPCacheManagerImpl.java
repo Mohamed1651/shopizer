@@ -26,10 +26,6 @@ public class GCPCacheManagerImpl implements CMSManager {
     return bucketName;
   }
 
-  public String getBucketName() {
-    return bucketName;
-  }
-
 
   @Override
   public String getLocation() {
