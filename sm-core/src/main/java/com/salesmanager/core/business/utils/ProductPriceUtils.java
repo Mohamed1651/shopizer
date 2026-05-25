@@ -226,10 +226,6 @@ public class ProductPriceUtils {
 
 		FinalPrice finalPrice = calculateFinalPrice(availability);
 
-		if (finalPrice == null) {
-			throw new ServiceException(ServiceException.EXCEPTION_ERROR,
-					"No inventory available to calculate the price. Availability should contain at least a region set to *");
-		}
 
 		finalPrice.setStringPrice(getStringAmount(finalPrice.getFinalPrice()));
 		if (finalPrice.isDiscounted()) {

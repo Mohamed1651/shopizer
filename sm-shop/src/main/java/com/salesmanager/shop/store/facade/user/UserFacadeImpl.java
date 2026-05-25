@@ -127,7 +127,7 @@ public class UserFacadeImpl implements UserFacade {
 	@Override
 	public ReadableUser findByUserName(String userName, String storeCode, Language lang) {
 		ReadableUser user = findByUserName(userName, lang);
-		if (user == null) {
+		if (user.getUserName() == null) {
 			throw new ResourceNotFoundException("User [" + userName + "] not found");
 		}
 
@@ -667,7 +667,7 @@ public class UserFacadeImpl implements UserFacade {
 
 				ReadableUser readableUser = findByUserName(currentPrincipalName, languageService.defaultLanguage());
 				//ReadableUser readableUser =	  findByUserName(currentPrincipalName, store.getCode(), store.getDefaultLanguage());
-				if (readableUser == null) {
+				if (readableUser.getUserName() == null) {
 					return false;
 				}
 
