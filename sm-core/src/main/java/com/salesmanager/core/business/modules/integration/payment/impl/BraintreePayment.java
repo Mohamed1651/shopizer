@@ -171,10 +171,11 @@ public class BraintreePayment implements PaymentModule {
         	com.braintreegateway.Transaction transaction = result.getTransaction();
         	authorizationId = transaction.getAuthorizedTransactionId();
         } else {
-            String errorString = "";
-            for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
-            }
+			StringBuilder sb = new StringBuilder();
+			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
+				sb.append("Error: ").append(error.getCode()).append(": ").append(error.getMessage()).append("\n");
+			}
+			String errorString = sb.toString();
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree authorization " + errorString);
@@ -255,10 +256,11 @@ public class BraintreePayment implements PaymentModule {
         	com.braintreegateway.Transaction settledTransaction = result.getTarget();
         	trxId = settledTransaction.getId();
         } else {
-            String errorString = "";
-            for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
-            }
+			StringBuilder sb = new StringBuilder();
+			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
+				sb.append("Error: ").append(error.getCode()).append(": ").append(error.getMessage()).append("\n");
+			}
+			String errorString = sb.toString();
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree refund " + errorString);
@@ -345,10 +347,11 @@ public class BraintreePayment implements PaymentModule {
         	com.braintreegateway.Transaction transaction = result.getTarget();
         	trxId  = transaction.getId();
         } else {
-            String errorString = "";
-            for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
-            }
+			StringBuilder sb = new StringBuilder();
+			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
+				sb.append("Error: ").append(error.getCode()).append(": ").append(error.getMessage()).append("\n");
+			}
+			String errorString = sb.toString();
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree auth + capture " + errorString);
@@ -429,10 +432,11 @@ public class BraintreePayment implements PaymentModule {
         	com.braintreegateway.Transaction settledTransaction = result.getTarget();
         	trxId = settledTransaction.getId();
         } else {
-            String errorString = "";
-            for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
-            }
+			StringBuilder sb = new StringBuilder();
+			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
+				sb.append("Error: ").append(error.getCode()).append(": ").append(error.getMessage()).append("\n");
+			}
+			String errorString = sb.toString();
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree refund " + errorString);

@@ -251,6 +251,7 @@ public class BeanStreamPayment implements PaymentModule {
 		
 		String agent = "Mozilla/4.0";
 		String respText = "";
+		StringBuilder sb = new StringBuilder(respText);
 		Map<String,String> nvp = null;
 		DataOutputStream output = null;
 		DataInputStream in = null;
@@ -359,11 +360,11 @@ public class BeanStreamPayment implements PaymentModule {
 						.getInputStream()));
 				String _line = null;
 				while (((_line = is.readLine()) != null)) {
-					respText = respText + _line;
+					sb.append(_line);
 				}
 
 				if (LOGGER.isDebugEnabled()) {
-					LOGGER.debug("BeanStream response -> {}", respText.trim());
+					LOGGER.debug("BeanStream response -> {}", sb);
 				}
 				
 				nvp = formatUrlResponse(respText.trim());
