@@ -315,7 +315,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			//redirect user to 
 			//https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5LL13394G30048922
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 			throw new IntegrationException(e);
 		}
@@ -416,7 +421,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return newTransaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			if(e instanceof IntegrationException) {
 				throw (IntegrationException)e;
 			} else {
@@ -548,7 +558,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return transaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			throw new IntegrationException(e);
 		}
 
@@ -660,7 +675,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return newTransaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			throw new IntegrationException(e);
 		}
 		
