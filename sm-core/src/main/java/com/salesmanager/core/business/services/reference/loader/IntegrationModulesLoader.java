@@ -94,17 +94,17 @@ public class IntegrationModulesLoader {
 	    		StringBuilder detailsStructure = new StringBuilder();
 	    		int count = 0;
 	    		detailsStructure.append("{");
-	    		for(String key : details.keySet()) {
-	    			String jsonKeyString = mapper.writeValueAsString(key);
-	    			detailsStructure.append(jsonKeyString);
-	    			detailsStructure.append(":");
-	    			String jsonValueString = mapper.writeValueAsString(details.get(key));
-	    			detailsStructure.append(jsonValueString);
-	        		if(count<(details.size()-1)) {
-	        			detailsStructure.append(",");
-	        		}
-	        		count++;
-	    		}
+				for (Map.Entry<String, String> entry : details.entrySet()) {
+					String jsonKeyString = mapper.writeValueAsString(entry.getKey());
+					detailsStructure.append(jsonKeyString);
+					detailsStructure.append(":");
+					String jsonValueString = mapper.writeValueAsString(entry.getValue());
+					detailsStructure.append(jsonValueString);
+					if (count < (details.size() - 1)) {
+						detailsStructure.append(",");
+					}
+					count++;
+				}
 	    		detailsStructure.append("}");
 	    		module.setConfigDetails(detailsStructure.toString());
 	    		

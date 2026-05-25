@@ -203,10 +203,10 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			}
 
 			Map<String, ModuleConfig> moduleConfigsMap = module.getModuleConfigs();
-			for(String key : moduleConfigsMap.keySet()) {
-				
-				ModuleConfig moduleConfig = moduleConfigsMap.get(key);
-				if(moduleConfig.getEnv().equals(env)) {
+			for (Map.Entry<String, ModuleConfig> entry : moduleConfigsMap.entrySet()) {
+
+				ModuleConfig moduleConfig = entry.getValue();
+				if (moduleConfig.getEnv().equals(env)) {
 					host = moduleConfig.getHost();
 					protocol = moduleConfig.getScheme();
 					port = moduleConfig.getPort();

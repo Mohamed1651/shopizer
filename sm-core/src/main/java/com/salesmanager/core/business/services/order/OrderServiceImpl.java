@@ -643,33 +643,28 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 			 * 2          AUTHORIZE
 			 */
 
-			for(Long orderId : processingTransactions.keySet()) {
+            for (Map.Entry<Long, List<Transaction>> entry : processingTransactions.entrySet()) {
+                Long orderId = entry.getKey();
+                List<Transaction> trx = entry.getValue();
 
-				List<Transaction> trx = processingTransactions.get(orderId);
-				if(CollectionUtils.isNotEmpty(trx)) {
+                if (CollectionUtils.isNotEmpty(trx)) {
+                    boolean capturable = true;
+                    for (Transaction t : trx) {
+                        if (TransactionType.CAPTURE.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        } else if (TransactionType.AUTHORIZECAPTURE.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        } else if (TransactionType.REFUND.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        }
+                    }
 
-					boolean capturable = true;
-					for(Transaction t : trx) {
-
-						if(TransactionType.CAPTURE.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						} else if(TransactionType.AUTHORIZECAPTURE.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						} else if(TransactionType.REFUND.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						}
-
-					}
-
-					if(capturable) {
-						Order o = preAuthOrders.get(orderId);
-						returnOrders.add(o);
-					}
-
-				}
-
-
-			}
+                    if (capturable) {
+                        Order o = preAuthOrders.get(orderId);
+                        returnOrders.add(o);
+                    }
+                }
+            }
 		}
 
 		return returnOrders;
