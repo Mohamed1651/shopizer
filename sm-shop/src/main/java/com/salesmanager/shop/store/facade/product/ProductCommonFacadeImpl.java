@@ -234,7 +234,7 @@ public class ProductCommonFacadeImpl implements ProductCommonFacade {
 		List<Category> assigned = product.getCategories().stream()
 				.filter(cat -> cat.getId().longValue() == category.getId().longValue()).collect(Collectors.toList());
 
-		if (assigned.size() > 0) {
+		if (!assigned.isEmpty()) {
 			throw new OperationNotAllowedException("Category with id [" + category.getId()
 					+ "] already attached to product [" + product.getId() + "]");
 		}

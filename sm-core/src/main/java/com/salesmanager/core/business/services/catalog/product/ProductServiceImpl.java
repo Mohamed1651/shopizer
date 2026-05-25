@@ -280,7 +280,7 @@ public class ProductServiceImpl extends SalesManagerEntityServiceImpl<Long, Prod
 
 		try {
 
-			if (images != null && images.size() > 0) {
+			if (images != null && !images.isEmpty()) {
 				for (ProductImage image : images) {
 					if (image.getImage() != null && (image.getId() == null || image.getId() == 0L)) {
 						image.setProduct(product);

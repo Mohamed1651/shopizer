@@ -30,7 +30,7 @@ public class PermissionRepositoryImpl implements PermissionRepositoryCustom {
 		StringBuilder countBuilderWhere = new StringBuilder();
 		
 		
-		if(criteria.getGroupIds()!=null && criteria.getGroupIds().size()>0) {
+		if(criteria.getGroupIds()!=null && !criteria.getGroupIds().isEmpty()) {
 			countBuilderSelect.append(" INNER JOIN p.groups grous");
 			countBuilderWhere.append(" where grous.id in (:cid)");
 		}
@@ -39,7 +39,7 @@ public class PermissionRepositoryImpl implements PermissionRepositoryCustom {
 		Query countQ = em.createQuery(
 				countBuilderSelect.toString() + countBuilderWhere.toString());
 
-		if(criteria.getGroupIds()!=null && criteria.getGroupIds().size()>0) {
+		if(criteria.getGroupIds()!=null && !criteria.getGroupIds().isEmpty()) {
 			countQ.setParameter("cid", criteria.getGroupIds());
 		}
 		
@@ -56,7 +56,7 @@ public class PermissionRepositoryImpl implements PermissionRepositoryCustom {
 		qs.append("select p from Permission as p ");
 		qs.append("join fetch p.groups grous ");
 		
-		if(criteria.getGroupIds()!=null && criteria.getGroupIds().size()>0) {
+		if(criteria.getGroupIds()!=null && !criteria.getGroupIds().isEmpty()) {
 			qs.append(" where grous.id in (:cid)");
 		}
 		
@@ -66,7 +66,7 @@ public class PermissionRepositoryImpl implements PermissionRepositoryCustom {
 		Query q = em.createQuery(hql);
 
 
-    	if(criteria.getGroupIds()!=null && criteria.getGroupIds().size()>0) {
+    	if(criteria.getGroupIds()!=null && !criteria.getGroupIds().isEmpty()) {
     		q.setParameter("cid", criteria.getGroupIds());
     	}
     	

@@ -441,7 +441,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
         groupsId.add(group.getId());
 
       }
-      if (groupsId != null && groupsId.size() > 0) {
+      if (groupsId != null && !groupsId.isEmpty()) {
         List<Permission> permissions = permissionService.getPermissions(groupsId);
         for (Permission permission : permissions) {
           GrantedAuthority auth = new SimpleGrantedAuthority(permission.getPermissionName());

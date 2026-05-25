@@ -85,7 +85,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 		}
 		
 		List<String> packages = options.get("packages");
-		if(packages==null || packages.size()==0) {
+		if(packages==null || packages.isEmpty()) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
@@ -484,7 +484,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 				throw new IntegrationException(parsed.getError());
 			}
 
-			if (parsed.getOptions() == null || parsed.getOptions().size() == 0) {
+			if (parsed.getOptions() == null || parsed.getOptions().isEmpty()) {
 
 				throw new IntegrationException("No shipping options available for the configuration");
 			}

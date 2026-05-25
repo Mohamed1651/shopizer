@@ -358,7 +358,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
 		List<Product> wrongStoreProducts = products.stream().filter(p -> p.getMerchantStore().getId() != store.getId())
 				.collect(Collectors.toList());
-		if (wrongStoreProducts.size() > 0) {
+		if (!wrongStoreProducts.isEmpty()) {
 			throw new ResourceNotFoundException("One or more of the items with id's "
 					+ wrongStoreProducts.stream().map(s -> Long.valueOf(s.getId())).collect(Collectors.toList())
 					+ " does not belong to merchant " + store.getId());
@@ -813,14 +813,14 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 		}
 
 		// remaining items
-		if (items.size() > 0) {
+		if (!items.isEmpty()) {
 			cart.setLineItems(items);
 		} else {
 			cart.getLineItems().clear();
 		}
 
 		shoppingCartService.saveOrUpdate(cart);// update cart with remaining items
-		if (items.size() > 0 & returnCart) {
+		if (!items.isEmpty() & returnCart) {
 			return this.getByCode(cartCode, merchant, language);
 		}
 		return null;

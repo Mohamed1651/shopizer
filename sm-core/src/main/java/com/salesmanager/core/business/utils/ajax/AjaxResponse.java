@@ -92,7 +92,7 @@ public class AjaxResponse implements JSONAware {
 		
 		returnString.append(getJsonInfo());
 
-		if(this.getData().size()>0) {
+		if(!this.getData().isEmpty()) {
 			StringBuilder dataEntries = null;
 			int count = 0;
 			for(Map keyValue : this.getData()) {

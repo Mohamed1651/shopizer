@@ -236,7 +236,7 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 			if (shoppingCart != null) {
 
 				Set<ShoppingCartItem> items = shoppingCart.getLineItems();
-				if (items == null || items.size() == 0) {
+				if (items == null || items.isEmpty()) {
 					shoppingCart.setObsolete(true);
 					return shoppingCart;
 
@@ -312,8 +312,8 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 		List<ShoppingCartAttributeItem> removeAttributesList = new ArrayList<ShoppingCartAttributeItem>();// attributes
 																											// to remove
 		// DELETE ORPHEANS MANUALLY
-		if ((productAttributes != null && productAttributes.size() > 0)
-				|| (cartAttributes != null && cartAttributes.size() > 0)) {
+		if ((productAttributes != null && !productAttributes.isEmpty())
+				|| (cartAttributes != null && !cartAttributes.isEmpty())) {
 			if (cartAttributes != null) {
 				for (ShoppingCartAttributeItem attribute : cartAttributes) {
 					long attributeId = attribute.getProductAttributeId();

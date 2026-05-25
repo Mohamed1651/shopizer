@@ -36,7 +36,7 @@ public class CustomShippingQuotesConfiguration extends IntegrationConfiguration 
 		
 
 
-		if(regions!=null && regions.size()>0) {
+		if(regions!=null && !regions.isEmpty()) {
 			
 			returnString.append(",");
 			//org.json.simple.JSONArray array=new org.json.simple.JSONArray();

@@ -616,7 +616,7 @@ public class UserFacadeImpl implements UserFacade {
 		List<String> roles = authentication.getAuthorities().stream().filter(x -> groupNames.contains(x.getAuthority()))
 				.map(r -> r.getAuthority()).collect(Collectors.toList());
 
-		return roles.size() > 0;
+		return !roles.isEmpty();
 
 	}
 

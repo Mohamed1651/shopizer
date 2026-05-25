@@ -169,7 +169,7 @@ public class MerchantStoreServiceImpl extends SalesManagerEntityServiceImpl<Inte
 		List<MerchantStore> stores = merchantRepository.listByGroup(code, id.get());
 		
 		
-		return stores.size() > 0;
+		return !stores.isEmpty();
 	}
 
 

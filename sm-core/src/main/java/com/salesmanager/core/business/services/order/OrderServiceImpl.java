@@ -146,7 +146,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     	//first process payment
     	Transaction processTransaction = paymentService.processPayment(customer, store, payment, items, order);
 
-    	if(order.getOrderHistory()==null || order.getOrderHistory().size()==0 || order.getStatus()==null) {
+    	if(order.getOrderHistory()==null || order.getOrderHistory().isEmpty() || order.getStatus()==null) {
     		OrderStatus status = order.getStatus();
     		if(status==null) {
     			status = OrderStatus.ORDERED;
@@ -352,7 +352,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 
         //tax
         List<TaxItem> taxes = taxService.calculateTax(summary, customer, store, language);
-        if(taxes!=null && taxes.size()>0) {
+        if(taxes!=null && !taxes.isEmpty()) {
         	BigDecimal totalTaxes = new BigDecimal(0);
         	totalTaxes.setScale(2, RoundingMode.HALF_UP);
             int taxCount = 200;

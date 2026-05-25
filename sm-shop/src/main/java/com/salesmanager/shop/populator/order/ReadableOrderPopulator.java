@@ -104,7 +104,7 @@ public class ReadableOrderPopulator extends
 			target.setBilling(address);
 		}
 		
-		if(source.getOrderAttributes()!=null && source.getOrderAttributes().size()>0) {
+		if(source.getOrderAttributes()!=null && !source.getOrderAttributes().isEmpty()) {
 			for(OrderAttribute attr : source.getOrderAttributes()) {
 				com.salesmanager.shop.model.order.OrderAttribute a = new com.salesmanager.shop.model.order.OrderAttribute();
 				a.setKey(attr.getKey());

@@ -232,7 +232,7 @@ public class ProductImageApi {
 			List<ReadableImage> target = new ArrayList<ReadableImage>();
 			
 			Set<ProductImage> images = p.getImages();
-			if(images!=null && images.size()>0) {
+			if(images!=null && !images.isEmpty()) {
 
 				
 				target = images.stream().map(i -> image(i, merchantStore, language))

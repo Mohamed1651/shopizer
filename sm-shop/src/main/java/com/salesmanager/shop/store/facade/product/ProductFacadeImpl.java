@@ -113,7 +113,7 @@ public class ProductFacadeImpl implements ProductFacade {
 							.getListByLineage(store, lineage);
 
 					List<Long> ids = new ArrayList<Long>();
-					if (categories != null && categories.size() > 0) {
+					if (categories != null && !categories.isEmpty()) {
 						for (com.salesmanager.core.model.catalog.category.Category c : categories) {
 							ids.add(c.getId());
 						}
@@ -188,7 +188,7 @@ public class ProductFacadeImpl implements ProductFacade {
 
 		List<ProductRelationship> relatedItems = productRelationshipService.getByType(store, product,
 				ProductRelationshipType.RELATED_ITEM);
-		if (relatedItems != null && relatedItems.size() > 0) {
+		if (relatedItems != null && !relatedItems.isEmpty()) {
 			List<ReadableProduct> items = new ArrayList<ReadableProduct>();
 			for (ProductRelationship relationship : relatedItems) {
 				Product relatedProduct = relationship.getRelatedProduct();

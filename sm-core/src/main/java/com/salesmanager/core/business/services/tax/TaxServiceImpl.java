@@ -233,7 +233,7 @@ public class TaxServiceImpl
 				taxRates = taxRateService.listByCountryZoneAndTaxClass(country, zone, taxClasses.get(taxClassId), store, language);
 			}
 			
-			if(taxRates==null || taxRates.size()==0){
+			if(taxRates==null || taxRates.isEmpty()){
 				continue;
 			}
 			BigDecimal taxedItemValue = null;

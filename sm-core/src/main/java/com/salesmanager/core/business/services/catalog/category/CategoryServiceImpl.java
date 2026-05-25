@@ -267,7 +267,7 @@ public class CategoryServiceImpl extends SalesManagerEntityServiceImpl<Long, Cat
 						productService.update(dbProduct);
 					}
 
-					if (product.getCategories() == null || product.getCategories().size() == 0) {
+					if (product.getCategories() == null || product.getCategories().isEmpty()) {
 						productService.delete(dbProduct);
 					}
 
@@ -333,7 +333,7 @@ public class CategoryServiceImpl extends SalesManagerEntityServiceImpl<Long, Cat
 			List<Category> subCategories = getListByLineage(child.getMerchantStore(), childLineage.toString());
 
 			// ajust all sub categories lineages
-			if (subCategories != null && subCategories.size() > 0) {
+			if (subCategories != null && !subCategories.isEmpty()) {
 				for (Category subCategory : subCategories) {
 					if (!child.getId().equals(subCategory.getId())) {
 						addChild(child, subCategory);

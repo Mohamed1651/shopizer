@@ -103,7 +103,7 @@ public class DefaultPackagingImpl implements Packaging {
 			if(wd==null) {
 				wd = new BigDecimal(defaultWidth);
 			}
-			if (attrs != null && attrs.size() > 0) {
+			if (attrs != null && !attrs.isEmpty()) {
 				for(ProductAttribute attribute : attrs) {
 					if(attribute.getProductAttributeWeight()!=null) {
 						w = w.add(attribute.getProductAttributeWeight());
@@ -173,7 +173,7 @@ public class DefaultPackagingImpl implements Packaging {
 		List<Product> assignedProducts = new ArrayList<Product>();
 
 		// calculate the volume for the next object
-		if (assignedProducts.size() > 0) {
+		if (!assignedProducts.isEmpty()) {
 			individualProducts.removeAll(assignedProducts);
 			assignedProducts = new ArrayList<Product>();
 		}
@@ -342,7 +342,7 @@ public class DefaultPackagingImpl implements Packaging {
 			if(wd==null) {
 				wd = new BigDecimal(defaultWidth);
 			}
-			if (attributes != null && attributes.size() > 0) {
+			if (attributes != null && !attributes.isEmpty()) {
 				for(ProductAttribute attribute : attributes) {
 					if(attribute.getAttributeAdditionalWeight()!=null && attribute.getProductAttributeWeight() !=null) {
 						w = w.add(attribute.getProductAttributeWeight());
@@ -364,7 +364,7 @@ public class DefaultPackagingImpl implements Packaging {
 				detail.setShippingWidth(wd.doubleValue());
 				detail.setShippingQuantity(shippingProduct.getQuantity());
 				String description = "item";
-				if(product.getDescriptions().size()>0) {
+				if(!product.getDescriptions().isEmpty()) {
 					description = product.getDescriptions().iterator().next().getName();
 				}
 				detail.setItemName(description);
@@ -382,7 +382,7 @@ public class DefaultPackagingImpl implements Packaging {
 							.doubleValue());
 					detail.setShippingQuantity(1);//issue seperate shipping
 					String description = "item";
-					if(product.getDescriptions().size()>0) {
+					if(!product.getDescriptions().isEmpty()) {
 						description = product.getDescriptions().iterator().next().getName();
 					}
 					detail.setItemName(description);
