@@ -159,7 +159,6 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     		statusHistory.setOrder(order);
     		statusHistorySet.add(statusHistory);
     		order.setOrderHistory(statusHistorySet);
-
     	}
 
         if(customer.getId()==null || customer.getId()==0) {
@@ -194,7 +193,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
         Set<OrderProduct> products = order.getOrderProducts();
         for(OrderProduct orderProduct : products) {
             orderProduct.getProductQuantity();
-            Product p = productService.getById(orderProduct.getId());
+            Product p = productService.getBySku(orderProduct.getSku(), store);
             if(p == null)
                 throw new ServiceException(ServiceException.EXCEPTION_INVENTORY_MISMATCH);
             for(ProductAvailability availability : p.getAvailabilities()) {
