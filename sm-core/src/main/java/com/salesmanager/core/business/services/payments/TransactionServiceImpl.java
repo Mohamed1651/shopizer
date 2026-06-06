@@ -134,10 +134,7 @@ public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long,
 					}
 				}
 			}
-			if(transaction.getTransactionType().name().equals(TransactionType.CAPTURE.name())) {
-				break;
-			}
-			if(transaction.getTransactionType().name().equals(TransactionType.REFUND.name())) {
+			if(transaction.getTransactionType().name().equals(TransactionType.CAPTURE.name()) || transaction.getTransactionType().name().equals(TransactionType.REFUND.name())) {
 				break;
 			}
 		}
@@ -154,13 +151,11 @@ public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long,
 		for(Transaction transaction : transactions) {
 			if(transaction.getTransactionType().name().equals(TransactionType.AUTHORIZECAPTURE.name())) {
 				finalTransactions.put(TransactionType.AUTHORIZECAPTURE.name(),transaction);
-				continue;
 			}
-			if(transaction.getTransactionType().name().equals(TransactionType.CAPTURE.name())) {
+			else if(transaction.getTransactionType().name().equals(TransactionType.CAPTURE.name())) {
 				finalTransactions.put(TransactionType.CAPTURE.name(),transaction);
-				continue;
 			}
-			if(transaction.getTransactionType().name().equals(TransactionType.REFUND.name())) {
+			else if(transaction.getTransactionType().name().equals(TransactionType.REFUND.name())) {
 				//check transaction id
 				Transaction previousRefund = finalTransactions.get(TransactionType.REFUND.name());
 				if(previousRefund!=null) {
@@ -168,11 +163,9 @@ public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long,
 					Date currentDate = transaction.getTransactionDate();
 					if(previousDate.before(currentDate)) {
 						finalTransactions.put(TransactionType.REFUND.name(),transaction);
-						continue;
 					}
 				} else {
 					finalTransactions.put(TransactionType.REFUND.name(),transaction);
-					continue;
 				}
 			}
 		}

@@ -462,12 +462,10 @@ public class ShippingServiceImpl implements ShippingService {
 				//use the first active module
 				if (configuration.isActive()) {
 					shippingQuoteModule = shippingModules.get(entry.getKey());
-					if (shippingQuoteModule instanceof ShippingQuotePrePostProcessModule) {
-						shippingQuoteModule = null;
-						continue;
-					} else {
+					if (!(shippingQuoteModule instanceof ShippingQuotePrePostProcessModule)) {
 						break;
 					}
+					shippingQuoteModule = null;
 				}
 			}
 			

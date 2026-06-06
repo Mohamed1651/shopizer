@@ -987,7 +987,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 				com.salesmanager.core.model.shoppingcart.ShoppingCartItem oldCartItem = oOldItem.get();
 				if (oldCartItem.getQuantity().intValue() == newItemValue.getQuantity()) {
 					// this is unchanged
-					continue;
+
 				}
 				if (newItemValue.getQuantity() == 0) {
 					// remove from cart
