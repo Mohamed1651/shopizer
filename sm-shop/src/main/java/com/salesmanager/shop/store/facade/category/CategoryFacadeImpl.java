@@ -416,7 +416,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 			Iterator<Entry<String, ProductOption>> it = references.entrySet().iterator();
 			while (it.hasNext()) {
 				@SuppressWarnings("rawtypes")
-				Map.Entry pair = (Map.Entry) it.next();
+				Map.Entry pair = it.next();
 				ProductOption option = (ProductOption) pair.getValue();
 				List<com.salesmanager.shop.model.catalog.product.attribute.ProductOptionValue> values = rawFacet.get(option.getCode());
 

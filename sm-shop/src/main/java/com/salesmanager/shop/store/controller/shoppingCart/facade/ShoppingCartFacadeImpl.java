@@ -647,7 +647,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 			entryToUpdate.getProduct();
 
 			LOG.info("Updating cart entry quantity to" + item.getQuantity());
-			entryToUpdate.setQuantity((int) item.getQuantity());
+			entryToUpdate.setQuantity(item.getQuantity());
 
 			List<ProductAttribute> productAttributes = new ArrayList<ProductAttribute>();
 			productAttributes.addAll(entryToUpdate.getProduct().getAttributes());

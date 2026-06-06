@@ -53,7 +53,7 @@ public class CmsStaticContentFileManagerImpl implements ContentAssetsManager {
 	@PostConstruct
 	void init() {
 
-		this.rootName = ((CMSManager) cacheManager).getRootName();
+		this.rootName = cacheManager.getRootName();
 		if (LOGGER.isInfoEnabled()) {
 			LOGGER.info("init {} setting root{}", getClass().getName(), this.rootName);
 		}

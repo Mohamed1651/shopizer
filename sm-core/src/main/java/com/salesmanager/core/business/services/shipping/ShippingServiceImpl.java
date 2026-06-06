@@ -239,7 +239,7 @@ public class ShippingServiceImpl implements ShippingService {
 			try {
 				
 				String moduleCode = configuration.getModuleCode();
-				ShippingQuoteModule quoteModule = (ShippingQuoteModule)shippingModules.get(moduleCode);
+				ShippingQuoteModule quoteModule = shippingModules.get(moduleCode);
 				if(quoteModule==null) {
 					throw new ServiceException("Shipping quote module " + moduleCode + " does not exist");
 				}

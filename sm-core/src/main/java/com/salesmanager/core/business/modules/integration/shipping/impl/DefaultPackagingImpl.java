@@ -58,9 +58,9 @@ public class DefaultPackagingImpl implements Packaging {
 			throw new ServiceException("ShippingConfiguration not found for merchant " + store.getCode());
 		}
 		
-		width = (double) shippingConfiguration.getBoxWidth();
-		length = (double) shippingConfiguration.getBoxLength();
-		height = (double) shippingConfiguration.getBoxHeight();
+		width = shippingConfiguration.getBoxWidth();
+		length = shippingConfiguration.getBoxLength();
+		height = shippingConfiguration.getBoxHeight();
 		weight = shippingConfiguration.getBoxWeight();
 		maxweight = shippingConfiguration.getMaxWeight();
 		
