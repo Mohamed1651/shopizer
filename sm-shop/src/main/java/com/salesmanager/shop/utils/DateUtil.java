@@ -137,14 +137,11 @@ public class DateUtil {
 		
 		if (firstDate.compareTo(compareDate) > 0) {
             return false;
-        } else if (firstDate.compareTo(compareDate) < 0) {
-            return true;
-        } else if (firstDate.compareTo(compareDate) == 0) {
+        } else if (firstDate.compareTo(compareDate) < 0 || firstDate.compareTo(compareDate) == 0) {
             return true;
         } else {
             return false;
         }
-		
 	}
 
 	public void processPostedDates(HttpServletRequest request) {

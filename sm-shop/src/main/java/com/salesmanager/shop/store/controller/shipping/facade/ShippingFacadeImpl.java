@@ -220,12 +220,8 @@ public class ShippingFacadeImpl implements ShippingFacade {
 		Validate.notEmpty(packageDetails.getCode(), "PackageDetails code cannot be empty");
 		
 		List<com.salesmanager.core.model.shipping.Package> packages = configuration.getPackages().stream().filter(p -> p.getCode().equalsIgnoreCase(packageDetails.getCode())).collect(Collectors.toList());
-		
-		if(packages.isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
+
+		return !(packages.isEmpty());
 		
 		
 	}

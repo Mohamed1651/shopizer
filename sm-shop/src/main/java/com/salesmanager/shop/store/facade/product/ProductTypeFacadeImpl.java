@@ -174,10 +174,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 	    } catch (ServiceException e) {
 			throw new RuntimeException("An exception occured while getting product type [" + code + "] for merchant store [" + store.getCode() +"]",e);
 		}
-		if(t != null) {
-			return true;
-		}
-		return false;
+		return t != null;
 	}
 
 	@Override

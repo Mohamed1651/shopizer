@@ -144,11 +144,8 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 		Validate.notNull(store, "MerchantStore cannot be null");
 		Validate.notNull(code, "code cannot be null");
 		Optional<ProductVariation> var =  productVariationService.getByCode(store, code);
-		if(var.isPresent()) {
-			return true;
-		}
 		
-		return false;
+		return var.isPresent();
 	}
 
 }

@@ -321,10 +321,8 @@ public class TaxFacadeImpl implements TaxFacade {
 		Validate.notNull(store.getCode(),"MerchantStore code cannot be null");
 		
 		TaxRate rate = taxRateByCode(code, store, language);
-		if(rate.getTaxRate() == null) {
-			return false;
-		}
-		return true;
+
+		return rate.getTaxRate() != null;
 	}
 
 	@Override

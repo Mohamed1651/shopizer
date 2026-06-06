@@ -277,10 +277,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
   
   private boolean bucketExists(Storage storage, String bucketName) {
     Bucket bucket = storage.get(bucketName, BucketGetOption.fields(BucketField.NAME));
-    if (bucket == null || !bucket.exists()) {
-      return false;
-    }
-    return true;
+    return !(bucket == null || !bucket.exists());
   }
   
   private Bucket createBucket(Storage storage, String bucketName) {
