@@ -92,7 +92,7 @@ public class IntegrationConfiguration implements JSONAware {
       String dataField = data.toJSONString();
 
       returnString.append(",").append("\"integrationKeys\"").append(":");
-      returnString.append(dataField.toString());
+      returnString.append(dataField);
 
 
     }
@@ -145,7 +145,7 @@ public class IntegrationConfiguration implements JSONAware {
       String dataField = optionDataEntries.toString();
 
       returnString.append(",").append("\"integrationOptions\"").append(":{");
-      returnString.append(dataField.toString());
+      returnString.append(dataField);
       returnString.append("}");
 
     }

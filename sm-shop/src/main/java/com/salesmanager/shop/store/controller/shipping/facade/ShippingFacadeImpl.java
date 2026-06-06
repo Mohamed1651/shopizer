@@ -73,7 +73,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 			if(!CollectionUtils.isEmpty(countries)) {
 				
 				List<String> countryCode = countries.stream()
-						.sorted(Comparator.comparing(n->n.toString()))
+						.sorted(Comparator.comparing(n->n))
 						.collect(Collectors.toList());
 				
 				expeditionConfiguration.setShipToCountry(countryCode);
