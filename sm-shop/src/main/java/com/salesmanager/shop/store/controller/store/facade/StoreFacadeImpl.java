@@ -321,7 +321,7 @@ public class StoreFacadeImpl implements StoreFacade {
 		configTO.setKey(config.getKey());
 		configTO.setType(config.getMerchantConfigurationType());
 		configTO.setValue(config.getValue());
-		configTO.setActive(config.getActive() != null ? config.getActive().booleanValue() : false);
+		configTO.setActive(config.getActive() != null && config.getActive());
 		return configTO;
 	}
 
@@ -332,7 +332,7 @@ public class StoreFacadeImpl implements StoreFacade {
 		configTO.setKey(config.getKey());
 		configTO.setMerchantConfigurationType(configurationType);
 		configTO.setValue(config.getValue());
-		configTO.setActive(new Boolean(config.isActive()));
+		configTO.setActive(config.isActive());
 		return configTO;
 	}
 

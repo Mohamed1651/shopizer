@@ -150,7 +150,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 	public boolean existByCode(MerchantStore store, String code) {
 		try {
 			Category c = categoryService.getByCode(store, code);
-			return c != null ? true : false;
+			return c != null;
 		} catch (ServiceException e) {
 			throw new ServiceRuntimeException(e);
 		}

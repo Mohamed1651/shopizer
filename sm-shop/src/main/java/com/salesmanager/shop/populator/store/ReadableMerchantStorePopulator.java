@@ -100,7 +100,7 @@ public class ReadableMerchantStorePopulator extends
 		if(target.getParent() == null) {
 			target.setRetailer(true);
 		} else {
-			target.setRetailer(source.isRetailer()!=null?source.isRetailer().booleanValue():false);	
+			target.setRetailer(source.isRetailer() != null && source.isRetailer());
 		}
 		
 		

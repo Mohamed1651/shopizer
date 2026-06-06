@@ -536,7 +536,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	@Override
 	public boolean exists(String code, ContentType type, MerchantStore store) {
 		Content c = contentRepository.findByCodeAndType(code, type, store.getId());
-		return c !=null ? true:false;
+		return c !=null;
 	}
 
 }

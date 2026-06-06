@@ -56,8 +56,8 @@ public class ReadableProductTypeMapper implements Mapper<ProductType, ReadablePr
 		
 		readableType.setCode(type.getCode());
 		readableType.setId(type.getId());
-		readableType.setVisible(type.getVisible() != null && type.getVisible().booleanValue() ? true:false);
-		readableType.setAllowAddToCart(type.getAllowAddToCart() != null && type.getAllowAddToCart().booleanValue() ? true:false);
+		readableType.setVisible(type.getVisible() != null && type.getVisible());
+		readableType.setAllowAddToCart(type.getAllowAddToCart() != null && type.getAllowAddToCart());
 		
 		return readableType;
 	}

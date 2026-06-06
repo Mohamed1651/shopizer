@@ -64,7 +64,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 			
 			ShippingConfiguration config = getDbConfig(store);
 			if(config!=null) {
-				expeditionConfiguration.setIternationalShipping(config.getShipType()!=null && config.getShipType().equals(ShippingType.INTERNATIONAL.name())?true:false);
+				expeditionConfiguration.setIternationalShipping(config.getShipType()!=null && config.getShipType().equals(ShippingType.INTERNATIONAL.name()));
 				expeditionConfiguration.setTaxOnShipping(config.isTaxOnShipping());
 			}
 			
