@@ -745,7 +745,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
 		shoppingCartCalculationService.calculate(cartModel, store, language);
 
-		ReadableShoppingCart readableCart = new ReadableShoppingCart();
+		ReadableShoppingCart readableCart;
 		readableCart = readableShoppingCartMapper.convert(cartModel, store, language);
 
 		return readableCart;
@@ -945,7 +945,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
 		shoppingCartCalculationService.calculate(cartModel, store, language);
 
-		ReadableShoppingCart readableCart = new ReadableShoppingCart();
+		ReadableShoppingCart readableCart;
 		readableCart = readableShoppingCartMapper.convert(cartModel, store, language);
 
 		return readableCart;

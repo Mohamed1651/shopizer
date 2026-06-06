@@ -137,7 +137,6 @@ public class SearchServiceImpl implements com.salesmanager.core.business.service
 			documents = document(product.getId(), languages, RequestOptions.DO_NOT_FAIL_ON_NOT_FOUND);
 
 				if (!CollectionUtils.isEmpty(product.getVariants())) {
-					variants = new ArrayList<Map<String, String>>();
 					variants = product.getVariants().stream().map(i -> variants(i)).collect(Collectors.toList());
 				}
 	

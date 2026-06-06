@@ -292,7 +292,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 		LOGGER.info("{} : Populating Zones ", name);
         try {
 
-    		  Map<String,Zone> zonesMap = new HashMap<String,Zone>();
+    		  Map<String,Zone> zonesMap;
     		  zonesMap = zonesLoader.loadZones("reference/zoneconfig.json");
     		  
     		  this.addZonesToDb(zonesMap);

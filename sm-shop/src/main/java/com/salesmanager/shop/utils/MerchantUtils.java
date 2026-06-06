@@ -20,11 +20,6 @@ public class MerchantUtils {
 		if(!StringUtils.isBlank(prefix)) {
 			footerMessage.append(prefix).append(" ");
 		}
-		
-		Date sinceDate = null;
-		String inBusinessSince = store.getDateBusinessSince();
-		
-		
 		return null;
 	}
 

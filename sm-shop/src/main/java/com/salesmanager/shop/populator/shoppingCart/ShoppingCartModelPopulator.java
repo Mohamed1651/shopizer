@@ -223,8 +223,6 @@ public class ShoppingCartModelPopulator
         List<ShoppingCartAttribute> cartAttributes = shoppingCartItem.getShoppingCartAttributes();
         if ( !CollectionUtils.isEmpty( cartAttributes ) )
         {
-            Set<com.salesmanager.core.model.shoppingcart.ShoppingCartAttributeItem> newAttributes =
-                new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartAttributeItem>();
             for ( ShoppingCartAttribute attribute : cartAttributes )
             {
                 ProductAttribute productAttribute = productAttributeService.getById( attribute.getAttributeId() );

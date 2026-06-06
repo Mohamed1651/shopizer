@@ -639,8 +639,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
 			Billing billing = customer.getBilling();
 
-			String postalCode = billing.getPostalCode();
-			postalCode = validatePostalCode(postalCode);
+			validatePostalCode(billing.getPostalCode());
 
 			delivery.setAddress(billing.getAddress());
 			delivery.setCompany(billing.getCompany());
@@ -1279,8 +1278,6 @@ public class OrderFacadeImpl implements OrderFacade {
 			String submitedAmount = order.getPayment().getAmount();
 
 			BigDecimal formattedSubmittedAmount = productPriceUtils.getAmount(submitedAmount);
-
-			BigDecimal submitedAmountFormat = productPriceUtils.getAmount(submitedAmount);
 
 			BigDecimal calculatedAmount = orderTotalSummary.getTotal();
 			String strCalculatedTotal = calculatedAmount.toPlainString();

@@ -62,8 +62,6 @@ public class StoreContactRESTController {
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@ResponseBody
 	public AjaxResponse store(@PathVariable final String store, HttpServletRequest request, HttpServletResponse response) {
-		
-		AjaxResponse ajaxResponse = new AjaxResponse();
 		try {
 			
 			/** default routine **/
@@ -84,10 +82,6 @@ public class StoreContactRESTController {
 				response.sendError(503, "Merchant store is null for code " + store);
 				return null;
 			}
-			
-			Language language = merchantStore.getDefaultLanguage();
-			
-			Map<String,Language> langs = languageService.getLanguagesMap();
 
 			
 			return null;

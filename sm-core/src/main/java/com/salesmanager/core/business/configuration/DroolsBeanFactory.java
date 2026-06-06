@@ -82,8 +82,6 @@ public class DroolsBeanFactory {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem()
             .write(dt);
 
-       KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem)
-            .buildAll();
 
         KieRepository kieRepository = kieServices.getRepository();
 

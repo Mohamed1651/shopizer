@@ -64,8 +64,6 @@ public class PersistableOrderPopulator extends
 		try {
 			
 
-			Map<String,Country> countriesMap = countryService.getCountriesMap(language);
-			Map<String,Zone> zonesMap = zoneService.getZones(language);
 			/** customer **/
 			PersistableCustomer customer = source.getCustomer();
 			if(customer!=null) {

@@ -283,7 +283,6 @@ public class ReadableProductPopulator extends
 							ReadableProductProperty property = null;
 							ReadableProductPropertyValue propertyValue = null;
 							ReadableProductOptionValue optValue = new ReadableProductOptionValue();
-							ReadableProductAttributeValue attrValue = new ReadableProductAttributeValue();
 
 							ProductOptionValue optionValue = attribute.getProductOptionValue();
 

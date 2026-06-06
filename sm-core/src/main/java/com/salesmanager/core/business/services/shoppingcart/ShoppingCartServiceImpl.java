@@ -501,7 +501,6 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 			}
 
 			// refresh
-			item = shoppingCartItemRepository.findOne(id);
 
 			// delete
 			shoppingCartItemRepository.deleteById(id);

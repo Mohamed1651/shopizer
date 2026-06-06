@@ -86,7 +86,7 @@ public class ProductCommonFacadeImpl implements ProductCommonFacade {
 
 		String manufacturer = Manufacturer.DEFAULT_MANUFACTURER;
 		if (product.getProductSpecifications() != null) {
-			manufacturer = product.getProductSpecifications().getManufacturer();
+
 		} else {
 			ProductSpecification specifications = new ProductSpecification();
 			specifications.setManufacturer(manufacturer);
@@ -118,7 +118,7 @@ public class ProductCommonFacadeImpl implements ProductCommonFacade {
 		Validate.notNull(product.getId(), "Product id must not be null");
 
 		// get original product
-		Product productModel = productService.getById(product.getId());
+
 
 
 	}

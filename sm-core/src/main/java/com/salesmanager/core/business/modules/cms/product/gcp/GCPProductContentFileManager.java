@@ -198,7 +198,6 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
         BlobId blobId = BlobId.of(bucketName, fileName.toString());
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
         storage.create(blobInfo, targetArray);
-        Acl acl = storage.createAcl(blobId, Acl.of(User.ofAllUsers(), Role.READER));
       } catch (IOException ioe) {
         throw new ServiceException(ioe);
       }

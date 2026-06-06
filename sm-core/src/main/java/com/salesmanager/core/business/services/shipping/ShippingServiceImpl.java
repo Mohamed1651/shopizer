@@ -504,13 +504,11 @@ public class ShippingServiceImpl implements ShippingService {
 					if(orderTotal.doubleValue()>freeShippingAmount.doubleValue()) {
 						if(shippingConfiguration.getFreeShippingType() == ShippingType.NATIONAL) {
 							if(store.getCountry().getIsoCode().equals(shipCountry.getIsoCode())) {
-								freeShipping = true;
 								shippingQuote.setFreeShipping(true);
 								shippingQuote.setFreeShippingAmount(freeShippingAmount);
 								return shippingQuote;
 							}
 						} else {//international all
-							freeShipping = true;
 							shippingQuote.setFreeShipping(true);
 							shippingQuote.setFreeShippingAmount(freeShippingAmount);
 							return shippingQuote;

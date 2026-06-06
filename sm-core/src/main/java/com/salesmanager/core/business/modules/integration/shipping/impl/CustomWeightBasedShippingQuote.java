@@ -101,10 +101,8 @@ public class CustomWeightBasedShippingQuote implements ShippingQuoteModule {
 		//get configuration
 		CustomShippingQuotesConfiguration customConfiguration = (CustomShippingQuotesConfiguration)this.getCustomModuleConfiguration(store);
 		
-		
-		List<CustomShippingQuotesRegion> regions = customConfiguration.getRegions();
-		
-		ShippingBasisType shippingType =  shippingConfiguration.getShippingBasisType();
+
+
 		ShippingOption shippingOption = null;
 		try {
 			

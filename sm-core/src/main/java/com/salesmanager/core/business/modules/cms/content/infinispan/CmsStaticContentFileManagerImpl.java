@@ -448,7 +448,7 @@ public class CmsStaticContentFileManagerImpl
 		if (nd == null) {
 
 			cacheManager.getTreeCache().getRoot().addChild(folderFqn);
-			nd = cacheManager.getTreeCache().getRoot().getChild(folderFqn);
+
 
 		}
 		

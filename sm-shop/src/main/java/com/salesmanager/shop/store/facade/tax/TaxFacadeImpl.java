@@ -303,7 +303,7 @@ public class TaxFacadeImpl implements TaxFacade {
 		model = persistableTaxRateMapper.merge(taxRate, model, store, language);
 		
 		try {
-			model = taxRateService.saveOrUpdate(model);
+			taxRateService.saveOrUpdate(model);
 
 		} catch (ServiceException e) {
 			LOGGER.error("Error while saving taxRate [" +  taxRate.getCode() + "] for store [" + store.getCode() + "]", e);

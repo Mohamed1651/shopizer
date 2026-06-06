@@ -26,7 +26,7 @@ public class ReadableProductOptionMapper implements Mapper<ProductOption, Readab
   @Override
   public ReadableProductOptionEntity merge(ProductOption source,
                                            ReadableProductOptionEntity destination, MerchantStore store, Language language) {
-    ReadableProductOptionEntity readableProductOption = new ReadableProductOptionEntity();
+    ReadableProductOptionEntity readableProductOption;
     if(language == null) {
       readableProductOption = new ReadableProductOptionFull();
       List<com.salesmanager.shop.model.catalog.product.attribute.ProductOptionDescription> descriptions = new ArrayList<com.salesmanager.shop.model.catalog.product.attribute.ProductOptionDescription>();

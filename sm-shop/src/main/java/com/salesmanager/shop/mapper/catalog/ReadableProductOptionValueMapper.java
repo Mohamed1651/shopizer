@@ -28,7 +28,7 @@ public class ReadableProductOptionValueMapper implements Mapper<ProductOptionVal
   @Override
   public ReadableProductOptionValue merge(ProductOptionValue source, ReadableProductOptionValue destination,
                                                 MerchantStore store, Language language) {
-    ReadableProductOptionValue readableProductOptionValue = new ReadableProductOptionValue();
+    ReadableProductOptionValue readableProductOptionValue;
     if(language == null) {
     	readableProductOptionValue = new ReadableProductOptionValueFull();
       List<com.salesmanager.shop.model.catalog.product.attribute.ProductOptionValueDescription> descriptions = new ArrayList<com.salesmanager.shop.model.catalog.product.attribute.ProductOptionValueDescription>();

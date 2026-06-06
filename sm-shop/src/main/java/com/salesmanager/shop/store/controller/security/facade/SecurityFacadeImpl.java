@@ -51,7 +51,6 @@ public class SecurityFacadeImpl implements SecurityFacade {
       PermissionCriteria criteria = new PermissionCriteria();
       criteria.setGroupIds(new HashSet(ids));
 
-      PermissionList permissions = permissionService.listByCriteria(criteria);
       throw new ServiceRuntimeException("Not implemented");
     } catch (ServiceException e) {
       e.printStackTrace();

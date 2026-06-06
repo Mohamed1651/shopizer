@@ -443,9 +443,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 				    
 				    //Arrays.sort(employees, employeeSalaryComparator);
 					
-				    List<ReadableProductVariantValue> readableValues = optionValues.stream()
-				    			.sorted(orderComparator)
-				    	    	.collect(Collectors.toList());
+				    List<ReadableProductVariantValue> readableValues;
 				    	        
 
 					
@@ -547,7 +545,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 		Validate.notNull(product, "Product id must not be null");
 		Validate.notNull(store, "Store must not be null");
 		
-		List<ReadableCategory> readableCategories = new ArrayList<ReadableCategory>();
+		List<ReadableCategory> readableCategories;
 
 			List<Category> categories = categoryService.getByProductId(product, store);
 

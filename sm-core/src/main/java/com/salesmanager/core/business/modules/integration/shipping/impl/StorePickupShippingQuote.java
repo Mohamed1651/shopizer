@@ -68,7 +68,7 @@ public class StorePickupShippingQuote implements ShippingQuoteModule, ShippingQu
 		} else {
 			//validate it can be parsed to BigDecimal
 			try {
-				BigDecimal price = new BigDecimal(keys.get("price"));
+				BigDecimal price;
 			} catch(Exception e) {
 				errorFields = new ArrayList<String>();
 				errorFields.add("price");
