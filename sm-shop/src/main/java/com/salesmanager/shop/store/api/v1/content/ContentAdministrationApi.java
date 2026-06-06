@@ -260,7 +260,7 @@ public class ContentAdministrationApi {
 	
 	private String decodeContentPath(String path) throws UnsupportedEncodingException {
 		try {
-			return StringUtils.isBlank(path) || path.contains("/images") ? "/" : URLDecoder.decode(path.replaceAll(",",""), "UTF-8");
+			return StringUtils.isBlank(path) || path.contains("/images") ? "/" : URLDecoder.decode(path.replace(",",""), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RestApiException(e);
 		}

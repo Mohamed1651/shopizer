@@ -685,7 +685,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	
 	private String fixContentDescription(String description) {
 		Validate.notNull(description, "description cannot be empty");
-		return "<![CDATA[" + description.replaceAll("\r\n", "").replaceAll("\t", "") + "]]>";
+		return "<![CDATA[" + description.replace("\r\n", "").replace("\t", "") + "]]>";
 		
 		
 	}

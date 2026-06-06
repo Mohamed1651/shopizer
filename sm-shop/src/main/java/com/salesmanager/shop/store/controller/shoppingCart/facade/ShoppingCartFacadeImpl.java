@@ -1078,7 +1078,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 	}
 
 	private String uniqueShoppingCartCode() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 
 	@Override
