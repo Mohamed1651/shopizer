@@ -51,7 +51,7 @@ public class FilesController extends AbstractController {
 		if(file!=null) {
 			return file.getFile().toByteArray();
 		} else {
-			LOGGER.debug("File not found " + fileName + "." + extension);
+			LOGGER.debug("File not found {}.{}", fileName, extension);
 			response.sendError(404, Constants.FILE_NOT_FOUND);
 			return null;
 		}
@@ -83,7 +83,7 @@ public class FilesController extends AbstractController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameAndExtension + "\"");
 			return file.getFile().toByteArray();
 		} else {
-			LOGGER.debug("File not found " + fileName + "." + extension);
+			LOGGER.debug("File not found {}.{}", fileName, extension);
 			response.sendError(404, Constants.FILE_NOT_FOUND);
 			return null;
 		}

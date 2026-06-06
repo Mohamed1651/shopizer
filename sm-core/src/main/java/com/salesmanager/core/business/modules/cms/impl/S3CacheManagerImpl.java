@@ -30,13 +30,5 @@ public class S3CacheManagerImpl implements CMSManager {
   }
 
 
-  public String getBucketName() {
-    return bucketName;
-  }
-
-  public String getRegionName() {
-    return regionName;
-  }
-
 
 }

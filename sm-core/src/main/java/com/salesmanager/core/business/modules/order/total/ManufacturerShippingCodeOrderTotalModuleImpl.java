@@ -72,8 +72,8 @@ public class ManufacturerShippingCodeOrderTotalModuleImpl implements OrderTotalP
 		
 		
 		inputParameters.setShippingMethod(summary.getShippingSummary().getShippingOptionCode());
-		
-		LOGGER.debug("Setting input parameters " + inputParameters.toString());
+
+		LOGGER.debug("Setting input parameters {}", inputParameters);
 		
 /*        KieSession kieSession = kieManufacturerBasedPricingContainer.newKieSession();
         kieSession.insert(inputParameters);

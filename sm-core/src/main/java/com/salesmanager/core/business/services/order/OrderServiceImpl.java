@@ -146,7 +146,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     	//first process payment
     	Transaction processTransaction = paymentService.processPayment(customer, store, payment, items, order);
 
-    	if(order.getOrderHistory()==null || order.getOrderHistory().size()==0 || order.getStatus()==null) {
+    	if(order.getOrderHistory()==null || order.getOrderHistory().isEmpty() || order.getStatus()==null) {
     		OrderStatus status = order.getStatus();
     		if(status==null) {
     			status = OrderStatus.ORDERED;
@@ -351,7 +351,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 
         //tax
         List<TaxItem> taxes = taxService.calculateTax(summary, customer, store, language);
-        if(taxes!=null && taxes.size()>0) {
+        if(taxes!=null && !taxes.isEmpty()) {
         	BigDecimal totalTaxes = new BigDecimal(0);
         	totalTaxes.setScale(2, RoundingMode.HALF_UP);
             int taxCount = 200;
@@ -642,33 +642,28 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 			 * 2          AUTHORIZE
 			 */
 
-			for(Long orderId : processingTransactions.keySet()) {
+            for (Map.Entry<Long, List<Transaction>> entry : processingTransactions.entrySet()) {
+                Long orderId = entry.getKey();
+                List<Transaction> trx = entry.getValue();
 
-				List<Transaction> trx = processingTransactions.get(orderId);
-				if(CollectionUtils.isNotEmpty(trx)) {
+                if (CollectionUtils.isNotEmpty(trx)) {
+                    boolean capturable = true;
+                    for (Transaction t : trx) {
+                        if (TransactionType.CAPTURE.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        } else if (TransactionType.AUTHORIZECAPTURE.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        } else if (TransactionType.REFUND.name().equals(t.getTransactionType().name())) {
+                            capturable = false;
+                        }
+                    }
 
-					boolean capturable = true;
-					for(Transaction t : trx) {
-
-						if(TransactionType.CAPTURE.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						} else if(TransactionType.AUTHORIZECAPTURE.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						} else if(TransactionType.REFUND.name().equals(t.getTransactionType().name())) {
-							capturable = false;
-						}
-
-					}
-
-					if(capturable) {
-						Order o = preAuthOrders.get(orderId);
-						returnOrders.add(o);
-					}
-
-				}
-
-
-			}
+                    if (capturable) {
+                        Order o = preAuthOrders.get(orderId);
+                        returnOrders.add(o);
+                    }
+                }
+            }
 		}
 
 		return returnOrders;

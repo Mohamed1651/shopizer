@@ -89,7 +89,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 		}
 		
 		List<String> packages = options.get("packages");
-		if(packages==null || packages.size()==0) {
+		if(packages==null || packages.isEmpty()) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
@@ -203,10 +203,10 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			}
 
 			Map<String, ModuleConfig> moduleConfigsMap = module.getModuleConfigs();
-			for(String key : moduleConfigsMap.keySet()) {
-				
-				ModuleConfig moduleConfig = moduleConfigsMap.get(key);
-				if(moduleConfig.getEnv().equals(env)) {
+			for (Map.Entry<String, ModuleConfig> entry : moduleConfigsMap.entrySet()) {
+
+				ModuleConfig moduleConfig = entry.getValue();
+				if (moduleConfig.getEnv().equals(env)) {
 					host = moduleConfig.getHost();
 					protocol = moduleConfig.getScheme();
 					port = moduleConfig.getPort();
@@ -423,7 +423,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			StringBuilder xmlbuffer = new StringBuilder().append(xmlheader.toString()).append(
 					xmldatabuffer.toString()).append(xmlfooter);
 
-			LOGGER.debug("USPS QUOTE REQUEST " + xmlbuffer.toString());
+			LOGGER.debug("USPS QUOTE REQUEST {}", xmlbuffer);
 			//HttpClient client = new HttpClient();
 			try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
 			@SuppressWarnings("deprecation")
@@ -448,7 +448,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 					HttpEntity entity = response.getEntity();
 					return entity != null ? EntityUtils.toString(entity) : null;
 				} else {
-					LOGGER.error("Communication Error with ups quote " + status);
+					LOGGER.error("Communication Error with ups quote {}", status);
 					throw new ClientProtocolException("UPS quote communication error " + status);
 				}
 			};
@@ -461,7 +461,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 				throw new Exception("USPS quote communication error " + result);
 			}*/
 			//data = httpget.getResponseBodyAsString();
-			LOGGER.debug("usps quote response " + data);
+			LOGGER.debug("usps quote response {}", data);
 
 			USPSParsedElements parsed = new USPSParsedElements();
 
@@ -559,7 +559,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 				throw new IntegrationException(parsed.getError());
 			}
 
-			if (parsed.getOptions() == null || parsed.getOptions().size() == 0) {
+			if (parsed.getOptions() == null || parsed.getOptions().isEmpty()) {
 				LOGGER.warn("No options returned from USPS");
 				throw new IntegrationException(parsed.getError());
 			}

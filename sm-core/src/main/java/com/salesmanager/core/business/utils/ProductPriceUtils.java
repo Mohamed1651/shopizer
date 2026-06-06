@@ -95,7 +95,7 @@ public class ProductPriceUtils {
 
 		// attributes
 		BigDecimal attributePrice = null;
-		if (attributes != null && attributes.size() > 0) {
+		if (attributes != null && !attributes.isEmpty()) {
 			for (ProductAttribute attribute : attributes) {
 				if (attribute.getProductAttributePrice() != null
 						&& attribute.getProductAttributePrice().doubleValue() > 0) {
@@ -144,7 +144,7 @@ public class ProductPriceUtils {
 
 		// attributes
 		BigDecimal attributePrice = null;
-		if (product.getAttributes() != null && product.getAttributes().size() > 0) {
+		if (product.getAttributes() != null && !product.getAttributes().isEmpty()) {
 			for (ProductAttribute attribute : product.getAttributes()) {
 				if (attribute.getAttributeDefault()) {
 					if (attribute.getProductAttributePrice() != null
@@ -226,10 +226,6 @@ public class ProductPriceUtils {
 
 		FinalPrice finalPrice = calculateFinalPrice(availability);
 
-		if (finalPrice == null) {
-			throw new ServiceException(ServiceException.EXCEPTION_ERROR,
-					"No inventory available to calculate the price. Availability should contain at least a region set to *");
-		}
 
 		finalPrice.setStringPrice(getStringAmount(finalPrice.getFinalPrice()));
 		if (finalPrice.isDiscounted()) {

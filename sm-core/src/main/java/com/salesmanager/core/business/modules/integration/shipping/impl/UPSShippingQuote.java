@@ -85,7 +85,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 		}
 		
 		List<String> packages = options.get("packages");
-		if(packages==null || packages.size()==0) {
+		if(packages==null || packages.isEmpty()) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
@@ -185,10 +185,10 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 			}
 			
 			Map<String, ModuleConfig> moduleConfigsMap = module.getModuleConfigs();
-			for(String key : moduleConfigsMap.keySet()) {
-				
-				ModuleConfig moduleConfig = moduleConfigsMap.get(key);
-				if(moduleConfig.getEnv().equals(env)) {
+			for (Map.Entry<String, ModuleConfig> entry : moduleConfigsMap.entrySet()) {
+
+				ModuleConfig moduleConfig = entry.getValue();
+				if (moduleConfig.getEnv().equals(env)) {
 					host = moduleConfig.getHost();
 					protocol = moduleConfig.getScheme();
 					port = moduleConfig.getPort();
@@ -372,10 +372,10 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 
 			xmlbuffer.append(xmlhead).append(xml).append(
 					xmldatabuffer.toString());
-			
 
 
-			LOGGER.debug("UPS QUOTE REQUEST " + xmlbuffer.toString());
+
+			LOGGER.debug("UPS QUOTE REQUEST {}", xmlbuffer);
 
 
 			try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
@@ -393,7 +393,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 					HttpEntity entity1 = response.getEntity();
 					return entity1 != null ? EntityUtils.toString(entity1) : null;
 				} else {
-					LOGGER.error("Communication Error with ups quote " + status);
+					LOGGER.error("Communication Error with ups quote {}", status);
 					throw new ClientProtocolException("UPS quote communication error " + status);
 				}
 			};
@@ -407,7 +407,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 				throw new Exception("UPS quote communication error " + result);
 			}*/
 
-			LOGGER.debug("ups quote response " + data);
+			LOGGER.debug("ups quote response {}", data);
 
 			UPSParsedElements parsed = new UPSParsedElements();
 
@@ -484,7 +484,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 				throw new IntegrationException(parsed.getError());
 			}
 
-			if (parsed.getOptions() == null || parsed.getOptions().size() == 0) {
+			if (parsed.getOptions() == null || parsed.getOptions().isEmpty()) {
 
 				throw new IntegrationException("No shipping options available for the configuration");
 			}

@@ -175,7 +175,7 @@ public class OrderProductPopulator extends
 
 		orderProductPrice.setProductPrice(price.getFinalPrice());
 		orderProductPrice.setProductPriceCode(productPrice.getCode());
-		if(productPrice.getDescriptions()!=null && productPrice.getDescriptions().size()>0) {
+		if(productPrice.getDescriptions()!=null && !productPrice.getDescriptions().isEmpty()) {
 			orderProductPrice.setProductPriceName(productPrice.getDescriptions().iterator().next().getName());
 		}
 		if(price.isDiscounted()) {

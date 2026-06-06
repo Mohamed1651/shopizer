@@ -101,17 +101,17 @@ public class PaymentServiceImpl implements PaymentService {
 		Map<String,IntegrationConfiguration> modules =  this.getPaymentModulesConfigured(store);
 
 		List<PaymentMethod> returnModules = new ArrayList<PaymentMethod>();
-		
-		for(String module : modules.keySet()) {
-			IntegrationConfiguration config = modules.get(module);
-			if(config.isActive()) {
-				
+
+		for (Map.Entry<String, IntegrationConfiguration> entry : modules.entrySet()) {
+			IntegrationConfiguration config = entry.getValue();
+			if (config.isActive()) {
+
 				IntegrationModule md = this.getPaymentMethodByCode(store, config.getModuleCode());
-				if(md==null) {
+				if (md == null) {
 					continue;
 				}
 				PaymentMethod paymentMethod = new PaymentMethod();
-				
+
 				paymentMethod.setDefaultSelected(config.isDefaultSelected());
 				paymentMethod.setPaymentMethodCode(config.getModuleCode());
 				paymentMethod.setModule(md);
@@ -168,9 +168,9 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		Map<String,IntegrationConfiguration> configuredModules = getPaymentModulesConfigured(store);
 		if(configuredModules!=null) {
-			for(String key : configuredModules.keySet()) {
-				if(key.equals(mod)) {
-					return configuredModules.get(key);	
+			for (Map.Entry<String, IntegrationConfiguration> entry : configuredModules.entrySet()) {
+				if (entry.getKey().equals(mod)) {
+					return entry.getValue();
 				}
 			}
 		}
@@ -373,7 +373,7 @@ public class PaymentServiceImpl implements PaymentService {
 		if(transactionType == TransactionType.AUTHORIZE)  {
 			transaction = module.authorize(store, customer, items, amount, payment, configuration, integrationModule);
 		} else if(transactionType == TransactionType.AUTHORIZECAPTURE)  {
-			transaction = module.authorizeAndCapture(store, customer, items, amount, payment, configuration, integrationModule);
+			transaction = module.authorize(store, customer, items, amount, payment, configuration, integrationModule);
 		} else if(transactionType == TransactionType.INIT)  {
 			transaction = module.initTransaction(store, customer, amount, payment, configuration, integrationModule);
 		}

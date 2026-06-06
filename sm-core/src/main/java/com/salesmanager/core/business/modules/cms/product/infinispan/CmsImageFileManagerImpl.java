@@ -74,8 +74,9 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
   void init() {
 
     this.rootName = cacheManager.getRootName();
-    LOGGER.info("init " + getClass().getName() + " setting root" + this.rootName);
-
+    if (LOGGER.isInfoEnabled()) {
+      LOGGER.info("init {} setting root{}", getClass().getName(), this.rootName);
+    }
   }
 
   public static CmsImageFileManagerImpl getInstance() {
@@ -402,7 +403,7 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
       byte[] imageBytes = (byte[]) productNode.get(imageName);
 
       if (imageBytes == null) {
-        LOGGER.warn("Image " + imageName + " does not exist");
+        LOGGER.warn("Image {} does not exist", imageName);
         return null;// no post processing will occur
       }
 

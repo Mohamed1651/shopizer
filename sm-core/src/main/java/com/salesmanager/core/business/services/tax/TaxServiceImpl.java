@@ -223,8 +223,9 @@ public class TaxServiceImpl
 		List<TaxItem> taxItems = new ArrayList<TaxItem>();
 		
 		//iterate through the tax class and get appropriate rates
-		for(Long taxClassId : taxClassAmountMap.keySet()) {
-			
+		for (Map.Entry<Long, BigDecimal> entry : taxClassAmountMap.entrySet()) {
+			Long taxClassId = entry.getKey();
+			BigDecimal beforeTaxeAmount = entry.getValue();
 			//get taxRate by tax class
 			List<TaxRate> taxRates = null; 
 			if(!StringUtils.isBlank(stateProvince)&& zone==null) {
@@ -233,13 +234,12 @@ public class TaxServiceImpl
 				taxRates = taxRateService.listByCountryZoneAndTaxClass(country, zone, taxClasses.get(taxClassId), store, language);
 			}
 			
-			if(taxRates==null || taxRates.size()==0){
+			if(taxRates==null || taxRates.isEmpty()){
 				continue;
 			}
 			BigDecimal taxedItemValue = null;
 			BigDecimal totalTaxedItemValue = new BigDecimal(0);
 			totalTaxedItemValue.setScale(2, RoundingMode.HALF_UP);
-			BigDecimal beforeTaxeAmount = taxClassAmountMap.get(taxClassId);
 			for(TaxRate taxRate : taxRates) {
 				
 				double taxRateDouble = taxRate.getTaxRate().doubleValue();//5% ... 8% ...

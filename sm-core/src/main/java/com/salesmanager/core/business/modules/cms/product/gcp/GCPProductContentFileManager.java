@@ -217,13 +217,13 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
       String filePath = filePath(productImage.getProduct().getMerchantStore().getCode(), productImage.getProduct().getSku(), size, productImage.getProductImage());
       BlobId blobId = BlobId.of(bucketName(), filePath);
       if(blobId==null) {
-        LOGGER.info("Image path " + filePath + " does not exist");
+        LOGGER.info("Image path {} does not exist", filePath);
         return;
         //throw new ServiceException("Image not found " + productImage.getProductImage());
       }
       boolean deleted = storage.delete(blobId);
       if (!deleted) {
-        LOGGER.error("Cannot delete image [" + productImage.getProductImage() + "]");
+        LOGGER.error("Cannot delete image [{}]", productImage.getProductImage());
       }
     }
   

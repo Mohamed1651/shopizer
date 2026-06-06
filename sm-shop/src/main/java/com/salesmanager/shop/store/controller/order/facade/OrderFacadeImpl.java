@@ -1118,7 +1118,7 @@ public class OrderFacadeImpl implements OrderFacade {
 		if (customerId != null) {
 			ReadableCustomer readableCustomer = customerFacade.getCustomerById(customerId, store, language);
 			if (readableCustomer == null) {
-				LOGGER.warn("Customer id " + customerId + " not found in order " + orderId);
+				LOGGER.warn("Customer id {} not found in order {}", customerId, orderId);
 			} else {
 				readableOrder.setCustomer(readableCustomer);
 			}
@@ -1235,7 +1235,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
 			modelOrder.setOrderProducts(orderProducts);
 
-			if (order.getAttributes() != null && order.getAttributes().size() > 0) {
+			if (order.getAttributes() != null && !order.getAttributes().isEmpty()) {
 				Set<OrderAttribute> attrs = new HashSet<OrderAttribute>();
 				for (com.salesmanager.shop.model.order.OrderAttribute attribute : order.getAttributes()) {
 					OrderAttribute attr = new OrderAttribute();

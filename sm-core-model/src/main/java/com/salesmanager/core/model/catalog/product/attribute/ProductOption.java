@@ -124,7 +124,7 @@ public class ProductOption extends SalesManagerEntity<Long, ProductOption> {
 	
 
 	public List<ProductOptionDescription> getDescriptionsSettoList() {
-		if(descriptionsList==null || descriptionsList.size()==0) {
+		if(descriptionsList==null || descriptionsList.isEmpty()) {
 			descriptionsList = new ArrayList<ProductOptionDescription>(this.getDescriptions());
 		} 
 		return descriptionsList;

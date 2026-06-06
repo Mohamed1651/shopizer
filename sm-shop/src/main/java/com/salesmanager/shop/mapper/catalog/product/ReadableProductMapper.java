@@ -108,7 +108,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 		destination.setDateAvailable(DateUtil.formatDate(source.getDateAvailable()));
 
 		ProductDescription description = null;
-		if (source.getDescriptions() != null && source.getDescriptions().size() > 0) {
+		if (source.getDescriptions() != null && !source.getDescriptions().isEmpty()) {
 			for (ProductDescription desc : source.getDescriptions()) {
 				if (language != null && desc.getLanguage() != null
 						&& desc.getLanguage().getId().intValue() == language.getId().intValue()) {
@@ -186,7 +186,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 						readableOption.setId(attribute.getProductOption().getId());
 
 						Set<ProductOptionDescription> podescriptions = attribute.getProductOption().getDescriptions();
-						if (podescriptions != null && podescriptions.size() > 0) {
+						if (podescriptions != null && !podescriptions.isEmpty()) {
 							for (ProductOptionDescription optionDescription : podescriptions) {
 								if (optionDescription.getLanguage().getCode().equals(language.getCode())) {
 									readableOption.setName(optionDescription.getName());
@@ -200,7 +200,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 								.getDescriptions();
 						readableOptionValue.setId(attribute.getProductOptionValue().getId());
 						readableOptionValue.setCode(optionValue.getCode());
-						if (povdescriptions != null && povdescriptions.size() > 0) {
+						if (povdescriptions != null && !povdescriptions.isEmpty()) {
 							for (ProductOptionValueDescription optionValueDescription : povdescriptions) {
 								if (optionValueDescription.getLanguage().getCode().equals(language.getCode())) {
 									readableOptionValue.setName(optionValueDescription.getName());
@@ -265,7 +265,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 
 						List<ProductOptionValueDescription> podescriptions = optionValue.getDescriptionsSettoList();
 						ProductOptionValueDescription podescription = null;
-						if (podescriptions != null && podescriptions.size() > 0) {
+						if (podescriptions != null && !podescriptions.isEmpty()) {
 							podescription = podescriptions.get(0);
 							if (podescriptions.size() > 1) {
 								for (ProductOptionValueDescription optionValueDescription : podescriptions) {
@@ -532,7 +532,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 
 		ReadableProductPropertyValue propertyValue = new ReadableProductPropertyValue();
 
-		if (descriptions != null && descriptions.size() > 0) {
+		if (descriptions != null && !descriptions.isEmpty()) {
 			for (ProductOptionDescription optionDescription : descriptions) {
 				com.salesmanager.shop.model.catalog.product.attribute.ProductOptionValueDescription productOptionValueDescription = new com.salesmanager.shop.model.catalog.product.attribute.ProductOptionValueDescription();
 				productOptionValueDescription.setId(optionDescription.getId());
@@ -574,7 +574,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 
 		List<ProductOptionValueDescription> podescriptions = optionValue.getDescriptionsSettoList();
 		ProductOptionValueDescription podescription = null;
-		if (podescriptions != null && podescriptions.size() > 0) {
+		if (podescriptions != null && !podescriptions.isEmpty()) {
 			podescription = podescriptions.get(0);
 			if (podescriptions.size() > 1) {
 				for (ProductOptionValueDescription optionValueDescription : podescriptions) {
@@ -664,7 +664,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 		option.setCode(opt.getCode());
 		List<ProductOptionDescription> descriptions = opt.getDescriptionsSettoList();
 		ProductOptionDescription description = null;
-		if (descriptions != null && descriptions.size() > 0) {
+		if (descriptions != null && !descriptions.isEmpty()) {
 			description = descriptions.get(0);
 			if (descriptions.size() > 1) {
 				for (ProductOptionDescription optionDescription : descriptions) {

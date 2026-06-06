@@ -296,7 +296,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			String ack = setExpressCheckoutResponse.getAck().getValue();
 			
 			if(!"Success".equals(ack)) {
-				LOGGER.error("Wrong value from init transaction " + ack);
+				LOGGER.error("Wrong value from init transaction {}", ack);
 				throw new IntegrationException("Wrong paypal ack from init transaction " + ack);
 			}
 			
@@ -315,7 +315,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			//redirect user to 
 			//https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5LL13394G30048922
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 			throw new IntegrationException(e);
 		}
@@ -330,7 +335,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			throws IntegrationException {
 
 		com.salesmanager.core.model.payments.PaypalPayment paypalPayment = (com.salesmanager.core.model.payments.PaypalPayment)payment;
-		Validate.notNull(paypalPayment.getPaymentToken(), "A paypal payment token is required to process this transaction");
+		Validate.notNull(paypalPayment.getPaymentToken(), "Authorize AND CAPTURE: A paypal payment token is required to process this transaction");
 		
 		return processTransaction(store, customer, items, amount, paypalPayment, configuration, module);
 
@@ -398,7 +403,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			 
 			 
 			 if(!"Success".equals(refundAck)) {
-				LOGGER.error("Wrong value from transaction commit " + refundAck);
+				LOGGER.error("Wrong value from transaction commit {}", refundAck);
 				throw new IntegrationException(ServiceException.EXCEPTION_TRANSACTION_DECLINED,"Paypal refund transaction code [" + refundTransactionResponse.getErrors().get(0).getErrorCode() + "], message-> " + refundTransactionResponse.getErrors().get(0).getShortMessage());
 			 }
 
@@ -416,7 +421,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return newTransaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			if(e instanceof IntegrationException) {
 				throw (IntegrationException)e;
 			} else {
@@ -476,7 +486,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			//TOKEN=EC-9VT64354BS889423P&CHECKOUTSTATUS=PaymentActionNotInitiated&TIMESTAMP=2014-01-26T17:30:17Z&CORRELATIONID=84dfe1d0939cc&ACK=Success&VERSION=104.0&BUILD=9285531&EMAIL=csamson777-facilitator@yahoo.com&PAYERID=XURV79Z6URDV4&PAYERSTATUS=verified&BUSINESS=facilitator account's Test Store&FIRSTNAME=facilitator&LASTNAME=account&COUNTRYCODE=US&SHIPTONAME=facilitator account's Test Store&SHIPTOSTREET=1 Main St&SHIPTOCITY=San Jose&SHIPTOSTATE=CA&SHIPTOZIP=95131&SHIPTOCOUNTRYCODE=US&SHIPTOCOUNTRYNAME=United States&ADDRESSSTATUS=Confirmed&CURRENCYCODE=USD&AMT=1.00&ITEMAMT=1.00&SHIPPINGAMT=0.00&HANDLINGAMT=0.00&TAXAMT=0.00&INSURANCEAMT=0.00&SHIPDISCAMT=0.00&L_NAME0=item&L_QTY0=1&L_TAXAMT0=0.00&L_AMT0=1.00&L_ITEMWEIGHTVALUE0=   0.00000&L_ITEMLENGTHVALUE0=   0.00000&L_ITEMWIDTHVALUE0=   0.00000&L_ITEMHEIGHTVALUE0=   0.00000&PAYMENTREQUEST_0_CURRENCYCODE=USD&PAYMENTREQUEST_0_AMT=1.00&PAYMENTREQUEST_0_ITEMAMT=1.00&PAYMENTREQUEST_0_SHIPPINGAMT=0.00&PAYMENTREQUEST_0_HANDLINGAMT=0.00&PAYMENTREQUEST_0_TAXAMT=0.00&PAYMENTREQUEST_0_INSURANCEAMT=0.00&PAYMENTREQUEST_0_SHIPDISCAMT=0.00&PAYMENTREQUEST_0_INSURANCEOPTIONOFFERED=false&PAYMENTREQUEST_0_SHIPTONAME=facilitator account's Test Store&PAYMENTREQUEST_0_SHIPTOSTREET=1 Main St&PAYMENTREQUEST_0_SHIPTOCITY=San Jose&PAYMENTREQUEST_0_SHIPTOSTATE=CA&PAYMENTREQUEST_0_SHIPTOZIP=95131&PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE=US&PAYMENTREQUEST_0_SHIPTOCOUNTRYNAME=United States&PAYMENTREQUEST_0_ADDRESSSTATUS=Confirmed&PAYMENTREQUEST_0_ADDRESSNORMALIZATIONSTATUS=None&L_PAYMENTREQUEST_0_NAME0=item&L_PAYMENTREQUEST_0_QTY0=1&L_PAYMENTREQUEST_0_TAXAMT0=0.00&L_PAYMENTREQUEST_0_AMT0=1.00&L_PAYMENTREQUEST_0_ITEMWEIGHTVALUE0=   0.00000&L_PAYMENTREQUEST_0_ITEMLENGTHVALUE0=   0.00000&L_PAYMENTREQUEST_0_ITEMWIDTHVALUE0=   0.00000&L_PAYMENTREQUEST_0_ITEMHEIGHTVALUE0=   0.00000&PAYMENTREQUESTINFO_0_ERRORCODE=0
 				
 			 if(!"Success".equals(ack)) {
-				LOGGER.error("Wrong value from anthorize and capture transaction " + ack);
+				LOGGER.error("Wrong value from anthorize and capture transaction {}", ack);
 				throw new IntegrationException("Wrong paypal ack from init transaction " + ack);
 			 }
 			
@@ -516,7 +526,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			 
 			 
 			 if(!"Success".equals(commitAck)) {
-				LOGGER.error("Wrong value from transaction commit " + ack);
+				LOGGER.error("Wrong value from transaction commit {}", ack);
 				throw new IntegrationException("Wrong paypal ack from init transaction " + ack);
 			 }
 			 
@@ -548,7 +558,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return transaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			throw new IntegrationException(e);
 		}
 
@@ -660,7 +675,12 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			return newTransaction;
 			
 			
-		} catch(Exception e) {
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new IntegrationException(e);
+		}
+		catch(Exception e) {
 			throw new IntegrationException(e);
 		}
 		

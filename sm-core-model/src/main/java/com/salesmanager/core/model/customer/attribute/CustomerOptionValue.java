@@ -106,7 +106,7 @@ public class CustomerOptionValue extends SalesManagerEntity<Long, CustomerOption
 	}
 	
 	public List<CustomerOptionValueDescription> getDescriptionsSettoList() {
-		if(descriptionsList==null || descriptionsList.size()==0) {
+		if(descriptionsList==null || descriptionsList.isEmpty()) {
 			descriptionsList = new ArrayList<CustomerOptionValueDescription>(this.getDescriptions());
 		} 
 		return descriptionsList;

@@ -109,7 +109,7 @@ public class BeanStreamPayment implements PaymentModule {
 				messageString.append("adjId=").append(trnID).append("&");
 				messageString.append("trnID=").append(trnID);
 				
-				LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageString.toString());
+				LOGGER.debug("REQUEST SENT TO BEANSTREAM -> {}", messageString);
 
 
 
@@ -200,8 +200,8 @@ public class BeanStreamPayment implements PaymentModule {
 			messageString.append("trnOrderNumber=").append(transaction.getTransactionDetails().get("TRNORDERNUMBER")).append("&");
 			messageString.append("trnAmount=").append(amnt).append("&");
 			messageString.append("adjId=").append(trnID);
-			
-			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageString.toString());
+
+			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> {}", messageString);
 	
 			
 		
@@ -251,6 +251,7 @@ public class BeanStreamPayment implements PaymentModule {
 		
 		String agent = "Mozilla/4.0";
 		String respText = "";
+		StringBuilder sb = new StringBuilder(respText);
 		Map<String,String> nvp = null;
 		DataOutputStream output = null;
 		DataInputStream in = null;
@@ -359,10 +360,12 @@ public class BeanStreamPayment implements PaymentModule {
 						.getInputStream()));
 				String _line = null;
 				while (((_line = is.readLine()) != null)) {
-					respText = respText + _line;
+					sb.append(_line);
 				}
-				
-				LOGGER.debug("BeanStream response -> " + respText.trim());
+
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("BeanStream response -> {}", sb);
+				}
 				
 				nvp = formatUrlResponse(respText.trim());
 			} else {
@@ -617,7 +620,7 @@ public class BeanStreamPayment implements PaymentModule {
 			/** debug **/
 	
 	
-			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageLogString.toString());
+			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> {} ", messageLogString);
 
 			
 			URL postURL = new URL(server);

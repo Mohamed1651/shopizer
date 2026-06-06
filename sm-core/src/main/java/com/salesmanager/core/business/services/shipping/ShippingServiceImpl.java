@@ -141,9 +141,9 @@ public class ShippingServiceImpl implements ShippingService {
 		
 		Map<String,IntegrationConfiguration> configuredModules = getShippingModulesConfigured(store);
 		if(configuredModules!=null) {
-			for(String key : configuredModules.keySet()) {
-				if(key.equals(moduleCode)) {
-					return configuredModules.get(key);	
+			for (Map.Entry<String, IntegrationConfiguration> entry : configuredModules.entrySet()) {
+				if (entry.getKey().equals(moduleCode)) {
+					return entry.getValue();
 				}
 			}
 		}
@@ -456,13 +456,13 @@ public class ShippingServiceImpl implements ShippingService {
 			/** uses this module name **/
 			String moduleName = null;
 			IntegrationConfiguration configuration = null;
-			for(String module : modules.keySet()) {
-				moduleName = module;
-				configuration = modules.get(module);
+			for (Map.Entry<String, IntegrationConfiguration> entry : modules.entrySet()) {
+				moduleName = entry.getKey();
+				configuration = entry.getValue();
 				//use the first active module
-				if(configuration.isActive()) {
-					shippingQuoteModule = shippingModules.get(module);
-					if(shippingQuoteModule instanceof ShippingQuotePrePostProcessModule) {
+				if (configuration.isActive()) {
+					shippingQuoteModule = shippingModules.get(entry.getKey());
+					if (shippingQuoteModule instanceof ShippingQuotePrePostProcessModule) {
 						shippingQuoteModule = null;
 						continue;
 					} else {

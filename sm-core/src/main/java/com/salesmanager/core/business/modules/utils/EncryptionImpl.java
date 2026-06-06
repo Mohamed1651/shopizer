@@ -65,18 +65,15 @@ public final class EncryptionImpl implements Encryption {
 		if (data == null) {
 			return null;
 		} else {
-			int len = data.length;
-			String str = "";
+			StringBuilder sb = new StringBuilder();
 			for (byte datum : data) {
-				if ((datum & 0xFF) < 16) {
-					str = str + "0"
-							+ Integer.toHexString(datum & 0xFF);
-				} else {
-					str = str + Integer.toHexString(datum & 0xFF);
+				int value = datum & 0xFF;
+				if (value < 16) {
+					sb.append("0");
 				}
-
+				sb.append(Integer.toHexString(value));
 			}
-			return str;
+			return sb.toString();
 		}
 	}
 

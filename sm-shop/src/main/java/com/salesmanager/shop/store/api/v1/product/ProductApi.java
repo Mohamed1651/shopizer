@@ -233,7 +233,7 @@ public class ProductApi {
 		if (category != null) {
 			categoryIds.add(category);
 		}
-		if (categoryIds.size() > 0) {
+		if (!categoryIds.isEmpty()) {
 			criteria.setCategoryIds(categoryIds);
 		}
 		// End Category handling

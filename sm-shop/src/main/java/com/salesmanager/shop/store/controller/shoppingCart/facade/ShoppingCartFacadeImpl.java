@@ -352,13 +352,13 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 				.collect(Collectors.toList());
 
 		if (products == null || products.size() != shoppingCartItems.size()) {
-			LOG.warn("----------------------- Items with in id-list " + productSkus + " does not exist");
+			LOG.warn("----------------------- Items with in id-list {} does not exist", productSkus);
 			throw new ResourceNotFoundException("Item with skus " + productSkus + " does not exist");
 		}
 
 		List<Product> wrongStoreProducts = products.stream().filter(p -> p.getMerchantStore().getId() != store.getId())
 				.collect(Collectors.toList());
-		if (wrongStoreProducts.size() > 0) {
+		if (!wrongStoreProducts.isEmpty()) {
 			throw new ResourceNotFoundException("One or more of the items with id's "
 					+ wrongStoreProducts.stream().map(s -> Long.valueOf(s.getId())).collect(Collectors.toList())
 					+ " does not belong to merchant " + store.getId());
@@ -462,13 +462,13 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 			for (com.salesmanager.core.model.shoppingcart.ShoppingCartItem shoppingCartItem : cartModel
 					.getLineItems()) {
 				if (shoppingCartItem.getId().longValue() == entryId) {
-					LOG.info("Found line item  for given entry id: " + entryId);
+					LOG.info("Found line item  for given entry id: {}", entryId);
 					return shoppingCartItem;
 
 				}
 			}
 		}
-		LOG.info("Unable to find any entry for given Id: " + entryId);
+		LOG.info("Unable to find any entry for given Id: {}", entryId);
 		return null;
 	}
 
@@ -597,7 +597,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 
 				entryToUpdate.getProduct();
 
-				LOG.info("Updating cart entry quantity to" + newQuantity);
+				LOG.info("Updating cart entry quantity to {}", newQuantity);
 				entryToUpdate.setQuantity((int) newQuantity);
 				List<ProductAttribute> productAttributes = new ArrayList<ProductAttribute>();
 				productAttributes.addAll(entryToUpdate.getProduct().getAttributes());
@@ -813,14 +813,14 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 		}
 
 		// remaining items
-		if (items.size() > 0) {
+		if (!items.isEmpty()) {
 			cart.setLineItems(items);
 		} else {
 			cart.getLineItems().clear();
 		}
 
 		shoppingCartService.saveOrUpdate(cart);// update cart with remaining items
-		if (items.size() > 0 & returnCart) {
+		if (!items.isEmpty() & returnCart) {
 			return this.getByCode(cartCode, merchant, language);
 		}
 		return null;
@@ -1137,8 +1137,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 	public void setOrderId(String code, Long orderId, MerchantStore store) throws Exception {
 		ShoppingCart cart = this.getShoppingCartModel(code, store);
 		if (cart == null) {
-			LOG.warn("Shopping cart with code [" + code + "] not found, expected to find a cart to set order id ["
-					+ orderId + "]");
+			LOG.warn("Shopping cart with code [{}] not found, expected to find a cart to set order id [{}]", code, orderId);
 		} else {
 			cart.setOrderId(orderId);
 		}

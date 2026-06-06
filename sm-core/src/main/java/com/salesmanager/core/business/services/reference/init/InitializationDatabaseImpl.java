@@ -243,7 +243,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 
 
 	private void createCurrencies() throws ServiceException {
-		LOGGER.info(String.format("%s : Populating Currencies ", name));
+		LOGGER.info("{} : Populating Currencies ", name);
 
 		for (String code : SchemaConstant.CURRENCY_MAP.keySet()) {
   
@@ -251,7 +251,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
             	java.util.Currency c = java.util.Currency.getInstance(code);
             	
             	if(c==null) {
-            		LOGGER.info(String.format("%s : Populating Currencies : no currency for code : %s", name, code));
+					LOGGER.info("{} : Populating Currencies : no currency for code : {}", name, code);
             	}
             	
             		//check if it exist
@@ -269,7 +269,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	}
 
 	private void createCountries() throws ServiceException {
-		LOGGER.info(String.format("%s : Populating Countries ", name));
+		LOGGER.info("{} : Populating Countries ", name);
 		List<Language> languages = languageService.list();
 		for(String code : SchemaConstant.COUNTRY_ISO_CODE) {
 			Locale locale = SchemaConstant.LOCALES.get(code);
@@ -289,7 +289,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	}
 	
 	private void createZones() throws ServiceException {
-		LOGGER.info(String.format("%s : Populating Zones ", name));
+		LOGGER.info("{} : Populating Zones ", name);
         try {
 
     		  Map<String,Zone> zonesMap = new HashMap<String,Zone>();
@@ -344,7 +344,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	    	    Zone value = entry.getValue();
 
 	    	    if(value.getDescriptions()==null) {
-	    	    	LOGGER.warn("This zone " + key + " has no descriptions");
+					LOGGER.warn("This zone {} has no descriptions", key);
 	    	    	continue;
 	    	    }
 	    	    
@@ -367,7 +367,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	}
 	
 	private void createLanguages() throws ServiceException {
-		LOGGER.info(String.format("%s : Populating Languages ", name));
+		LOGGER.info("{} : Populating Languages ", name);
 		for(String code : SchemaConstant.LANGUAGE_ISO_CODE) {
 			Language language = new Language(code);
 			languageService.create(language);
@@ -375,7 +375,7 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	}
 	
 	private void createMerchant() throws ServiceException {
-		LOGGER.info(String.format("%s : Creating merchant ", name));
+		LOGGER.info("{} : Creating merchant ", name);
 		
 		Date date = new Date(System.currentTimeMillis());
 		
@@ -455,8 +455,8 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	}
 	
 	private void createSubReferences() throws ServiceException {
-		
-		LOGGER.info(String.format("%s : Loading catalog sub references ", name));
+
+		LOGGER.info("{} : Loading catalog sub references ", name);
 		
 		
 		ProductType productType = new ProductType();

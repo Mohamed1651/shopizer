@@ -98,7 +98,7 @@ public class SearchFacadeImpl implements SearchFacade {
 		
 		
 		try {
-			LOGGER.debug("Search " + query);
+			LOGGER.debug("Search {}", query);
 			SearchRequest searchRequest = new SearchRequest();
 			searchRequest.setLanguage(languageCode);
 			searchRequest.setSearchString(query);
