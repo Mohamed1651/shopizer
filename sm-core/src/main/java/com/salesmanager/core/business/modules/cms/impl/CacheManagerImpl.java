@@ -73,8 +73,6 @@ public abstract class CacheManagerImpl implements CacheManager {
 
     } catch (Exception e) {
       LOGGER.error("Error while instantiating CmsImageFileManager", e);
-    } finally {
-
     }
 
 

@@ -213,8 +213,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
     catch (Exception e) {
       throw new ServiceException(e);
-    } finally {
-
     }
 
     return images;
@@ -241,8 +239,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
     } catch (Exception e) {
       throw new ServiceException(e);
-    } finally {
-
     }
 
   }
@@ -271,8 +267,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
     } catch (Exception e) {
       throw new ServiceException(e);
-    } finally {
-
     }
 
   }
@@ -300,8 +294,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
     } catch (Exception e) {
       throw new ServiceException(e);
-    } finally {
-
     }
 
   }
@@ -359,8 +351,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
     } catch (Exception e) {
       throw new ServiceException(e);
-    } finally {
-
     }
 
     return images;

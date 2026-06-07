@@ -81,9 +81,6 @@ public class ReadableCategoryMapper implements Mapper<Category, ReadableCategory
 		return Optional.ofNullable(source.getParent()).map(parentValue -> {
 			final com.salesmanager.shop.model.catalog.category.Category parent = new com.salesmanager.shop.model.catalog.category.Category();
 
-			if (source.getParent() != null) {
-
-			}
 			
 
 			parent.setCode(source.getParent().getCode());
