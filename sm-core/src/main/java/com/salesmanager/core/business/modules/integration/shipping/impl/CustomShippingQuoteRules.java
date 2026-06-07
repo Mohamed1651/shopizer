@@ -76,14 +76,10 @@ public class CustomShippingQuoteRules implements ShippingQuoteModule {
 		}
 
 		Double distance = null;
-		
-		if(quote!=null) {
-			//look if distance has been calculated
-			if(quote.getQuoteInformations()!=null) {
-				if(quote.getQuoteInformations().containsKey(Constants.DISTANCE_KEY)) {
-					distance = (Double)quote.getQuoteInformations().get(Constants.DISTANCE_KEY);
-				}
-			}
+
+		if (quote != null && quote.getQuoteInformations() != null
+				&& quote.getQuoteInformations().containsKey(Constants.DISTANCE_KEY)) {
+			distance = (Double) quote.getQuoteInformations().get(Constants.DISTANCE_KEY);
 		}
 		
 		//calculate volume (L x W x H)

@@ -79,8 +79,7 @@ public class DroolsBeanFactory {
     }
 
     public KieSession getKieSession(Resource dt) {
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem()
-            .write(dt);
+
 
 
         KieRepository kieRepository = kieServices.getRepository();

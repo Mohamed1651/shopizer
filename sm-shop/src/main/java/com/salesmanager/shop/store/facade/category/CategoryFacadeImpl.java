@@ -438,8 +438,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 						optionValues.add(v);
 					}
 					
-				    Comparator<ReadableProductVariantValue> orderComparator
-				      = Comparator.comparingInt(ReadableProductVariantValue::getOrder);
+
 				    
 				    //Arrays.sort(employees, employeeSalaryComparator);
 					

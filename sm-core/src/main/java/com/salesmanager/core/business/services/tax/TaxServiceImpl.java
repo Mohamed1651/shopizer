@@ -273,7 +273,7 @@ public class TaxServiceImpl
 			} 
 			
 			TaxItem item = taxItemsMap.get(taxRate.getCode());
-			BigDecimal amount = item.getItemPrice().add(taxItem.getItemPrice());
+			item.getItemPrice().add(taxItem.getItemPrice());
 		}
 		
 		if(taxItemsMap.size()==0) {
