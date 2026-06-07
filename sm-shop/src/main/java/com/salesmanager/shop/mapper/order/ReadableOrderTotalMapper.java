@@ -57,10 +57,8 @@ public class ReadableOrderTotalMapper implements Mapper<OrderTotal, ReadableOrde
 			target.setValue(source.getValue());
 			target.setTotal(pricingService.getDisplayAmount(source.getValue(), store));
 
-			if (!StringUtils.isBlank(source.getOrderTotalCode())) {
-				if (Constants.OT_DISCOUNT_TITLE.equals(source.getOrderTotalCode())) {
-					target.setDiscounted(true);
-				}
+			if (!StringUtils.isBlank(source.getOrderTotalCode()) && Constants.OT_DISCOUNT_TITLE.equals(source.getOrderTotalCode())) {
+				target.setDiscounted(true);
 			}
 
 		} catch (Exception e) {

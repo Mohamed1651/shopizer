@@ -146,14 +146,12 @@ public class ProductPriceUtils {
 		BigDecimal attributePrice = null;
 		if (product.getAttributes() != null && !product.getAttributes().isEmpty()) {
 			for (ProductAttribute attribute : product.getAttributes()) {
-				if (attribute.getAttributeDefault()) {
-					if (attribute.getProductAttributePrice() != null
-							&& attribute.getProductAttributePrice().doubleValue() > 0) {
-						if (attributePrice == null) {
-							attributePrice = new BigDecimal(0);
-						}
-						attributePrice = attributePrice.add(attribute.getProductAttributePrice());
+				if (attribute.getAttributeDefault() && attribute.getProductAttributePrice() != null
+						&& attribute.getProductAttributePrice().doubleValue() > 0) {
+					if (attributePrice == null) {
+						attributePrice = new BigDecimal(0);
 					}
+					attributePrice = attributePrice.add(attribute.getProductAttributePrice());
 				}
 			}
 
@@ -510,17 +508,10 @@ public class ProductPriceUtils {
 		// calculate discount price
 		boolean hasDiscount = false;
 		if (productPrice.getProductPriceSpecialStartDate() != null
-				|| productPrice.getProductPriceSpecialEndDate() != null) {
-
-			if (productPrice.getProductPriceSpecialStartDate() != null) {
-				if (productPrice.getProductPriceSpecialStartDate().before(today)) {
-					if (productPrice.getProductPriceSpecialEndDate() != null) {
-						if (productPrice.getProductPriceSpecialEndDate().after(today)) {
-							hasDiscount = true;
-						}
-					}
-				}
-			}
+				&& productPrice.getProductPriceSpecialStartDate().before(today)
+				&& productPrice.getProductPriceSpecialEndDate() != null
+				&& productPrice.getProductPriceSpecialEndDate().after(today)) {
+			hasDiscount = true;
 		}
 
 		return hasDiscount;
@@ -655,26 +646,21 @@ public class ProductPriceUtils {
 		boolean hasDiscount = false;
 		if (price.getProductPriceSpecialStartDate() != null || price.getProductPriceSpecialEndDate() != null) {
 
-			if (price.getProductPriceSpecialStartDate() != null) {
-				if (price.getProductPriceSpecialStartDate().before(today)) {
-					if (price.getProductPriceSpecialEndDate() != null) {
-						if (price.getProductPriceSpecialEndDate().after(today)) {
-							hasDiscount = true;
-							fPrice = price.getProductPriceSpecialAmount();
-							finalPrice.setDiscountEndDate(price.getProductPriceSpecialEndDate());
-						}
-					}
-
-				}
+			if (price.getProductPriceSpecialStartDate() != null
+					&& price.getProductPriceSpecialStartDate().before(today)
+					&& price.getProductPriceSpecialEndDate() != null
+					&& price.getProductPriceSpecialEndDate().after(today)) {
+				hasDiscount = true;
+				fPrice = price.getProductPriceSpecialAmount();
+				finalPrice.setDiscountEndDate(price.getProductPriceSpecialEndDate());
 			}
 
 			if (!hasDiscount && price.getProductPriceSpecialStartDate() == null
-					&& price.getProductPriceSpecialEndDate() != null) {
-				if (price.getProductPriceSpecialEndDate().after(today)) {
-					hasDiscount = true;
-					fPrice = price.getProductPriceSpecialAmount();
-					finalPrice.setDiscountEndDate(price.getProductPriceSpecialEndDate());
-				}
+					&& price.getProductPriceSpecialEndDate() != null
+					&& price.getProductPriceSpecialEndDate().after(today)) {
+				hasDiscount = true;
+				fPrice = price.getProductPriceSpecialAmount();
+				finalPrice.setDiscountEndDate(price.getProductPriceSpecialEndDate());
 			}
 		} else {
 			if (price.getProductPriceSpecialAmount() != null

@@ -67,10 +67,8 @@ public class StoreContactRESTController {
 			/** default routine **/
 			
 			MerchantStore merchantStore = (MerchantStore)request.getAttribute(Constants.MERCHANT_STORE);
-			if(merchantStore!=null) {
-				if(!merchantStore.getCode().equals(store)) {
-					merchantStore = null;
-				}
+			if (merchantStore != null && !merchantStore.getCode().equals(store)) {
+				merchantStore = null;
 			}
 			
 			if(merchantStore== null) {
@@ -109,10 +107,8 @@ public class StoreContactRESTController {
 			/** default routine **/
 			
 			MerchantStore merchantStore = (MerchantStore)request.getAttribute(Constants.MERCHANT_STORE);
-			if(merchantStore!=null) {
-				if(!merchantStore.getCode().equals(store)) {
-					merchantStore = null;
-				}
+			if (merchantStore != null && !merchantStore.getCode().equals(store)) {
+				merchantStore = null;
 			}
 			
 			if(merchantStore== null) {

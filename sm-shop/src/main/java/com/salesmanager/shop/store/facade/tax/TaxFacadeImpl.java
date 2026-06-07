@@ -167,10 +167,8 @@ public class TaxFacadeImpl implements TaxFacade {
 			if(model == null) {
 				throw new ResourceNotFoundException("TaxClass not found [" + code + "] for store [" + store.getCode() + "]");
 			}
-			if(model != null) {
-				if(!model.getMerchantStore().getCode().equals(store.getCode())) {
-					throw new UnauthorizedException("MerchantStore [" + store.getCode() + "] cannot get tax class [" + code + "]");
-				}
+			if (!model.getMerchantStore().getCode().equals(store.getCode())) {
+				throw new UnauthorizedException("MerchantStore [" + store.getCode() + "] cannot get tax class [" + code + "]");
 			}
 			return readableTaxClassMapper.convert(model, store, language);
 		} catch (ServiceException e) {
@@ -204,11 +202,10 @@ public class TaxFacadeImpl implements TaxFacade {
 			if(model == null) {
 				throw new ResourceNotFoundException("TaxRate not found [" + code + "] for store [" + store.getCode() + "]");
 			}
-			if(model != null) {
-				if(!model.getMerchantStore().getCode().equals(store.getCode())) {
-					throw new UnauthorizedException("MerchantStore [" + store.getCode() + "] cannot get tax rate [" + code + "]");
-				}
+			if(!model.getMerchantStore().getCode().equals(store.getCode())) {
+				throw new UnauthorizedException("MerchantStore [" + store.getCode() + "] cannot get tax rate [" + code + "]");
 			}
+
 			return model;
 		} catch (ServiceException e) {
 			LOGGER.error("Error while getting taxRate [" +  code + "] for store [" + store.getCode() + "]", e);

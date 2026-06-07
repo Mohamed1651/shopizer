@@ -66,23 +66,18 @@ public class PersistableOrderPopulator extends
 
 			/** customer **/
 			PersistableCustomer customer = source.getCustomer();
-			if(customer!=null) {
-				if(customer.getId()!=null && customer.getId()>0) {
-					Customer modelCustomer = customerService.getById(customer.getId());
-					if(modelCustomer==null) {
-						throw new ConversionException("Customer id " + customer.getId() + " does not exists");
-					}
-					if(modelCustomer.getMerchantStore().getId().intValue()!=store.getId().intValue()) {
-						throw new ConversionException("Customer id " + customer.getId() + " does not exists for store " + store.getCode());
-					}
-					target.setCustomerId(modelCustomer.getId());
-					target.setBilling(modelCustomer.getBilling());
-					target.setDelivery(modelCustomer.getDelivery());
-					target.setCustomerEmailAddress(source.getCustomer().getEmailAddress());
-
-
-					
-				} 
+			if (customer != null && customer.getId() != null && customer.getId() > 0) {
+				Customer modelCustomer = customerService.getById(customer.getId());
+				if (modelCustomer == null) {
+					throw new ConversionException("Customer id " + customer.getId() + " does not exists");
+				}
+				if (modelCustomer.getMerchantStore().getId().intValue() != store.getId().intValue()) {
+					throw new ConversionException("Customer id " + customer.getId() + " does not exists for store " + store.getCode());
+				}
+				target.setCustomerId(modelCustomer.getId());
+				target.setBilling(modelCustomer.getBilling());
+				target.setDelivery(modelCustomer.getDelivery());
+				target.setCustomerEmailAddress(source.getCustomer().getEmailAddress());
 			}
 			
 			target.setLocale(LocaleUtils.getLocale(store));

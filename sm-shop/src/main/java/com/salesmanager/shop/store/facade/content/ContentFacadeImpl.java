@@ -751,11 +751,9 @@ public class ContentFacadeImpl implements ContentFacade {
 		Validate.notNull(id, "Content id must not be null");
 		// select content first
 		Content content = contentService.getById(id);
-		if (content != null) {
-			if (content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
-				throw new ResourceNotFoundException(
-						"No content found with id [" + id + "] for store [" + store.getCode() + "]");
-			}
+		if (content != null && content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
+			throw new ResourceNotFoundException(
+					"No content found with id [" + id + "] for store [" + store.getCode() + "]");
 		}
 
 		try {

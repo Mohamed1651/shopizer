@@ -188,15 +188,9 @@ public class PaymentServiceImpl implements PaymentService {
 		
 			Map<String,IntegrationConfiguration> modules = new HashMap<String,IntegrationConfiguration>();
 			MerchantConfiguration merchantConfiguration = merchantConfigurationService.getMerchantConfiguration(Constants.PAYMENT_MODULES, store);
-			if(merchantConfiguration!=null) {
-				
-				if(!StringUtils.isBlank(merchantConfiguration.getValue())) {
-					
-					String decrypted = encryption.decrypt(merchantConfiguration.getValue());
-					modules = ConfigurationModulesLoader.loadIntegrationConfigurations(decrypted);
-					
-					
-				}
+			if (merchantConfiguration != null && StringUtils.isNotBlank(merchantConfiguration.getValue())) {
+				String decrypted = encryption.decrypt(merchantConfiguration.getValue());
+				modules = ConfigurationModulesLoader.loadIntegrationConfigurations(decrypted);
 			}
 			return modules;
 		
@@ -620,44 +614,35 @@ public class PaymentServiceImpl implements PaymentService {
 	throws ServiceException {
 
 		//TODO implement
-		if(CreditCardType.MASTERCARD.equals(creditCard.name())) {
-			if (number.length() != 16
-					|| Integer.parseInt(number.substring(0, 2)) < 51
-					|| Integer.parseInt(number.substring(0, 2)) > 55) {
-				throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid card number","messages.error.creditcard.number");
-			}
+		if (CreditCardType.MASTERCARD.equals(creditCard.name())
+				&& (number.length() != 16
+				|| Integer.parseInt(number.substring(0, 2)) < 51
+				|| Integer.parseInt(number.substring(0, 2)) > 55)) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Invalid card number", "messages.error.creditcard.number");
 		}
-		
-		if(CreditCardType.VISA.equals(creditCard.name())) {
-			if ((number.length() != 13 && number.length() != 16)
-					|| Integer.parseInt(number.substring(0, 1)) != 4) {
-				throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid card number","messages.error.creditcard.number");
-			}
+
+		if (CreditCardType.VISA.equals(creditCard.name())
+				&& ((number.length() != 13 && number.length() != 16)
+				|| Integer.parseInt(number.substring(0, 1)) != 4)) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Invalid card number", "messages.error.creditcard.number");
 		}
-		
-		if(CreditCardType.AMEX.equals(creditCard.name())) {
-			if (number.length() != 15
-					|| (Integer.parseInt(number.substring(0, 2)) != 34 && Integer
-							.parseInt(number.substring(0, 2)) != 37)) {
-				throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid card number","messages.error.creditcard.number");
-			}
+
+		if (CreditCardType.AMEX.equals(creditCard.name())
+				&& (number.length() != 15
+				|| (Integer.parseInt(number.substring(0, 2)) != 34 && Integer.parseInt(number.substring(0, 2)) != 37))) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Invalid card number", "messages.error.creditcard.number");
 		}
-		
-		if(CreditCardType.DINERS.equals(creditCard.name())) {
-			if (number.length() != 14
-					|| ((Integer.parseInt(number.substring(0, 2)) != 36 && Integer
-							.parseInt(number.substring(0, 2)) != 38)
-							&& Integer.parseInt(number.substring(0, 3)) < 300 || Integer
-							.parseInt(number.substring(0, 3)) > 305)) {
-				throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid card number","messages.error.creditcard.number");
-			}
+
+		if (CreditCardType.DINERS.equals(creditCard.name())
+				&& (number.length() != 14
+				|| ((Integer.parseInt(number.substring(0, 2)) != 36 && Integer.parseInt(number.substring(0, 2)) != 38)
+				&& Integer.parseInt(number.substring(0, 3)) < 300 || Integer.parseInt(number.substring(0, 3)) > 305))) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Invalid card number", "messages.error.creditcard.number");
 		}
-		
-		if(CreditCardType.DISCOVERY.equals(creditCard.name())) {
-			if (number.length() != 16
-					|| Integer.parseInt(number.substring(0, 5)) != 6011) {
-				throw new ServiceException(ServiceException.EXCEPTION_VALIDATION,"Invalid card number","messages.error.creditcard.number");
-			}
+
+		if (CreditCardType.DISCOVERY.equals(creditCard.name())
+				&& (number.length() != 16 || Integer.parseInt(number.substring(0, 5)) != 6011)) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Invalid card number", "messages.error.creditcard.number");
 		}
 
 		luhnValidate(number);

@@ -157,9 +157,7 @@ public class ProductFacadeV2Impl implements ProductFacade {
 		Validate.notNull(criterias, "ProductCriteria must be set for this product");
 
 		/** This is for category **/
-		if (CollectionUtils.isNotEmpty(criterias.getCategoryIds())) {
-
-			if (criterias.getCategoryIds().size() == 1) {
+		if (CollectionUtils.isNotEmpty(criterias.getCategoryIds()) && criterias.getCategoryIds().size() == 1) {
 
 				com.salesmanager.core.model.catalog.category.Category category = categoryService
 						.getById(criterias.getCategoryIds().get(0));
@@ -180,7 +178,7 @@ public class ProductFacadeV2Impl implements ProductFacade {
 					ids.add(category.getId());
 					criterias.setCategoryIds(ids);
 				}
-			}
+
 		}
 
 		

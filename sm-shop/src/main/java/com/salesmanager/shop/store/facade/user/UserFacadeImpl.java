@@ -404,11 +404,9 @@ public class UserFacadeImpl implements UserFacade {
 				throw new ServiceRuntimeException("Cannot find user [" + authenticatedUser + "]");
 			}
 			User adminName = getByUserName(user.getUserName());
-			if (adminName != null) {
-				if (adminName.getId().longValue() != userModel.getId().longValue()) {
-					throw new ServiceRuntimeException(
-							"User id [" + userModel.getId() + "] does not match [" + user.getUserName() + "]");
-				}
+			if (adminName != null && adminName.getId().longValue() != userModel.getId().longValue()) {
+				throw new ServiceRuntimeException(
+						"User id [" + userModel.getId() + "] does not match [" + user.getUserName() + "]");
 			}
 			boolean isActive = userModel.isActive();
 			List<Group> originalGroups = userModel.getGroups();
@@ -531,15 +529,13 @@ public class UserFacadeImpl implements UserFacade {
 			if (storeCode.isPresent()) {
 				// get store
 				MerchantStore store = merchantStoreService.getByCode(storeCode.get());
-				if (store != null && (store.isRetailer() != null)) {
-					if (store.isRetailer().booleanValue()) {
-						// get group stores
-						List<MerchantStore> stores = merchantStoreService.findAllStoreNames(store.getCode());
-						List<Integer> intList = stores.stream().map(s -> s.getId()).collect(Collectors.toList());
-						criteria.setStoreIds(intList);
-						// search over store list
-						criteria.setStoreCode(null);
-					}
+				if (store != null && store.isRetailer() != null && store.isRetailer().booleanValue()) {
+					// get group stores
+					List<MerchantStore> stores = merchantStoreService.findAllStoreNames(store.getCode());
+					List<Integer> intList = stores.stream().map(s -> s.getId()).collect(Collectors.toList());
+					criteria.setStoreIds(intList);
+					// search over store list
+					criteria.setStoreCode(null);
 				}
 			}
 
@@ -590,10 +586,8 @@ public class UserFacadeImpl implements UserFacade {
 			}
 
 			for (PersistableGroup g : user.getGroups()) {
-				if (g.getName().equals("SUPERADMIN")) {
-					if (!isSuperAdmin) {
-						throw new UnauthorizedException("Superadmin group not allowed");
-					}
+				if (g.getName().equals("SUPERADMIN") && !isSuperAdmin) {
+					throw new UnauthorizedException("Superadmin group not allowed");
 				}
 			}
 

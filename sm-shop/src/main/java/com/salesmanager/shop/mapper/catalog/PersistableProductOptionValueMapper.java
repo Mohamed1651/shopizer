@@ -50,11 +50,9 @@ public class PersistableProductOptionValueMapper
 		}
 
 		try {
-			
-			if(StringUtils.isBlank(source.getCode())) {
-				if(!StringUtils.isBlank(destination.getCode())) {
-					source.setCode(destination.getCode());
-				}
+
+			if (StringUtils.isBlank(source.getCode()) && StringUtils.isNotBlank(destination.getCode())) {
+				source.setCode(destination.getCode());
 			}
 
 			if (!CollectionUtils.isEmpty(source.getDescriptions())) {

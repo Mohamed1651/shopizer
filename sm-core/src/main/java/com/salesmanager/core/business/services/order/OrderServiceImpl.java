@@ -333,19 +333,21 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 
             //check handling fees
             shippingConfiguration = shippingService.getShippingConfiguration(store);
-            if(summary.getShippingSummary().getHandling()!=null && summary.getShippingSummary().getHandling().doubleValue()>0) {
-                if(shippingConfiguration.getHandlingFees()!=null && shippingConfiguration.getHandlingFees().doubleValue()>0) {
-                    OrderTotal handlingubTotal = new OrderTotal();
-                    handlingubTotal.setModule(Constants.OT_HANDLING_MODULE_CODE);
-                    handlingubTotal.setOrderTotalType(OrderTotalType.HANDLING);
-                    handlingubTotal.setOrderTotalCode("order.total.handling");
-                    handlingubTotal.setTitle(Constants.OT_HANDLING_MODULE_CODE);
-                    //handlingubTotal.setText("order.total.handling");
-                    handlingubTotal.setSortOrder(120);
-                    handlingubTotal.setValue(summary.getShippingSummary().getHandling());
-                    orderTotals.add(handlingubTotal);
-                    grandTotal=grandTotal.add(summary.getShippingSummary().getHandling());
-                }
+            if (summary.getShippingSummary().getHandling() != null
+                    && summary.getShippingSummary().getHandling().doubleValue() > 0
+                    && shippingConfiguration.getHandlingFees() != null
+                    && shippingConfiguration.getHandlingFees().doubleValue() > 0) {
+
+                OrderTotal handlingubTotal = new OrderTotal();
+                handlingubTotal.setModule(Constants.OT_HANDLING_MODULE_CODE);
+                handlingubTotal.setOrderTotalType(OrderTotalType.HANDLING);
+                handlingubTotal.setOrderTotalCode("order.total.handling");
+                handlingubTotal.setTitle(Constants.OT_HANDLING_MODULE_CODE);
+                //handlingubTotal.setText("order.total.handling");
+                handlingubTotal.setSortOrder(120);
+                handlingubTotal.setValue(summary.getShippingSummary().getHandling());
+                orderTotals.add(handlingubTotal);
+                grandTotal = grandTotal.add(summary.getShippingSummary().getHandling());
             }
         }
 

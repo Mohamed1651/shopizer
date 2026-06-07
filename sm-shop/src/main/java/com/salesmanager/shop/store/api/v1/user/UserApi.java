@@ -121,13 +121,11 @@ public class UserApi {
 		userFacade.authorizedGroup(authenticatedUser, Stream.of(Constants.GROUP_SUPERADMIN, Constants.GROUP_ADMIN, Constants.GROUP_ADMIN_RETAIL).collect(Collectors.toList()));
 
 		/** if user is admin, user must be in that store */
-		if (!userFacade.userInRoles(authenticatedUser, Arrays.asList(Constants.GROUP_SUPERADMIN))) {
-			if (!userFacade.authorizedStore(authenticatedUser, merchantStore.getCode())) {
-				throw new UnauthorizedException("Operation unauthorized for user [" + authenticatedUser
-						+ "] and store [" + merchantStore.getCode() + "]");
-			}
+		if (!userFacade.userInRoles(authenticatedUser, Arrays.asList(Constants.GROUP_SUPERADMIN))
+				&& !userFacade.authorizedStore(authenticatedUser, merchantStore.getCode())) {
+			throw new UnauthorizedException("Operation unauthorized for user [" + authenticatedUser
+					+ "] and store [" + merchantStore.getCode() + "]");
 		}
-
 		return userFacade.create(user, merchantStore);
 	}
 
@@ -188,11 +186,10 @@ public class UserApi {
 		
 		criteria.setStoreCode(merchantStore.getCode());
 
-		if (!userFacade.userInRoles(authenticatedUser, Arrays.asList(Constants.GROUP_SUPERADMIN))) {
-			if (!userFacade.authorizedStore(authenticatedUser, merchantStore.getCode())) {
-				throw new UnauthorizedException("Operation unauthorized for user [" + authenticatedUser
-						+ "] and store [" + merchantStore + "]");
-			}
+		if (!userFacade.userInRoles(authenticatedUser, Arrays.asList(Constants.GROUP_SUPERADMIN))
+				&& !userFacade.authorizedStore(authenticatedUser, merchantStore.getCode())) {
+			throw new UnauthorizedException("Operation unauthorized for user [" + authenticatedUser
+					+ "] and store [" + merchantStore + "]");
 		}
 
 		userFacade.authorizedGroup(authenticatedUser, Stream.of(Constants.GROUP_SUPERADMIN, Constants.GROUP_ADMIN, Constants.GROUP_ADMIN_RETAIL).collect(Collectors.toList()));

@@ -139,12 +139,10 @@ public class SearchServiceImpl implements com.salesmanager.core.business.service
 				if (!CollectionUtils.isEmpty(product.getVariants())) {
 					variants = product.getVariants().stream().map(i -> variants(i)).collect(Collectors.toList());
 				}
-	
-				if (!CollectionUtils.isEmpty(documents)) {
-					if (documents.iterator().next() != null) {
-						searchModule.delete(languages, product.getId());
-					}
-				}
+
+			if (!CollectionUtils.isEmpty(documents) && documents.iterator().next() != null) {
+				searchModule.delete(languages, product.getId());
+			}
 
 
 		} catch (Exception e) {

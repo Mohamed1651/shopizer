@@ -34,11 +34,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 		StringBuilder objectBuilderSelect = new StringBuilder();
 		
 		String orderByCriteria = " order by o.id desc";
-		
-		if(criteria.getOrderBy()!=null) {
-			if(CriteriaOrderBy.ASC.name().equals(criteria.getOrderBy().name())) {
-				orderByCriteria = " order by o.id asc";
-			}
+
+		if (criteria.getOrderBy() != null && CriteriaOrderBy.ASC.name().equals(criteria.getOrderBy().name())) {
+			orderByCriteria = " order by o.id asc";
 		}
 		
 		String countBaseQuery = "select count(o) from Order as o";
@@ -142,10 +140,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
 		String orderByCriteria = " order by o.id desc";
 
-		if(criteria.getOrderBy()!=null) {
-			if(CriteriaOrderBy.ASC.name().equals(criteria.getOrderBy().name())) {
-				orderByCriteria = " order by o.id asc";
-			}
+		if (criteria.getOrderBy() != null && CriteriaOrderBy.ASC.name().equals(criteria.getOrderBy().name())) {
+			orderByCriteria = " order by o.id asc";
 		}
 
 		

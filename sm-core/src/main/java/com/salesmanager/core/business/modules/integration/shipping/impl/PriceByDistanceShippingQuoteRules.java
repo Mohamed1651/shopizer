@@ -78,10 +78,8 @@ public class PriceByDistanceShippingQuoteRules implements ShippingQuoteModule {
 		Double distance = null;
 
 		//look if distance has been calculated
-		if (Objects.nonNull(quote) && Objects.nonNull(quote.getQuoteInformations())) {
-			if (quote.getQuoteInformations().containsKey(Constants.DISTANCE_KEY)) {
-				distance = (Double) quote.getQuoteInformations().get(Constants.DISTANCE_KEY);
-			}
+		if (Objects.nonNull(quote) && Objects.nonNull(quote.getQuoteInformations()) && quote.getQuoteInformations().containsKey(Constants.DISTANCE_KEY)) {
+			distance = (Double) quote.getQuoteInformations().get(Constants.DISTANCE_KEY);
 		}
 		
 		if(distance==null) {

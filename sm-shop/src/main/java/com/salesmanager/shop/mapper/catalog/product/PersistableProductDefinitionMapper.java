@@ -166,16 +166,14 @@ public class PersistableProductDefinitionMapper implements Mapper<PersistablePro
 		      for(ProductAvailability avail : destination.getAvailabilities()) {
 			        Set<ProductPrice> prices = avail.getPrices();
 			        for(ProductPrice p : prices) {
-			          if(p.isDefaultPrice()) {
-			            if(productAvailability == null) {
-			              productAvailability = avail;
-			              defaultPrice = p;
-			              productAvailability.setProductQuantity(source.getQuantity());
-			              productAvailability.setProductStatus(source.isCanBePurchased());
-			              p.setProductPriceAmount(source.getPrice());
-			              break;
-			            }
-			          }
+						if (p.isDefaultPrice() && productAvailability == null) {
+							productAvailability = avail;
+							defaultPrice = p;
+							productAvailability.setProductQuantity(source.getQuantity());
+							productAvailability.setProductStatus(source.isCanBePurchased());
+							p.setProductPriceAmount(source.getPrice());
+							break;
+						}
 			        }
 		      }
 		    }

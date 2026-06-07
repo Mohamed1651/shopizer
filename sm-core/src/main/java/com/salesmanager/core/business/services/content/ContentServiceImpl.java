@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.Validate;
+import org.opensearch.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -434,10 +435,9 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 
 		Content content = contentRepository.findOne(id);
 
-		if (content != null) {
-			if (content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
-				return null;
-			}
+		if (content != null && content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
+			throw new ResourceNotFoundException(
+					"No content found with id [" + id + "] for store [" + store.getCode() + "]");
 		}
 
 		return content;
@@ -447,10 +447,8 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 
 		Content content = contentRepository.findOne(id);
 
-		if (content != null) {
-			if (content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
-				return null;
-			}
+		if (content != null && content.getMerchantStore().getId().intValue() != store.getId().intValue()) {
+			return null;
 		}
 
 		return content;
@@ -460,11 +458,9 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	public void addFolder(MerchantStore store, Optional<String> path, String folderName) throws ServiceException {
 		Validate.notNull(store, "MerchantStore cannot be null");
 		Validate.notNull(folderName, "Folder name cannot be null");
-		
-		if(path.isPresent()) {
-			if(!this.isValidLinuxDirectory(path.get())) {
-				throw new ServiceException("Path format [" + path.get() + "] not a valid directory format");
-			}
+
+		if (path.isPresent() && !this.isValidLinuxDirectory(path.get())) {
+			throw new ServiceException("Path format [" + path.get() + "] not a valid directory format");
 		}
 		contentFileManager.addFolder(store.getCode(), folderName, path);
 

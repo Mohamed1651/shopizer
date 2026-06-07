@@ -148,11 +148,8 @@ public class TaxServiceImpl
 						return null;
 					}
 				}
-				else if(!StringUtils.isBlank(store.getStorestateprovince())) {
-
-					if(!store.getStorestateprovince().equals(stateProvince)) {
-						return null;
-					}
+				else if (!StringUtils.isBlank(store.getStorestateprovince()) && !store.getStorestateprovince().equals(stateProvince)) {
+					return null;
 				}
 			}
 		}
@@ -243,12 +240,10 @@ public class TaxServiceImpl
 			for(TaxRate taxRate : taxRates) {
 				
 				double taxRateDouble = taxRate.getTaxRate().doubleValue();//5% ... 8% ...
-				
 
-				if(taxRate.isPiggyback()) {//(compound)
-					if(totalTaxedItemValue.doubleValue()>0) {
-						beforeTaxeAmount = totalTaxedItemValue;
-					}
+
+				if (taxRate.isPiggyback() && totalTaxedItemValue.doubleValue() > 0) {
+					beforeTaxeAmount = totalTaxedItemValue;
 				} //else just use nominal taxing (combine)
 				
 				double value  = (beforeTaxeAmount.doubleValue() * taxRateDouble)/100;

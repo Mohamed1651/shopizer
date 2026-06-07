@@ -312,14 +312,11 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 		List<ShoppingCartAttributeItem> removeAttributesList = new ArrayList<ShoppingCartAttributeItem>();// attributes
 																											// to remove
 		// DELETE ORPHEANS MANUALLY
-		if ((productAttributes != null && !productAttributes.isEmpty())
-				|| (cartAttributes != null && !cartAttributes.isEmpty())) {
-			if (cartAttributes != null) {
+		if (cartAttributes != null && ((productAttributes != null && !productAttributes.isEmpty()) || !cartAttributes.isEmpty())) {
 				for (ShoppingCartAttributeItem attribute : cartAttributes) {
 					long attributeId = attribute.getProductAttributeId();
 					boolean existingAttribute = false;
 					for (ProductAttribute productAttribute : productAttributes) {
-
 						if (productAttribute.getId().equals(attributeId)) {
 							attribute.setProductAttribute(productAttribute);
 							attributesList.add(productAttribute);
@@ -327,13 +324,11 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 							break;
 						}
 					}
-
 					if (!existingAttribute) {
 						removeAttributesList.add(attribute);
 					}
-
 				}
-			}
+
 		}
 
 		// cleanup orphean item
@@ -407,17 +402,14 @@ public class ShoppingCartServiceImpl extends SalesManagerEntityServiceImpl<Long,
 				for (ShoppingCartItem sessionShoppingCartItem : shoppingCartItemsSet) {
 					if (CollectionUtils.isNotEmpty(userShoppingModel.getLineItems())) {
 						for (ShoppingCartItem cartItem : userShoppingModel.getLineItems()) {
-							if (cartItem.getProduct().getId().longValue() == sessionShoppingCartItem.getProduct()
-									.getId().longValue()) {
-								if (CollectionUtils.isNotEmpty(cartItem.getAttributes())) {
-									if (!duplicateFound) {
-										LOGGER.info("Dupliate item found..updating exisitng product quantity");
-										cartItem.setQuantity(
-												cartItem.getQuantity() + sessionShoppingCartItem.getQuantity());
-										duplicateFound = true;
-										break;
-									}
-								}
+							if (cartItem.getProduct().getId().longValue() == sessionShoppingCartItem.getProduct().getId().longValue()
+									&& CollectionUtils.isNotEmpty(cartItem.getAttributes())
+									&& !duplicateFound) {
+								LOGGER.info("Dupliate item found..updating exisitng product quantity");
+								cartItem.setQuantity(
+										cartItem.getQuantity() + sessionShoppingCartItem.getQuantity());
+								duplicateFound = true;
+								break;
 							}
 						}
 					}

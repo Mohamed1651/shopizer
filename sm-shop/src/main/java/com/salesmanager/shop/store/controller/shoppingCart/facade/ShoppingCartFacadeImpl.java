@@ -152,16 +152,14 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 			// get duplicate item from the cart
 			Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> cartModelItems = cartModel.getLineItems();
 			for (com.salesmanager.core.model.shoppingcart.ShoppingCartItem cartItem : cartModelItems) {
-				if (cartItem.getProduct().getId().longValue() == shoppingCartItem.getProduct().getId().longValue()) {
-					if (CollectionUtils.isEmpty(cartItem.getAttributes())) {
-						if (!duplicateFound) {
-							if (!shoppingCartItem.isProductVirtual()) {
-								cartItem.setQuantity(cartItem.getQuantity() + shoppingCartItem.getQuantity());
-							}
-							duplicateFound = true;
-							break;
-						}
+				if (cartItem.getProduct().getId().longValue() == shoppingCartItem.getProduct().getId().longValue()
+						&& CollectionUtils.isEmpty(cartItem.getAttributes())
+						&& !duplicateFound) {
+					if (!shoppingCartItem.isProductVirtual()) {
+						cartItem.setQuantity(cartItem.getQuantity() + shoppingCartItem.getQuantity());
 					}
+					duplicateFound = true;
+					break;
 				}
 			}
 		}
@@ -552,27 +550,24 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 		if (StringUtils.isNotBlank(cartId)) {
 
 			ShoppingCart cartModel = getCartModel(cartId, store);
-			if (cartModel != null) {
-				if (CollectionUtils.isNotEmpty(cartModel.getLineItems())) {
-					Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> shoppingCartItemSet = new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartItem>();
-					for (com.salesmanager.core.model.shoppingcart.ShoppingCartItem shoppingCartItem : cartModel
-							.getLineItems()) {
-						if (shoppingCartItem.getId().longValue() == itemID.longValue()) {
-							shoppingCartService.deleteShoppingCartItem(itemID);
-						} else {
-							shoppingCartItemSet.add(shoppingCartItem);
-						}
+			if (cartModel != null && CollectionUtils.isNotEmpty(cartModel.getLineItems())) {
+				Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> shoppingCartItemSet = new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartItem>();
+				for (com.salesmanager.core.model.shoppingcart.ShoppingCartItem shoppingCartItem : cartModel
+						.getLineItems()) {
+					if (shoppingCartItem.getId().longValue() == itemID.longValue()) {
+						shoppingCartService.deleteShoppingCartItem(itemID);
+					} else {
+						shoppingCartItemSet.add(shoppingCartItem);
 					}
-
-					cartModel.setLineItems(shoppingCartItemSet);
-
-					ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
-					shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
-					shoppingCartDataPopulator.setPricingService(pricingService);
-					shoppingCartDataPopulator.setimageUtils(imageUtils);
-					return shoppingCartDataPopulator.populate(cartModel, store, language);
-
 				}
+
+				cartModel.setLineItems(shoppingCartItemSet);
+
+				ShoppingCartDataPopulator shoppingCartDataPopulator = new ShoppingCartDataPopulator();
+				shoppingCartDataPopulator.setShoppingCartCalculationService(shoppingCartCalculationService);
+				shoppingCartDataPopulator.setPricingService(pricingService);
+				shoppingCartDataPopulator.setimageUtils(imageUtils);
+				return shoppingCartDataPopulator.populate(cartModel, store, language);
 			}
 		}
 		return null;
@@ -839,16 +834,14 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 			// get duplicate item from the cart
 			Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> cartModelItems = cartModel.getLineItems();
 			for (com.salesmanager.core.model.shoppingcart.ShoppingCartItem cartItem : cartModelItems) {
-				if (cartItem.getProduct().getSku().equals(item.getProduct())) {
-					if (CollectionUtils.isEmpty(cartItem.getAttributes())) {
-						if (!duplicateFound) {
-							if (!itemModel.isProductVirtual()) {
-								cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
-							}
-							duplicateFound = true;
-							break;
-						}
+				if (cartItem.getProduct().getSku().equals(item.getProduct())
+						&& CollectionUtils.isEmpty(cartItem.getAttributes())
+						&& !duplicateFound) {
+					if (!itemModel.isProductVirtual()) {
+						cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
 					}
+					duplicateFound = true;
+					break;
 				}
 			}
 		}

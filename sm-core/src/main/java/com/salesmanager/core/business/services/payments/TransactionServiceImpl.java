@@ -122,16 +122,15 @@ public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long,
 		ObjectMapper mapper = new ObjectMapper();
 		Transaction capturable = null;
 		for(Transaction transaction : transactions) {
-			if(transaction.getTransactionType().name().equals(TransactionType.AUTHORIZE.name())) {
-				if(!StringUtils.isBlank(transaction.getDetails())) {
-					try {
-						@SuppressWarnings("unchecked")
-						Map<String,String> objects = mapper.readValue(transaction.getDetails(), Map.class);
-						transaction.setTransactionDetails(objects);
-						capturable = transaction;
-					} catch (Exception e) {
-						throw new ServiceException(e);
-					}
+			if (transaction.getTransactionType().name().equals(TransactionType.AUTHORIZE.name())
+					&& !StringUtils.isBlank(transaction.getDetails())) {
+				try {
+					@SuppressWarnings("unchecked")
+					Map<String, String> objects = mapper.readValue(transaction.getDetails(), Map.class);
+					transaction.setTransactionDetails(objects);
+					capturable = transaction;
+				} catch (Exception e) {
+					throw new ServiceException(e);
 				}
 			}
 			if(transaction.getTransactionType().name().equals(TransactionType.CAPTURE.name()) || transaction.getTransactionType().name().equals(TransactionType.REFUND.name())) {

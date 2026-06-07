@@ -341,12 +341,9 @@ public class ShippingServiceImpl implements ShippingService {
 
 			Map<String,IntegrationConfiguration> modules = new HashMap<String,IntegrationConfiguration>();
 			MerchantConfiguration merchantConfiguration = merchantConfigurationService.getMerchantConfiguration(SHIPPING_MODULES, store);
-			if(merchantConfiguration!=null) {
-				if(!StringUtils.isBlank(merchantConfiguration.getValue())) {
-					String decrypted = encryption.decrypt(merchantConfiguration.getValue());
-					modules = ConfigurationModulesLoader.loadIntegrationConfigurations(decrypted);
-					
-				}
+			if (merchantConfiguration != null && !StringUtils.isBlank(merchantConfiguration.getValue())) {
+				String decrypted = encryption.decrypt(merchantConfiguration.getValue());
+				modules = ConfigurationModulesLoader.loadIntegrationConfigurations(decrypted);
 			}
 			return modules;
 		
@@ -498,20 +495,17 @@ public class ShippingServiceImpl implements ShippingService {
 			boolean freeShipping = false;
 			if(shippingConfiguration.isFreeShippingEnabled()) {
 				BigDecimal freeShippingAmount = shippingConfiguration.getOrderTotalFreeShipping();
-				if(freeShippingAmount!=null) {
-					if(orderTotal.doubleValue()>freeShippingAmount.doubleValue()) {
-						if(shippingConfiguration.getFreeShippingType() == ShippingType.NATIONAL) {
-							if(store.getCountry().getIsoCode().equals(shipCountry.getIsoCode())) {
-								shippingQuote.setFreeShipping(true);
-								shippingQuote.setFreeShippingAmount(freeShippingAmount);
-								return shippingQuote;
-							}
-						} else {//international all
+				if (freeShippingAmount != null && orderTotal.doubleValue() > freeShippingAmount.doubleValue()) {
+					if (shippingConfiguration.getFreeShippingType() == ShippingType.NATIONAL) {
+						if (store.getCountry().getIsoCode().equals(shipCountry.getIsoCode())) {
 							shippingQuote.setFreeShipping(true);
 							shippingQuote.setFreeShippingAmount(freeShippingAmount);
 							return shippingQuote;
 						}
-	
+					} else {//international all
+						shippingQuote.setFreeShipping(true);
+						shippingQuote.setFreeShippingAmount(freeShippingAmount);
+						return shippingQuote;
 					}
 				}
 			}
@@ -540,13 +534,11 @@ public class ShippingServiceImpl implements ShippingService {
 					if(shippingQuote.getCurrentShippingModule()!=null && !shippingQuote.getCurrentShippingModule().getCode().equals(shippingModule.getCode())) {
 						shippingModule = shippingQuote.getCurrentShippingModule();//determines the shipping module
 						configuration = modules.get(shippingModule.getCode());
-						if(configuration!=null) {
-							if(configuration.isActive()) {
-								moduleName = shippingModule.getCode();
-								shippingQuoteModule = this.shippingModules.get(shippingModule.getCode());
-								configuration = modules.get(shippingModule.getCode());
-							} //TODO use default
-						}
+						if (configuration != null && configuration.isActive()) {
+							moduleName = shippingModule.getCode();
+							shippingQuoteModule = this.shippingModules.get(shippingModule.getCode());
+							configuration = modules.get(shippingModule.getCode());
+						} //TODO use default
 						
 					}
 				}
@@ -607,37 +599,22 @@ public class ShippingServiceImpl implements ShippingService {
 						}
 							option.setOptionName(countryName);		
 					}
-				
-					if(shippingOptionPriceType.name().equals(ShippingOptionPriceType.HIGHEST.name())) {
 
-						if (option.getOptionPrice()
-								.longValue() > selectedOption
-								.getOptionPrice()
-								.longValue()) {
-							selectedOption = option;
-						}
+					if (shippingOptionPriceType.name().equals(ShippingOptionPriceType.HIGHEST.name())
+							&& option.getOptionPrice().longValue() > selectedOption.getOptionPrice().longValue()) {
+						selectedOption = option;
 					}
 
-				
-					if(shippingOptionPriceType.name().equals(ShippingOptionPriceType.LEAST.name())) {
 
-						if (option.getOptionPrice()
-								.longValue() < selectedOption
-								.getOptionPrice()
-								.longValue()) {
-							selectedOption = option;
-						}
+					if (shippingOptionPriceType.name().equals(ShippingOptionPriceType.LEAST.name())
+							&& option.getOptionPrice().longValue() < selectedOption.getOptionPrice().longValue()) {
+						selectedOption = option;
 					}
-					
-				
-					if(shippingOptionPriceType.name().equals(ShippingOptionPriceType.ALL.name())) {
-	
-						if (option.getOptionPrice()
-								.longValue() < selectedOption
-								.getOptionPrice()
-								.longValue()) {
-							selectedOption = option;
-						}
+
+
+					if (shippingOptionPriceType.name().equals(ShippingOptionPriceType.ALL.name())
+							&& option.getOptionPrice().longValue() < selectedOption.getOptionPrice().longValue()) {
+						selectedOption = option;
 					}
 
 				}

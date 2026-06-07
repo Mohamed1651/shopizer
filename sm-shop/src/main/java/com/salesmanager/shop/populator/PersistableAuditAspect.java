@@ -41,11 +41,9 @@ public class PersistableAuditAspect {
 					audit.setDateModified(new Date());
 					
 					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-					if(auth!=null) {
-						if(auth instanceof UsernamePasswordAuthenticationToken) {//api only is captured
-							com.salesmanager.shop.store.security.user.JWTUser user = (com.salesmanager.shop.store.security.user.JWTUser)auth.getPrincipal();
-							audit.setModifiedBy(user.getUsername());
-						}
+					if (auth instanceof UsernamePasswordAuthenticationToken) {
+						com.salesmanager.shop.store.security.user.JWTUser user = (com.salesmanager.shop.store.security.user.JWTUser) auth.getPrincipal();
+						audit.setModifiedBy(user.getUsername());
 					}
 					//TODO put in log audit log trail
 					entity.setAuditSection(audit);
