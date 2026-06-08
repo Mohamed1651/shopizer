@@ -1,6 +1,7 @@
 package com.salesmanager.shop.store.controller.security.facade;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -57,7 +58,7 @@ public class SecurityFacadeImpl implements SecurityFacade {
       e.printStackTrace();
     }
 
-    return null;
+    return Collections.emptyList();
   }
 
   @Override

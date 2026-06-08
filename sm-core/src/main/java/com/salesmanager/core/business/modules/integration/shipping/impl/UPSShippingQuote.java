@@ -4,11 +4,7 @@ import java.io.BufferedReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang3.StringUtils;
@@ -131,13 +127,13 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 
 		
 		if(StringUtils.isBlank(delivery.getPostalCode())) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		BigDecimal total = orderTotal;
 
 		if (packages == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		
 		List<ShippingOption> options = null;
@@ -148,7 +144,7 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 
 		
 		if(!(country.getIsoCode().equals("US") || country.getIsoCode().equals("CA"))) {
-			return null;
+			return Collections.emptyList();
 			//throw new IntegrationException("UPS Not configured for shipping in country " + country.getIsoCode());
 		}
 

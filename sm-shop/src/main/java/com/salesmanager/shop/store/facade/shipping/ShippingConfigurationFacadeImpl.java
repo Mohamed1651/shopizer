@@ -1,5 +1,6 @@
 package com.salesmanager.shop.store.facade.shipping;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class ShippingConfigurationFacadeImpl implements ConfigurationsFacade {
 	@Override
 	public List<ReadableConfiguration> configurations(MerchantStore store) {
 		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

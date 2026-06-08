@@ -466,7 +466,7 @@ public class CmsStaticContentFileManagerImpl
 	@Override
 	public List<String> listFolders(String merchantStoreCode, Optional<String> path) throws ServiceException {
 		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
