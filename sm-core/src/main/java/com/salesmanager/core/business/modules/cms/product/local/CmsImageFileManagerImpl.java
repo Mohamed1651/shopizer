@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -147,7 +146,7 @@ public class CmsImageFileManagerImpl
 
     // the web server takes care of the images
 
-    return Collections.emptyList();
+    return null;
 
   }
 
@@ -156,7 +155,7 @@ public class CmsImageFileManagerImpl
 
     // the web server takes care of the images
 
-    return Collections.emptyList();
+    return null;
   }
 
 
@@ -251,7 +250,7 @@ public class CmsImageFileManagerImpl
 
     // the web server taks care of the images
 
-    return Collections.emptyList();
+    return null;
   }
 
   @Override

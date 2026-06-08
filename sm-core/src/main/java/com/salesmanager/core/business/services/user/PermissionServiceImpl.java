@@ -1,6 +1,5 @@
 package com.salesmanager.core.business.services.user;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +36,7 @@ public class PermissionServiceImpl extends
 	@Override
 	public List<Permission> getByName() {
 		// TODO Auto-generated method stub
-		return Collections.emptyList();
+		return null;
 	}
 
 

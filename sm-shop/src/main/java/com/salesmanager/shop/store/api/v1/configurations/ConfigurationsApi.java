@@ -1,6 +1,5 @@
 package com.salesmanager.shop.store.api.v1.configurations;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +62,7 @@ public class ConfigurationsApi {
 	      @ApiIgnore MerchantStore merchantStore,
 	      @ApiIgnore Language language) {
 	      //return customerFacade.create(customer, merchantStore, language);
-		  return Collections.emptyList();
+		  return null;
 
 	  }
 	  
@@ -85,7 +84,7 @@ public class ConfigurationsApi {
 	      @ApiIgnore MerchantStore merchantStore,
 	      @ApiIgnore Language language) {
 	      //return customerFacade.create(customer, merchantStore, language);
-		  return Collections.emptyList();
+		  return null;
 
 	  }
 	

@@ -1,7 +1,10 @@
 package com.salesmanager.core.business.modules.integration.shipping.impl;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -99,7 +102,7 @@ public class StorePickupShippingQuote implements ShippingQuoteModule, ShippingQu
 			throws IntegrationException {
 
 		// TODO Auto-generated method stub
-		return Collections.emptyList();
+		return null;
 
 	}
 

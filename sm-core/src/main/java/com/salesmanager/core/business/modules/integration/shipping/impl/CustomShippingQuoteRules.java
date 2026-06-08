@@ -72,7 +72,7 @@ public class CustomShippingQuoteRules implements ShippingQuoteModule {
 		
 		//requires the postal code
 		if(StringUtils.isBlank(delivery.getPostalCode())) {
-			return Collections.emptyList();
+			return null;
 		}
 
 		Double distance = null;

@@ -3,7 +3,6 @@ package com.salesmanager.core.business.modules.cms.content.aws;
 import java.io.ByteArrayOutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -317,7 +316,7 @@ public class S3StaticContentAssetsManagerImpl implements ContentAssetsManager {
 	@Override
 	public List<String> listFolders(String merchantStoreCode, Optional<String> path) throws ServiceException {
 		// TODO Auto-generated method stub
-		return Collections.emptyList();
+		return null;
 	}
 
 }

@@ -5,7 +5,12 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -129,11 +134,11 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 	
 
 		if (packages == null) {
-			return Collections.emptyList();
+			return null;
 		}
 		
 		if(StringUtils.isBlank(delivery.getPostalCode())) {
-			return Collections.emptyList();
+			return null;
 		}
 		
 
@@ -178,7 +183,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			
 			Map<String,String> keys = configuration.getIntegrationKeys();
 			if(keys==null || StringUtils.isBlank(keys.get("account"))) {
-				return Collections.emptyList();//TODO can we return null
+				return null;//TODO can we return null
 			}
 
 			

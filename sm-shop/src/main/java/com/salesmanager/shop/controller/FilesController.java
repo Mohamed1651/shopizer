@@ -53,7 +53,7 @@ public class FilesController extends AbstractController {
 		} else {
 			LOGGER.debug("File not found " + fileName + "." + extension);
 			response.sendError(404, Constants.FILE_NOT_FOUND);
-			return new byte[0];
+			return null;
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class FilesController extends AbstractController {
 		} else {
 			LOGGER.debug("File not found " + fileName + "." + extension);
 			response.sendError(404, Constants.FILE_NOT_FOUND);
-			return new byte[0];
+			return null;
 		}
 	}
 

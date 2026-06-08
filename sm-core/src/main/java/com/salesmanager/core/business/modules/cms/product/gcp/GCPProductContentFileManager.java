@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.Channels;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -121,7 +124,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
   @Override
   public List<OutputContentFile> getImages(Product product) throws ServiceException {
     // TODO Auto-generated method stub
-    return Collections.emptyList();
+    return null;
   }
 
   /**
@@ -138,7 +141,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
       String bucketName = bucketName();
       
       if(!this.bucketExists(storage, bucketName)) {
-        return Collections.emptyList();
+        return null;
       }
       
       Page<Blob> blobs =

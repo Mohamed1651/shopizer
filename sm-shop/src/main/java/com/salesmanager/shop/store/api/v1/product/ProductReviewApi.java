@@ -1,6 +1,5 @@
 package com.salesmanager.shop.store.api.v1.product;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -120,7 +119,7 @@ public class ProductReviewApi {
 
       if (product == null) {
         response.sendError(404, "Product id " + id + " does not exists");
-        return Collections.emptyList();
+        return null;
       }
 
       List<ReadableProductReview> reviews =
@@ -135,7 +134,7 @@ public class ProductReviewApi {
       } catch (Exception ignore) {
       }
 
-      return Collections.emptyList();
+      return null;
     }
   }
 

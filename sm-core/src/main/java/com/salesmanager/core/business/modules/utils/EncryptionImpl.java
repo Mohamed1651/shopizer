@@ -82,9 +82,9 @@ public final class EncryptionImpl implements Encryption {
 
 	private static byte[] hexToBytes(String str) {
 		if (str == null) {
-			return new byte[0];
+			return null;
 		} else if (str.length() < 2) {
-			return new byte[0];
+			return null;
 		} else {
 			int len = str.length() / 2;
 			byte[] buffer = new byte[len];

@@ -1,7 +1,10 @@
 package com.salesmanager.core.business.modules.integration.shipping.impl;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -69,7 +72,7 @@ public class PriceByDistanceShippingQuoteRules implements ShippingQuoteModule {
 		
 		//requires the postal code
 		if(StringUtils.isBlank(delivery.getPostalCode())) {
-			return Collections.emptyList();
+			return null;
 		}
 
 		Double distance = null;
@@ -82,12 +85,12 @@ public class PriceByDistanceShippingQuoteRules implements ShippingQuoteModule {
 		}
 		
 		if(distance==null) {
-			return Collections.emptyList();
+			return null;
 		}
 		
 		//maximum distance TODO configure from admin
 		if(distance > 150D) {
-			return Collections.emptyList();
+			return null;
 		}
 		
 		List<ShippingOption> options = quote.getShippingOptions();

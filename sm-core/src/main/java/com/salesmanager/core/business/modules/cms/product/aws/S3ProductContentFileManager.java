@@ -3,7 +3,6 @@ package com.salesmanager.core.business.modules.cms.product.aws;
 import java.io.ByteArrayOutputStream;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -193,7 +192,7 @@ public class S3ProductContentFileManager
 
   @Override
   public List<OutputContentFile> getImages(Product product) throws ServiceException {
-    return Collections.emptyList();
+    return null;
   }
 
   @Override

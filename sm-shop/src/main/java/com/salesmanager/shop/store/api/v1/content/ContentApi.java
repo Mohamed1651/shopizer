@@ -1,7 +1,6 @@
 package com.salesmanager.shop.store.api.v1.content;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,7 +105,7 @@ public class ContentApi {
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {
 		//return contentFacade.getContentBoxes(ContentType.BOX, "summary_", merchantStore, language);
-		return Collections.emptyList();
+		return null;
 	}
 
 	/**
