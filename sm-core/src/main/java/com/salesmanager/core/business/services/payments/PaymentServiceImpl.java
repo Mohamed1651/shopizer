@@ -367,7 +367,7 @@ public class PaymentServiceImpl implements PaymentService {
 		if(transactionType == TransactionType.AUTHORIZE)  {
 			transaction = module.authorize(store, customer, items, amount, payment, configuration, integrationModule);
 		} else if(transactionType == TransactionType.AUTHORIZECAPTURE)  {
-			transaction = module.authorize(store, customer, items, amount, payment, configuration, integrationModule);
+			transaction = module.authorizeAndCapture(store, customer, items, amount, payment, configuration, integrationModule);
 		} else if(transactionType == TransactionType.INIT)  {
 			transaction = module.initTransaction(store, customer, amount, payment, configuration, integrationModule);
 		}
