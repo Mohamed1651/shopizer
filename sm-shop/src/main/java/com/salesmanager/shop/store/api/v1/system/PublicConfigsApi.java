@@ -21,7 +21,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/api/v1")
 public class PublicConfigsApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(PublicConfigsApi.class);
 
   @Inject private StoreFacade storeFacade;
 

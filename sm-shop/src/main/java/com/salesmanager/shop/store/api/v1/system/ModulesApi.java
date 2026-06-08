@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/system")
 public class ModulesApi {
-  
-  private static final Logger LOGGER = LoggerFactory.getLogger(ModulesApi.class);
+
   
 
   /**

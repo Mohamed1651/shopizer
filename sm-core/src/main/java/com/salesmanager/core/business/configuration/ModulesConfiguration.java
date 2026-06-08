@@ -19,8 +19,6 @@ import com.salesmanager.core.modules.integration.shipping.model.ShippingQuoteMod
 @Configuration
 public class ModulesConfiguration {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ModulesConfiguration.class);
-	
 	
 	/**
 	 * Goes along with

@@ -9,8 +9,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 
 public class UserAuthenticationSuccessHandler extends AbstractAuthenticatinSuccessHandler {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthenticationSuccessHandler.class);
+
 	
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 

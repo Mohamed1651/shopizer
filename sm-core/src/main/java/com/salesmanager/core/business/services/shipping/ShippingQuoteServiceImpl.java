@@ -19,9 +19,6 @@ import com.salesmanager.core.model.shipping.ShippingSummary;
 
 @Service("shippingQuoteService")
 public class ShippingQuoteServiceImpl extends SalesManagerEntityServiceImpl<Long, Quote> implements ShippingQuoteService {
-
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingQuoteServiceImpl.class);
 	
 	private ShippingQuoteRepository shippingQuoteRepository;
 	

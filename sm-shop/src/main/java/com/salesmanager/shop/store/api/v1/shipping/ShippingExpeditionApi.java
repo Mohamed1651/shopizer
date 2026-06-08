@@ -37,8 +37,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(tags = { "Shipping - Expedition management resource (Shipping Management Api) - ship to country" })
 @SwaggerDefinition(tags = { @Tag(name = "Shipping - Expedition management resource", description = "Manage shipping expedition") })
 public class ShippingExpeditionApi {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingExpeditionApi.class);
 
 	@Autowired
 	private AuthorizationUtils authorizationUtils;

@@ -15,8 +15,6 @@ import com.salesmanager.core.model.shipping.ShippingOrigin;
 
 @Service("shippingOriginService")
 public class ShippingOriginServiceImpl extends SalesManagerEntityServiceImpl<Long, ShippingOrigin> implements ShippingOriginService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingOriginServiceImpl.class);
 	
 	private ShippingOriginRepository shippingOriginRepository;
 

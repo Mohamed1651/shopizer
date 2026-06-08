@@ -88,8 +88,6 @@ public class ProductVariationApi {
   private ImageFilePath imageUtils;
 
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProductVariationApi.class);
-
   /**
    * Calculates the price based on selected options if any
    * @param id

@@ -44,10 +44,8 @@ public class ProductPriceApi {
 
 
 	@Autowired
-	private ProductPriceFacade productPriceFacade;;
+	private ProductPriceFacade productPriceFacade;
 
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductApi.class);
 
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = { "/private/product/{sku}/inventory/{inventoryId}/price"},

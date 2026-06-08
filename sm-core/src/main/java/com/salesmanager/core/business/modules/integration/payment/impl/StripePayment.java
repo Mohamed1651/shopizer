@@ -41,8 +41,6 @@ public class StripePayment implements PaymentModule {
 	@Inject
 	private ProductPriceUtils productPriceUtils;
 
-	
-	private final static String AUTHORIZATION = "Authorization";
 	private final static String TRANSACTION = "Transaction";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StripePayment.class);

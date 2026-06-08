@@ -40,7 +40,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/api/v1")
 public class SearchToolsApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SearchToolsApi.class);
 
 	@Inject
 	private SearchFacade searchFacade;

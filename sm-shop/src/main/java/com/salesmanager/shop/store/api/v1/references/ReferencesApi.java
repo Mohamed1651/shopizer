@@ -39,8 +39,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/api/v1")
 public class ReferencesApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ReferencesApi.class);
-
 
   @Inject private StoreFacade storeFacade;
 

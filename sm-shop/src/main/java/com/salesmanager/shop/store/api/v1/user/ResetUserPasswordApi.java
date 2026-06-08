@@ -38,11 +38,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(tags = { "User password reset resource (User password reset Api)" })
 @SwaggerDefinition(tags = { @Tag(name = "User password reset resource", description = "User password reset") })
 public class ResetUserPasswordApi {
-	
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ResetUserPasswordApi.class);
-	
-
 
 	@Inject
 	private UserFacade userFacade;

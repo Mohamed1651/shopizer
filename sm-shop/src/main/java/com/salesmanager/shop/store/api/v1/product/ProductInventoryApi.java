@@ -41,7 +41,6 @@ public class ProductInventoryApi {
 	@Autowired
 	private ProductInventoryFacade productInventoryFacade;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductInventoryApi.class);
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = { "/private/product/{productId}/inventory" }, method = RequestMethod.POST)

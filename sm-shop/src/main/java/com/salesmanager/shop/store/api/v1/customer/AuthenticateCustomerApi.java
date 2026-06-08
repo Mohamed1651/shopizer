@@ -61,8 +61,6 @@ import springfox.documentation.annotations.ApiIgnore;
     @Tag(name = "Customer authentication resource", description = "Authenticates customer, register customer and reset customer password")
 })
 public class AuthenticateCustomerApi {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateCustomerApi.class);
 
     @Value("${authToken.header}")
     private String tokenHeader;

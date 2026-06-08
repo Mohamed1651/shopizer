@@ -50,7 +50,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @SwaggerDefinition(tags = { @Tag(name = "Customer management resource", description = "Manage customers") })
 public class CustomerApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerApi.class);
 
 	@Inject
 	private CustomerFacade customerFacade;

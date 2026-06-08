@@ -54,7 +54,6 @@ import com.salesmanager.shop.utils.ImageFilePath;
 @Component("contentFacade")
 public class ContentFacadeImpl implements ContentFacade {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContentFacade.class);
 
 	public static final String FILE_CONTENT_DELIMETER = "/";
 

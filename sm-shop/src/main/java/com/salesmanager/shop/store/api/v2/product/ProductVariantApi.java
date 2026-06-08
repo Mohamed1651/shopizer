@@ -61,7 +61,6 @@ import springfox.documentation.annotations.ApiIgnore;
 		@Tag(name = "Product variants resource", description = "Manage inventory for a given product") })
 public class ProductVariantApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductVariantApi.class);
 
 	@Autowired
 	private ProductVariantFacade productVariantFacade;

@@ -18,7 +18,6 @@ import com.salesmanager.core.model.order.orderproduct.OrderProductDownload;
 @Service("orderProductDownloadService")
 public class OrderProductDownloadServiceImpl  extends SalesManagerEntityServiceImpl<Long, OrderProductDownload> implements OrderProductDownloadService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderProductDownloadServiceImpl.class);
 
 
     private final OrderProductDownloadRepository orderProductDownloadRepository;

@@ -65,8 +65,6 @@ import springfox.documentation.annotations.ApiIgnore;
 		@Tag(name = "Merchant and store management", description = "Edit merchants (retailers) and stores") })
 public class MerchantStoreApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MerchantStoreApi.class);
-
 	private static final Map<String, String> MAPPING_FIELDS = ImmutableMap.<String, String>builder()
 			.put("name", "name").put("readableAudit.user", "auditSection.modifiedBy").build();
 

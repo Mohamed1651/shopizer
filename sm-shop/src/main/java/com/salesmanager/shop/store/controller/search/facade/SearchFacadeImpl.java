@@ -59,8 +59,6 @@ public class SearchFacadeImpl implements SearchFacade {
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 
-	private final static String CATEGORY_FACET_NAME = "categories";
-	private final static String MANUFACTURER_FACET_NAME = "manufacturer";
 	private final static int AUTOCOMPLETE_ENTRIES_COUNT = 15;
 
 	/**

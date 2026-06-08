@@ -17,7 +17,6 @@ import com.salesmanager.shop.model.catalog.category.ReadableCategoryFull;
 @Component
 public class ReadableCategoryMapper implements Mapper<Category, ReadableCategory> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReadableCategoryMapper.class);
 
 	@Override
 	public ReadableCategory convert(Category source, MerchantStore store, Language language) {

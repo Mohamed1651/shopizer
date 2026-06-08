@@ -36,7 +36,6 @@ public class MarketPlace extends SalesManagerEntity<Long, MarketPlace> implement
 	
 	private String code;
 	
-	private Set<Catalog> catalogs = new HashSet<Catalog>();
 	
 	@Embedded
 	private AuditSection auditSection = new AuditSection();

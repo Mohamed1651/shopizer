@@ -35,8 +35,7 @@ import com.salesmanager.core.modules.integration.shipping.model.ShippingQuoteMod
  *
  */
 public class PriceByDistanceShippingQuoteRules implements ShippingQuoteModule {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(PriceByDistanceShippingQuoteRules.class);
+
 
 	public final static String MODULE_CODE = "priceByDistance";
 

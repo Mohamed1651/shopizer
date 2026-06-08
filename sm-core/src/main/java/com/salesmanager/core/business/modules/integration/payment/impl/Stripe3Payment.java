@@ -45,10 +45,6 @@ public class Stripe3Payment implements PaymentModule {
 	@Inject
 	private ProductPriceUtils productPriceUtils;
 
-	private final static String AUTHORIZATION = "Authorization";
-	private final static String TRANSACTION = "Transaction";
-
-
 	@Override
 	public Transaction initTransaction(MerchantStore store, Customer customer,
 									   BigDecimal amount, Payment payment,

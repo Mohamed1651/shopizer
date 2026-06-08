@@ -46,7 +46,6 @@ public class ProductTypeApi {
 	@Inject
 	private ProductTypeFacade productTypeFacade;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductTypeApi.class);
 
 	@GetMapping(value = "/private/product/types", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Get product types list", notes = "", produces = "application/json", response = List.class)
