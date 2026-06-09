@@ -11,6 +11,7 @@
 [![CircleCI](https://circleci.com/gh/shopizer-ecommerce/shopizer.svg?style=svg)](https://circleci.com/gh/shopizer-ecommerce/shopizer)
 
 
+Memory-FrictionV2
 Java open source e-commerce software
 
 Headless commerce and Rest api for ecommerce
