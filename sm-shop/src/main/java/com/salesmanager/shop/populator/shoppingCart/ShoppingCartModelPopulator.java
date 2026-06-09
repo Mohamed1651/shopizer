@@ -114,8 +114,6 @@ public class ShoppingCartModelPopulator
         }
 
         List<ShoppingCartItem> items = shoppingCart.getShoppingCartItems();
-        Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> newItems =
-            new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartItem>();
         if ( items != null && items.size() > 0 )
         {
             for ( ShoppingCartItem item : items )
@@ -155,7 +153,6 @@ public class ShoppingCartModelPopulator
                             {
                                 dbItem.removeAllAttributes();
                             }
-                            newItems.add( dbItem );
                         }
                     }
                 }

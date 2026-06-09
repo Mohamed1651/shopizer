@@ -216,10 +216,8 @@ public class OrderFacadeImpl implements OrderFacade {
 		populator.setProductService(productService);
 		populator.setShoppingCartService(shoppingCartService);
 
-		List<ShoppingCartItem> items = new ArrayList<ShoppingCartItem>();
 		for (PersistableOrderProduct orderProduct : orderProducts) {
 			ShoppingCartItem item = populator.populate(orderProduct, new ShoppingCartItem(), store, language);
-			items.add(item);
 		}
 
 		Customer customer = customer(order.getCustomer(), store, language);
@@ -1079,11 +1077,10 @@ public class OrderFacadeImpl implements OrderFacade {
 			return null;
 		}
 
-		List<com.salesmanager.shop.model.order.v0.ReadableOrder> readableOrders = new ArrayList<com.salesmanager.shop.model.order.v0.ReadableOrder>();
 		for (Order order : orders) {
 			com.salesmanager.shop.model.order.v0.ReadableOrder readableOrder = new com.salesmanager.shop.model.order.v0.ReadableOrder();
 			readableOrderPopulator.populate(order, readableOrder, store, language);
-			readableOrders.add(readableOrder);
+
 
 		}
 

@@ -273,8 +273,6 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 
 		final Category category = new Category();
 		category.setCode(categoryCode);
-		final List<Category> categories = new ArrayList<>();
-		categories.add(category);
 
 		final String manufacturer = "temple";
 		final Manufacturer collection = new Manufacturer();
@@ -329,9 +327,6 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 
 		productPrice.setPrice(new BigDecimal(250));
 		productPrice.setDiscountedPrice(new BigDecimal(125));
-
-		final List<PersistableProductPrice> productPriceList = new ArrayList<>();
-		productPriceList.add(productPrice);
 		
 		inventory.setPrice(productPrice);
 		product.setInventory(inventory);
