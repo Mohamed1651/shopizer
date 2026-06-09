@@ -70,6 +70,7 @@ public class DefaultPackagingImpl implements Packaging {
 		List<PackageDetails> boxes = new ArrayList<PackageDetails>();
 
 		// maximum number of boxes
+		int maxBox = 100;
 		int iterCount = 0;
 
 		List<Product> individualProducts = new ArrayList<Product>();
@@ -141,6 +142,8 @@ public class DefaultPackagingImpl implements Packaging {
 		if (iterCount == 0) {
 			return null;
 		}
+
+		int productCount = individualProducts.size();
 
 		List<PackingBox> boxesList = new ArrayList<PackingBox>();
 
