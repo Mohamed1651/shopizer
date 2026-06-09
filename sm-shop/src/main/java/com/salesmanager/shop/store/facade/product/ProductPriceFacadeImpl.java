@@ -27,8 +27,8 @@ import com.salesmanager.shop.store.controller.product.facade.ProductPriceFacade;
 
 @Service
 public class ProductPriceFacadeImpl implements ProductPriceFacade {
-	
-	
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+	private static final String PRODUCT_SKU_CANNOT_BE_NULL = "Product sku cannot be null";
 	@Autowired
 	private ProductPriceService productPriceService;
 	
@@ -67,8 +67,8 @@ public class ProductPriceFacadeImpl implements ProductPriceFacade {
 
 	@Override
 	public List<ReadableProductPrice> list(String sku, Long inventoryId, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(sku, "Product sku cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(sku, PRODUCT_SKU_CANNOT_BE_NULL);
 		Validate.notNull(inventoryId, "Product inventory cannot be null");
 		
 		List<ProductPrice> prices = productPriceService.findByInventoryId(inventoryId, sku, store);
@@ -87,8 +87,8 @@ public class ProductPriceFacadeImpl implements ProductPriceFacade {
 
 	@Override
 	public List<ReadableProductPrice> list(String sku, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(sku, "Product sku cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(sku, PRODUCT_SKU_CANNOT_BE_NULL);
 
 			List<ProductPrice> prices = productPriceService.findByProductSku(sku, store);
 			List<ReadableProductPrice> returnPrices = prices.stream().map(p -> {
@@ -107,8 +107,8 @@ public class ProductPriceFacadeImpl implements ProductPriceFacade {
 	@Override
 	public void delete(Long priceId, String sku, MerchantStore store) {
 		Validate.notNull(priceId, "Product Price id cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(sku, "Product sku cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(sku, PRODUCT_SKU_CANNOT_BE_NULL);
 		ProductPrice productPrice = productPriceService.findById(priceId, sku, store);
 		if(productPrice == null) {
 			throw new ServiceRuntimeException("An exception occured while getting product price [" + priceId + "] for product sku [" + sku + "] and Store [" + store.getCode() + "]");
@@ -132,8 +132,8 @@ public class ProductPriceFacadeImpl implements ProductPriceFacade {
 	@Override
 	public ReadableProductPrice get(String sku, Long productPriceId, MerchantStore store, Language language) {
 		Validate.notNull(productPriceId, "Product Price id cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(sku, "Product sku cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(sku, PRODUCT_SKU_CANNOT_BE_NULL);
 		ProductPrice price = productPriceService.findById(productPriceId, sku, store);
 		
 		if(price == null) {

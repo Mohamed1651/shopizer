@@ -33,8 +33,8 @@ import com.salesmanager.shop.utils.ImageFilePath;
 
 @Component
 public class ProductItemsFacadeImpl implements ProductItemsFacade {
-	
-	
+
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
 	@Inject
 	ProductService productService;
 	
@@ -203,7 +203,7 @@ public class ProductItemsFacadeImpl implements ProductItemsFacade {
 	public void deleteGroup(String group, MerchantStore store) {
 		
 		Validate.notNull(group, "Group cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		
 		try {
 			productRelationshipService.deleteGroup(store, group);
@@ -217,7 +217,7 @@ public class ProductItemsFacadeImpl implements ProductItemsFacade {
 	public ProductGroup createProductGroup(ProductGroup group, MerchantStore store) {
 		Validate.notNull(group,"ProductGroup cannot be null");
 		Validate.notNull(group.getCode(),"ProductGroup code cannot be null");
-		Validate.notNull(store,"MerchantStore cannot be null");
+		Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 		try {
 			productRelationshipService.addGroup(store, group.getCode());
 		} catch (ServiceException e) {
@@ -248,7 +248,7 @@ public class ProductItemsFacadeImpl implements ProductItemsFacade {
 
 	@Override
 	public List<ProductGroup> listProductGroups(MerchantStore store, Language language) {
-		Validate.notNull(store,"MerchantStore cannot be null");
+		Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 		
 		List<ProductRelationship> relationships = productRelationshipService.getGroups(store);
 		

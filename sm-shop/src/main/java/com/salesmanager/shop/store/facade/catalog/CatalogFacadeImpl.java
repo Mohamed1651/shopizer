@@ -54,12 +54,17 @@ public class CatalogFacadeImpl implements CatalogFacade {
     @Autowired
     private ReadableCatalogCategoryEntryMapper readableCatalogEntryMapper;
 
+    private static final String MERCHANTSTOREMESSAGE = "MerchantStore cannot be null";
+    private static final String LANGUAGEMESSAGE = "Language cannot be null";
+    private static final String CATALOGIDMESSAGE = "Catalog id cannot be null";
+    private static final String CATALOG_WITH_ID_OPEN_BRACKET = "Catalog with id [";
+    private static final String CLOSE_BRACKET_NOT_FOUND = "] not found";
 
     @Override
     public ReadableCatalog saveCatalog(PersistableCatalog catalog, MerchantStore store, Language language) {
         Validate.notNull(catalog, "Catalog cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
-        Validate.notNull(language, "Language cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
+        Validate.notNull(language, LANGUAGEMESSAGE);
         Catalog catalogToSave = persistableCatalogMapper.convert(catalog, store, language);
 
         boolean existByCode = uniqueCatalog(catalog.getCode(), store);
@@ -73,18 +78,18 @@ public class CatalogFacadeImpl implements CatalogFacade {
 
     @Override
     public void deleteCatalog(Long catalogId, MerchantStore store, Language language) {
-        Validate.notNull(catalogId, "Catalog id cannot be null");
-        Validate.isTrue(catalogId > 0, "Catalog id cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(catalogId, CATALOGIDMESSAGE);
+        Validate.isTrue(catalogId > 0, CATALOGIDMESSAGE);
+        Validate.notNull(store, LANGUAGEMESSAGE);
 
         Catalog c = catalogService.getById(catalogId);
 
         if (Objects.isNull(c)) {
-            throw new ResourceNotFoundException("Catalog with id [" + catalogId + "] not found");
+            throw new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + catalogId + CLOSE_BRACKET_NOT_FOUND);
         }
 
         if (Objects.nonNull(c.getMerchantStore()) && !c.getMerchantStore().getCode().equals(store.getCode())) {
-            throw new ResourceNotFoundException("Catalog with id [" + catalogId + "] not found for merchant [" + store.getCode() + "]");
+            throw new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + catalogId + "] not found for merchant [" + store.getCode() + "]");
         }
 
         try {
@@ -98,26 +103,26 @@ public class CatalogFacadeImpl implements CatalogFacade {
     @Override
     public ReadableCatalog getCatalog(String code, MerchantStore store, Language language) {
         Validate.notNull(code, "Catalog code cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
-        Validate.notNull(language, "Language cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
+        Validate.notNull(language, LANGUAGEMESSAGE);
 
         Catalog catalog = catalogService.getByCode(code, store)
-                .orElseThrow(() -> new ResourceNotFoundException("Catalog with code [" + code + "] not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Catalog with code [" + code + CLOSE_BRACKET_NOT_FOUND));
         return readableCatalogMapper.convert(catalog, store, language);
     }
 
     @Override
     public void updateCatalog(Long catalogId, PersistableCatalog catalog, MerchantStore store, Language language) {
-        Validate.notNull(catalogId, "Catalog id cannot be null");
-        Validate.isTrue(catalogId > 0, "Catalog id cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
-        Validate.notNull(language, "Language cannot be null");
+        Validate.notNull(catalogId, CATALOGIDMESSAGE);
+        Validate.isTrue(catalogId > 0, CATALOGIDMESSAGE);
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
+        Validate.notNull(language, LANGUAGEMESSAGE);
 
         Catalog c = Optional.ofNullable(catalogService.getById(catalogId))
-                .orElseThrow(() -> new ResourceNotFoundException("Catalog with id [" + catalogId + "] not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + catalogId + CLOSE_BRACKET_NOT_FOUND));
 
         if (Objects.nonNull(c.getMerchantStore()) && !c.getMerchantStore().getCode().equals(store.getCode())) {
-            throw new ResourceNotFoundException("Catalog with id [" + catalogId + "] not found for merchant [" + store.getCode() + "]");
+            throw new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + catalogId + "] not found for merchant [" + store.getCode() + "]");
         }
 
         c.setDefaultCatalog(catalog.isDefaultCatalog());
@@ -128,25 +133,25 @@ public class CatalogFacadeImpl implements CatalogFacade {
 
     @Override
     public ReadableCatalog getCatalog(Long id, MerchantStore store, Language language) {
-        Validate.notNull(id, "Catalog id cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(id, CATALOGIDMESSAGE);
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
 
         Catalog catalog = catalogService.getById(id, store)
-                .orElseThrow(() -> new ResourceNotFoundException("Catalog with id [" + id + "] not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + id + CLOSE_BRACKET_NOT_FOUND));
         return readableCatalogMapper.convert(catalog, store, language);
     }
 
     @Override
     public Catalog getCatalog(String code, MerchantStore store) {
         Validate.notNull(code, "Catalog code cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
 
         return catalogService.getByCode(code, store).get();
     }
 
     @Override
     public ReadableEntityList<ReadableCatalog> getListCatalogs(Optional<String> code, MerchantStore store, Language language, int page, int count) {
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
 
         String catalogCode = code.orElse(null);
         Page<Catalog> catalogs = catalogService.getCatalogs(store, language, catalogCode, page, count);
@@ -162,11 +167,11 @@ public class CatalogFacadeImpl implements CatalogFacade {
 
     @Override
     public ReadableEntityList<ReadableCatalogCategoryEntry> listCatalogEntry(Optional<String> product, Long id, MerchantStore store, Language language, int page, int count) {
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
 
         String productCode = product.orElse(null);
         Catalog catalog = catalogService.getById(id, store)
-                .orElseThrow(() -> new ResourceNotFoundException("Catalog with id [" + id + "] not found for store [" + store.getCode() + "]"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATALOG_WITH_ID_OPEN_BRACKET + id + "] not found for store [" + store.getCode() + "]"));
 
         Page<CatalogCategoryEntry> entries = catalogEntryService.list(catalog, store, language, productCode, page, count);
 
@@ -184,11 +189,11 @@ public class CatalogFacadeImpl implements CatalogFacade {
     public ReadableCatalogCategoryEntry getCatalogEntry(Long id, MerchantStore store, Language language) {
         CatalogCategoryEntry entry = catalogEntryService.getById(id);
         if (Objects.isNull(entry)) {
-            throw new ResourceNotFoundException("catalog entry [" + id + "] not found");
+            throw new ResourceNotFoundException("catalog entry [" + id + CLOSE_BRACKET_NOT_FOUND);
         }
 
         if (entry.getCatalog().getMerchantStore().getId().intValue() != store.getId().intValue()) {
-            throw new ResourceNotFoundException("catalog entry [" + id + "] not found");
+            throw new ResourceNotFoundException("catalog entry [" + id + CLOSE_BRACKET_NOT_FOUND);
         }
         return readableCatalogEntryMapper.convert(entry, store, language);
     }
@@ -198,10 +203,10 @@ public class CatalogFacadeImpl implements CatalogFacade {
 
         Validate.notNull(entry, "PersistableCatalogEntry cannot be null");
         Validate.notNull(entry.getCatalog(), "CatalogEntry.catalog cannot be null");
-        Validate.notNull(store, "MerchantStore cannot be null");
+        Validate.notNull(store, MERCHANTSTOREMESSAGE);
 
         Catalog catalog = catalogService.getByCode(entry.getCatalog(), store)
-                .orElseThrow(() -> new ResourceNotFoundException("catalog [" + entry.getCatalog() + "] not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("catalog [" + entry.getCatalog() + CLOSE_BRACKET_NOT_FOUND));
 
         CatalogCategoryEntry catalogEntryModel = persistableCatalogEntryMapper.convert(entry, store, language);
         catalogEntryService.add(catalogEntryModel, catalog);
@@ -213,15 +218,15 @@ public class CatalogFacadeImpl implements CatalogFacade {
     public void removeCatalogEntry(Long catalogId, Long catalogEntryId, MerchantStore store, Language language) {
         CatalogCategoryEntry entry = catalogEntryService.getById(catalogEntryId);
         if (Objects.isNull(entry)) {
-            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + "] not found");
+            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + CLOSE_BRACKET_NOT_FOUND);
         }
 
         if (entry.getCatalog().getId().longValue() != catalogId.longValue()) {
-            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + "] not found");
+            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + CLOSE_BRACKET_NOT_FOUND);
         }
 
         if (entry.getCatalog().getMerchantStore().getId().intValue() != store.getId().intValue()) {
-            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + "] not found");
+            throw new ResourceNotFoundException("catalog entry [" + catalogEntryId + CLOSE_BRACKET_NOT_FOUND);
         }
 
         try {

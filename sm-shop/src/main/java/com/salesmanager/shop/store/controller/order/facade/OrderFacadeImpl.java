@@ -114,6 +114,25 @@ import com.salesmanager.shop.utils.LocaleUtils;
 public class OrderFacadeImpl implements OrderFacade {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderFacadeImpl.class);
+	private static final String CUSTOMER_BILLING_STATE_PROVINCE = "customer.billing.stateProvince";
+	private static final String CUSTOMER_BILLING_ADDRESS = "customer.billing.address";
+	private static final String CUSTOMER_BILLING_FIRST_NAME = "customer.billing.firstName";
+	private static final String CUSTOMER_DELIVERY_CITY = "customer.delivery.city";
+	private static final String CUSTOMER_DELIVERY_FIRST_NAME = "customer.delivery.firstName";
+	private static final String CONTEXT_PATH = "CONTEXT_PATH";
+	private static final String CUSTOMER_DELIVERY_POSTAL_CODE = "customer.delivery.postalCode";
+	private static final String CUSTOMER_BILLING_PHONE = "customer.billing.phone";
+	private static final String CUSTOMER_BILLING_LAST_NAME = "customer.billing.lastName";
+	private static final String CUSTOMER_DELIVERY_STATE_PROVINCE = "customer.delivery.stateProvince";
+	private static final String CUSTOMER_EMAIL_ADDRESS = "customer.emailAddress";
+	private static final String CUSTOMER_DELIVERY_ADDRESS = "customer.delivery.address";
+	private static final String CREDITCARD_CARD_NUMBER = "creditcard_card_number";
+	private static final String PAYMENT_TOKEN = "paymentToken";
+	private static final String CUSTOMER_BILLING_POSTAL_CODE = "customer.billing.postalCode";
+	private static final String CUSTOMER_BILLING_CITY = "customer.billing.city";
+	private static final String CUSTOMER_DELIVERY_COUNTRY = "customer.delivery.country";
+	private static final String CUSTOMER_DELIVERY_LAST_NAME = "customer.delivery.lastName";
+	private static final String CUSTOMER_BILLING_COUNTRY = "customer.billing.country";
 
 	@Inject
 	private OrderService orderService;
@@ -459,12 +478,12 @@ public class OrderFacadeImpl implements OrderFacade {
 			payment.setModuleName(order.getPaymentModule());
 			payment.setCurrency(modelOrder.getCurrency());
 
-			if (order.getPayment() != null && order.getPayment().get("paymentToken") != null) {// set
+			if (order.getPayment() != null && order.getPayment().get(PAYMENT_TOKEN) != null) {// set
 																				// token
-				String paymentToken = order.getPayment().get("paymentToken");
+				String paymentToken = order.getPayment().get(PAYMENT_TOKEN);
 				Map<String, String> paymentMetaData = new HashMap<String, String>();
 				payment.setPaymentMetaData(paymentMetaData);
-				paymentMetaData.put("paymentToken", paymentToken);
+				paymentMetaData.put(PAYMENT_TOKEN, paymentToken);
 			}
 
 			if (PaymentType.CREDITCARD.name().equals(paymentType)) {
@@ -473,7 +492,7 @@ public class OrderFacadeImpl implements OrderFacade {
 				((CreditCardPayment) payment).setCardOwner(order.getPayment().get("creditcard_card_holder"));
 				((CreditCardPayment) payment)
 						.setCredidCardValidationNumber(order.getPayment().get("creditcard_card_cvv"));
-				((CreditCardPayment) payment).setCreditCardNumber(order.getPayment().get("creditcard_card_number"));
+				((CreditCardPayment) payment).setCreditCardNumber(order.getPayment().get(CREDITCARD_CARD_NUMBER));
 				((CreditCardPayment) payment)
 						.setExpirationMonth(order.getPayment().get("creditcard_card_expirationmonth"));
 				((CreditCardPayment) payment)
@@ -516,7 +535,7 @@ public class OrderFacadeImpl implements OrderFacade {
 					// hash credit card number
 					if (!StringUtils.isBlank(cc.getCcNumber())) {
 						String maskedNumber = CreditCardUtils
-								.maskCardNumber(order.getPayment().get("creditcard_card_number"));
+								.maskCardNumber(order.getPayment().get(CREDITCARD_CARD_NUMBER));
 						cc.setCcNumber(maskedNumber);
 						modelOrder.setCreditCard(cc);
 					}
@@ -713,135 +732,135 @@ public class OrderFacadeImpl implements OrderFacade {
 
 			// validate order shipping and billing
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getFirstName())) {
-				FieldError error = new FieldError("customer.billing.firstName", "customer.billing.firstName",
+				FieldError error = new FieldError(CUSTOMER_BILLING_FIRST_NAME, CUSTOMER_BILLING_FIRST_NAME,
 						messages.getMessage("NotEmpty.customer.firstName", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.firstName",
+				messagesResult.put(CUSTOMER_BILLING_FIRST_NAME,
 						messages.getMessage("NotEmpty.customer.firstName", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getLastName())) {
-				FieldError error = new FieldError("customer.billing.lastName", "customer.billing.lastName",
+				FieldError error = new FieldError(CUSTOMER_BILLING_LAST_NAME, CUSTOMER_BILLING_LAST_NAME,
 						messages.getMessage("NotEmpty.customer.lastName", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.lastName",
+				messagesResult.put(CUSTOMER_BILLING_LAST_NAME,
 						messages.getMessage("NotEmpty.customer.lastName", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getEmailAddress())) {
-				FieldError error = new FieldError("customer.emailAddress", "customer.emailAddress",
+				FieldError error = new FieldError(CUSTOMER_EMAIL_ADDRESS, CUSTOMER_EMAIL_ADDRESS,
 						messages.getMessage("NotEmpty.customer.emailAddress", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.emailAddress",
+				messagesResult.put(CUSTOMER_EMAIL_ADDRESS,
 						messages.getMessage("NotEmpty.customer.emailAddress", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getAddress())) {
-				FieldError error = new FieldError("customer.billing.address", "customer.billing.address",
+				FieldError error = new FieldError(CUSTOMER_BILLING_ADDRESS, CUSTOMER_BILLING_ADDRESS,
 						messages.getMessage("NotEmpty.customer.billing.address", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.address",
+				messagesResult.put(CUSTOMER_BILLING_ADDRESS,
 						messages.getMessage("NotEmpty.customer.billing.address", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getCity())) {
-				FieldError error = new FieldError("customer.billing.city", "customer.billing.city",
+				FieldError error = new FieldError(CUSTOMER_BILLING_CITY, CUSTOMER_BILLING_CITY,
 						messages.getMessage("NotEmpty.customer.billing.city", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.city",
+				messagesResult.put(CUSTOMER_BILLING_CITY,
 						messages.getMessage("NotEmpty.customer.billing.city", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getCountry())) {
-				FieldError error = new FieldError("customer.billing.country", "customer.billing.country",
+				FieldError error = new FieldError(CUSTOMER_BILLING_COUNTRY, CUSTOMER_BILLING_COUNTRY,
 						messages.getMessage("NotEmpty.customer.billing.country", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.country",
+				messagesResult.put(CUSTOMER_BILLING_COUNTRY,
 						messages.getMessage("NotEmpty.customer.billing.country", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getZone())
 					&& StringUtils.isBlank(order.getCustomer().getBilling().getStateProvince())) {
-				FieldError error = new FieldError("customer.billing.stateProvince", "customer.billing.stateProvince",
+				FieldError error = new FieldError(CUSTOMER_BILLING_STATE_PROVINCE, CUSTOMER_BILLING_STATE_PROVINCE,
 						messages.getMessage("NotEmpty.customer.billing.stateProvince", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.stateProvince",
+				messagesResult.put(CUSTOMER_BILLING_STATE_PROVINCE,
 						messages.getMessage("NotEmpty.customer.billing.stateProvince", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getPhone())) {
-				FieldError error = new FieldError("customer.billing.phone", "customer.billing.phone",
+				FieldError error = new FieldError(CUSTOMER_BILLING_PHONE, CUSTOMER_BILLING_PHONE,
 						messages.getMessage("NotEmpty.customer.billing.phone", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.phone",
+				messagesResult.put(CUSTOMER_BILLING_PHONE,
 						messages.getMessage("NotEmpty.customer.billing.phone", locale));
 			}
 
 			if (StringUtils.isBlank(order.getCustomer().getBilling().getPostalCode())) {
-				FieldError error = new FieldError("customer.billing.postalCode", "customer.billing.postalCode",
+				FieldError error = new FieldError(CUSTOMER_BILLING_POSTAL_CODE, CUSTOMER_BILLING_POSTAL_CODE,
 						messages.getMessage("NotEmpty.customer.billing.postalCode", locale));
 				bindingResult.addError(error);
-				messagesResult.put("customer.billing.postalCode",
+				messagesResult.put(CUSTOMER_BILLING_POSTAL_CODE,
 						messages.getMessage("NotEmpty.customer.billing.postalCode", locale));
 			}
 
 			if (!order.isShipToBillingAdress()) {
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getFirstName())) {
-					FieldError error = new FieldError("customer.delivery.firstName", "customer.delivery.firstName",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_FIRST_NAME, CUSTOMER_DELIVERY_FIRST_NAME,
 							messages.getMessage("NotEmpty.customer.shipping.firstName", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.firstName",
+					messagesResult.put(CUSTOMER_DELIVERY_FIRST_NAME,
 							messages.getMessage("NotEmpty.customer.shipping.firstName", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getLastName())) {
-					FieldError error = new FieldError("customer.delivery.lastName", "customer.delivery.lastName",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_LAST_NAME, CUSTOMER_DELIVERY_LAST_NAME,
 							messages.getMessage("NotEmpty.customer.shipping.lastName", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.lastName",
+					messagesResult.put(CUSTOMER_DELIVERY_LAST_NAME,
 							messages.getMessage("NotEmpty.customer.shipping.lastName", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getAddress())) {
-					FieldError error = new FieldError("customer.delivery.address", "customer.delivery.address",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_ADDRESS, CUSTOMER_DELIVERY_ADDRESS,
 							messages.getMessage("NotEmpty.customer.shipping.address", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.address",
+					messagesResult.put(CUSTOMER_DELIVERY_ADDRESS,
 							messages.getMessage("NotEmpty.customer.shipping.address", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getCity())) {
-					FieldError error = new FieldError("customer.delivery.city", "customer.delivery.city",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_CITY, CUSTOMER_DELIVERY_CITY,
 							messages.getMessage("NotEmpty.customer.shipping.city", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.city",
+					messagesResult.put(CUSTOMER_DELIVERY_CITY,
 							messages.getMessage("NotEmpty.customer.shipping.city", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getCountry())) {
-					FieldError error = new FieldError("customer.delivery.country", "customer.delivery.country",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_COUNTRY, CUSTOMER_DELIVERY_COUNTRY,
 							messages.getMessage("NotEmpty.customer.shipping.country", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.country",
+					messagesResult.put(CUSTOMER_DELIVERY_COUNTRY,
 							messages.getMessage("NotEmpty.customer.shipping.country", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getZone())
 						&& StringUtils.isBlank(order.getCustomer().getDelivery().getStateProvince())) {
-					FieldError error = new FieldError("customer.delivery.stateProvince",
-							"customer.delivery.stateProvince",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_STATE_PROVINCE,
+							CUSTOMER_DELIVERY_STATE_PROVINCE,
 							messages.getMessage("NotEmpty.customer.shipping.stateProvince", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.stateProvince",
+					messagesResult.put(CUSTOMER_DELIVERY_STATE_PROVINCE,
 							messages.getMessage("NotEmpty.customer.shipping.stateProvince", locale));
 				}
 
 				if (StringUtils.isBlank(order.getCustomer().getDelivery().getPostalCode())) {
-					FieldError error = new FieldError("customer.delivery.postalCode", "customer.delivery.postalCode",
+					FieldError error = new FieldError(CUSTOMER_DELIVERY_POSTAL_CODE, CUSTOMER_DELIVERY_POSTAL_CODE,
 							messages.getMessage("NotEmpty.customer.shipping.postalCode", locale));
 					bindingResult.addError(error);
-					messagesResult.put("customer.delivery.postalCode",
+					messagesResult.put(CUSTOMER_DELIVERY_POSTAL_CODE,
 							messages.getMessage("NotEmpty.customer.shipping.postalCode", locale));
 				}
 
@@ -874,7 +893,7 @@ public class OrderFacadeImpl implements OrderFacade {
 					&& "true".equals(coreConfiguration.getProperty("VALIDATE_CREDIT_CARD"))) {
 				String cco = order.getPayment().get("creditcard_card_holder");
 				String cvv = order.getPayment().get("creditcard_card_cvv");
-				String ccn = order.getPayment().get("creditcard_card_number");
+				String ccn = order.getPayment().get(CREDITCARD_CARD_NUMBER);
 				String ccm = order.getPayment().get("creditcard_card_expirationmonth");
 				String ccd = order.getPayment().get("creditcard_card_expirationyear");
 
@@ -1360,18 +1379,18 @@ public class OrderFacadeImpl implements OrderFacade {
 
 		// send order confirmation email to customer
 		emailTemplatesUtils.sendOrderEmail(customer.getEmailAddress(), customer, order, locale,
-				language, store, coreConfiguration.getProperty("CONTEXT_PATH"));
+				language, store, coreConfiguration.getProperty(CONTEXT_PATH));
 
 		if (orderService.hasDownloadFiles(order)) {
 			emailTemplatesUtils.sendOrderDownloadEmail(customer, order, store, locale,
-					coreConfiguration.getProperty("CONTEXT_PATH"));
+					coreConfiguration.getProperty(CONTEXT_PATH));
 		}
 
 		// send customer credentials
 
 		// send order confirmation email to merchant
 		emailTemplatesUtils.sendOrderEmail(store.getStoreEmailAddress(), customer, order, locale,
-				language, store, coreConfiguration.getProperty("CONTEXT_PATH"));
+				language, store, coreConfiguration.getProperty(CONTEXT_PATH));
 
 
 	}

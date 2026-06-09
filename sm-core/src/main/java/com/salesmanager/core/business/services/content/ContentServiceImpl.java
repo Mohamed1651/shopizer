@@ -38,7 +38,8 @@ import com.salesmanager.core.model.reference.language.Language;
 public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Content> implements ContentService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ContentServiceImpl.class);
-
+	private static final String MERCHANT_STORE_NULL_ERROR = "MerchantStore cannot be null";
+	private static final String MERCHANT_STORE_ID_NULL_ERROR = "Merchant store Id can not be null";
 	private final ContentRepository contentRepository;
 	
 	@Autowired
@@ -145,7 +146,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	 */
 	@Override
 	public void addContentFile(String merchantStoreCode, InputContentFile contentFile) throws ServiceException {
-		Assert.notNull(merchantStoreCode, "Merchant store Id can not be null");
+		Assert.notNull(merchantStoreCode, MERCHANT_STORE_ID_NULL_ERROR);
 		Assert.notNull(contentFile, "InputContentFile image can not be null");
 		Assert.notNull(contentFile.getFileName(), "InputContentFile.fileName can not be null");
 		Assert.notNull(contentFile.getFileContentType(), "InputContentFile.fileContentType can not be null");
@@ -171,7 +172,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	@Override
 	public void addLogo(String merchantStoreCode, InputContentFile cmsContentImage) throws ServiceException {
 
-		Assert.notNull(merchantStoreCode, "Merchant store Id can not be null");
+		Assert.notNull(merchantStoreCode, MERCHANT_STORE_ID_NULL_ERROR);
 		Assert.notNull(cmsContentImage, "CMSContent image can not be null");
 
 		cmsContentImage.setFileContentType(FileContentType.LOGO);
@@ -182,7 +183,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	@Override
 	public void addOptionImage(String merchantStoreCode, InputContentFile cmsContentImage) throws ServiceException {
 
-		Assert.notNull(merchantStoreCode, "Merchant store Id can not be null");
+		Assert.notNull(merchantStoreCode, MERCHANT_STORE_ID_NULL_ERROR);
 		Assert.notNull(cmsContentImage, "CMSContent image can not be null");
 		cmsContentImage.setFileContentType(FileContentType.PROPERTY);
 		addImage(merchantStoreCode, cmsContentImage);
@@ -383,7 +384,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	@Override
 	public List<OutputContentFile> getContentFiles(String merchantStoreCode, FileContentType fileContentType)
 			throws ServiceException {
-		Assert.notNull(merchantStoreCode, "Merchant store Id can not be null");
+		Assert.notNull(merchantStoreCode, MERCHANT_STORE_ID_NULL_ERROR);
 		// return staticContentFileManager.getFiles(merchantStoreCode,
 		// fileContentType);
 		String p = null;
@@ -402,7 +403,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 	@Override
 	public List<String> getContentFilesNames(String merchantStoreCode, FileContentType fileContentType)
 			throws ServiceException {
-		Assert.notNull(merchantStoreCode, "Merchant store Id can not be null");
+		Assert.notNull(merchantStoreCode, MERCHANT_STORE_ID_NULL_ERROR);
 
 		String p = null;
 		Optional<String> path = Optional.ofNullable(p);
@@ -458,7 +459,7 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 
 	@Override
 	public void addFolder(MerchantStore store, Optional<String> path, String folderName) throws ServiceException {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		Validate.notNull(folderName, "Folder name cannot be null");
 		
 		if(path.isPresent()) {
@@ -473,14 +474,14 @@ public class ContentServiceImpl extends SalesManagerEntityServiceImpl<Long, Cont
 
 	@Override
 	public List<String> listFolders(MerchantStore store, Optional<String> path) throws ServiceException {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		
 		return contentFileManager.listFolders(store.getCode(), path);
 	}
 
 	@Override
 	public void removeFolder(MerchantStore store, Optional<String> path, String folderName) throws ServiceException {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		Validate.notNull(folderName, "Folder name cannot be null");
 		
 		contentFileManager.removeFolder(store.getCode(), folderName, path);

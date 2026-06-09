@@ -69,6 +69,11 @@ public class ContentFacadeImpl implements ContentFacade {
 
 	@Inject
 	private FilePathUtils fileUtils;
+	private static final String MERCHANT_STORE_NULL_ERROR = "MerchantStore cannot be null";
+	private static final String NO_PAGE_FOUND_ERROR = "No page found : ";
+	private static final String CONTENT_ID_NULL_ERROR = "Content id must not be null";
+
+
 
 	@Override
 	public ContentFolder getContentFolder(String folder, MerchantStore store) throws Exception {
@@ -109,7 +114,7 @@ public class ContentFacadeImpl implements ContentFacade {
 
 	@Override
 	public void delete(MerchantStore store, String fileName, String fileType) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		Validate.notNull(fileName, "File name cannot be null");
 		try {
 			FileContentType t = FileContentType.valueOf(fileType);
@@ -123,7 +128,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	@Override
 	public ReadableEntityList<ReadableContentPage> getContentPages(MerchantStore store, Language language, int page,
 			int count) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 
 		@SuppressWarnings("rawtypes")
 		ReadableEntityList items = new ReadableEntityList();
@@ -414,17 +419,17 @@ public class ContentFacadeImpl implements ContentFacade {
 	public ReadableContentPage getContentPage(String code, MerchantStore store, Language language) {
 
 		Validate.notNull(code, "Content code cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 
 		try {
 			Content content = null;
 
 			if (language == null) {
 				content = Optional.ofNullable(contentService.getByCode(code, store))
-						.orElseThrow(() -> new ResourceNotFoundException("No page found : " + code));
+						.orElseThrow(() -> new ResourceNotFoundException(NO_PAGE_FOUND_ERROR + code));
 			} else {
 				content = Optional.ofNullable(contentService.getByCode(code, store, language))
-						.orElseThrow(() -> new ResourceNotFoundException("No page found : " + code));
+						.orElseThrow(() -> new ResourceNotFoundException(NO_PAGE_FOUND_ERROR + code));
 			}
 
 			return convertContentToReadableContentPage(store, language, content);
@@ -439,7 +444,7 @@ public class ContentFacadeImpl implements ContentFacade {
 			MerchantStore store, Language language, int page, int count) {
 
 		Validate.notNull(codePrefix, "content code prefix cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		Validate.notNull(language, "Language cannot be null");
 
 		/*
@@ -457,7 +462,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	public ReadableEntityList<ReadableContentBox> getContentBoxes(ContentType type, MerchantStore store,
 			Language language, int page, int count) {
 
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 
 		ReadableEntityList items = new ReadableEntityList();
 		Page<Content> contentBoxes;
@@ -620,7 +625,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	@Override
 	public ReadableContentBox getContentBox(String code, MerchantStore store, Language language) {
 		Validate.notNull(code, "Content code cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 
 		try {
 			Content content = null;
@@ -747,7 +752,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	@Override
 	public void delete(MerchantStore store, Long id) {
 		Validate.notNull(store, "MerchantStore not null");
-		Validate.notNull(id, "Content id must not be null");
+		Validate.notNull(id, CONTENT_ID_NULL_ERROR);
 		// select content first
 		Content content = contentService.getById(id);
 		if (content != null) {
@@ -809,13 +814,13 @@ public class ContentFacadeImpl implements ContentFacade {
 	@Override
 	public ReadableContentPage getContentPageByName(String name, MerchantStore store, Language language) {
 		Validate.notNull(name, "Content name cannot be null");
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_NULL_ERROR);
 		Validate.notNull(language, "Language cannot be null");
 
 		try {
 
 			ContentDescription contentDescription = Optional.ofNullable(contentService.getBySeUrl(store, name))
-					.orElseThrow(() -> new ResourceNotFoundException("No page found : " + name));
+					.orElseThrow(() -> new ResourceNotFoundException(NO_PAGE_FOUND_ERROR + name));
 
 			return this.contentDescriptionToReadableContent(store, contentDescription.getContent(), contentDescription);
 
@@ -852,7 +857,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	public void updateContentPage(Long id, PersistableContentPage page, MerchantStore merchantStore,
 			Language language) {
 		Validate.notNull(page);
-		Validate.notNull(id, "Content id must not be null");
+		Validate.notNull(id, CONTENT_ID_NULL_ERROR);
 		Validate.notNull(merchantStore);
 
 		try {
@@ -876,7 +881,7 @@ public class ContentFacadeImpl implements ContentFacade {
 
 	@Override
 	public void deleteContent(Long id, MerchantStore merchantStore) {
-		Validate.notNull(id, "Content id must not be null");
+		Validate.notNull(id, CONTENT_ID_NULL_ERROR);
 		Validate.notNull(merchantStore);
 		
 		try {
@@ -899,7 +904,7 @@ public class ContentFacadeImpl implements ContentFacade {
 	@Override
 	public void updateContentBox(Long id, PersistableContentBox box, MerchantStore merchantStore, Language language) {
 		Validate.notNull(box);
-		Validate.notNull(id, "Content id must not be null");
+		Validate.notNull(id, CONTENT_ID_NULL_ERROR);
 		Validate.notNull(merchantStore);
 
 		try {

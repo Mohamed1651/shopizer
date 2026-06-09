@@ -69,7 +69,7 @@ import com.salesmanager.shop.utils.ImageFilePath;
  */
 @Service(value = "shoppingCartFacade")
 public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
-
+	private static final String PERSISTABLE_SHOPPING_CART_ITEM_CANNOT_BE_NULL = "PersistableShoppingCartItem cannot be null";
 	private static final Logger LOG = LoggerFactory.getLogger(ShoppingCartFacadeImpl.class);
 
 	@Inject
@@ -755,7 +755,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 	// KEEP ** ENTRY POINT **
 	public ReadableShoppingCart addToCart(PersistableShoppingCartItem item, MerchantStore store, Language language) {
 
-		Validate.notNull(item, "PersistableShoppingCartItem cannot be null");
+		Validate.notNull(item, PERSISTABLE_SHOPPING_CART_ITEM_CANNOT_BE_NULL);
 
 		// if cart does not exist create a new one
 
@@ -1048,7 +1048,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 			Language language) throws Exception {
 
 		Validate.notNull(cartCode, "String cart code cannot be null");
-		Validate.notNull(item, "PersistableShoppingCartItem cannot be null");
+		Validate.notNull(item, PERSISTABLE_SHOPPING_CART_ITEM_CANNOT_BE_NULL);
 
 		ShoppingCart cartModel = getCartModel(cartCode, store);
 		if (cartModel == null) {
@@ -1063,7 +1063,7 @@ public class ShoppingCartFacadeImpl implements ShoppingCartFacade {
 	public ReadableShoppingCart modifyCartMulti(String cartCode, List<PersistableShoppingCartItem> items,
 			MerchantStore store, Language language) throws Exception {
 		Validate.notNull(cartCode, "String cart code cannot be null");
-		Validate.notNull(items, "PersistableShoppingCartItem cannot be null");
+		Validate.notNull(items, PERSISTABLE_SHOPPING_CART_ITEM_CANNOT_BE_NULL);
 
 		ShoppingCart cartModel = this.getCartModel(cartCode, store);
 		if (cartModel == null) {

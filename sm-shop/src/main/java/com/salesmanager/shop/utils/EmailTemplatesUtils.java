@@ -37,7 +37,7 @@ import java.util.Map;
 public class EmailTemplatesUtils {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailTemplatesUtils.class);
-	
+	private static final String LABEL_GENERIC_HI = "label.generic.hi";
 	@Inject
 	private EmailService emailService;
 
@@ -266,7 +266,7 @@ public class EmailTemplatesUtils {
 	       try {
 
 	           Map<String, String> templateTokens = emailUtils.createEmailObjectsMap(contextPath, merchantStore, messages, customerLocale);
-	           templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage("label.generic.hi", customerLocale));
+	           templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage(LABEL_GENERIC_HI, customerLocale));
 	           templateTokens.put(EmailConstants.EMAIL_CUSTOMER_FIRSTNAME, customer.getBilling().getFirstName());
 	           templateTokens.put(EmailConstants.EMAIL_CUSTOMER_LASTNAME, customer.getBilling().getLastName());
 	           String[] greetingMessage = {merchantStore.getStorename(),filePathUtils.buildCustomerUri(merchantStore,contextPath),merchantStore.getStoreEmailAddress()};
@@ -359,7 +359,7 @@ public class EmailTemplatesUtils {
 
 				Map<String, String> templateTokens = emailUtils.createEmailObjectsMap(contextPath, merchantStore, messages, customerLocale);
 				
-		        templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage("label.generic.hi", customerLocale));
+		        templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage(LABEL_GENERIC_HI, customerLocale));
 		        templateTokens.put(EmailConstants.EMAIL_CUSTOMER_FIRSTNAME, customer.getBilling().getFirstName());
 		        templateTokens.put(EmailConstants.EMAIL_CUSTOMER_LASTNAME, customer.getBilling().getLastName());
 				
@@ -412,7 +412,7 @@ public class EmailTemplatesUtils {
 	       try {
 
 	           Map<String, String> templateTokens = emailUtils.createEmailObjectsMap(contextPath, merchantStore, messages, customerLocale);
-	           templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage("label.generic.hi", customerLocale));
+	           templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage(LABEL_GENERIC_HI, customerLocale));
 	           templateTokens.put(EmailConstants.EMAIL_CUSTOMER_FIRSTNAME, customer.getBilling().getFirstName());
 	           templateTokens.put(EmailConstants.EMAIL_CUSTOMER_LASTNAME, customer.getBilling().getLastName());
 	           String[] downloadMessage = {String.valueOf(ApplicationConstants.MAX_DOWNLOAD_DAYS), String.valueOf(order.getId()), filePathUtils.buildCustomerUri(merchantStore, contextPath), merchantStore.getStoreEmailAddress()};
@@ -460,7 +460,7 @@ public class EmailTemplatesUtils {
 
 				Map<String, String> templateTokens = emailUtils.createEmailObjectsMap(contextPath, merchantStore, messages, customerLocale);
 				
-		        templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage("label.generic.hi", customerLocale));
+		        templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage(LABEL_GENERIC_HI, customerLocale));
 		        templateTokens.put(EmailConstants.EMAIL_CUSTOMER_FIRSTNAME, customer.getBilling().getFirstName());
 		        templateTokens.put(EmailConstants.EMAIL_CUSTOMER_LASTNAME, customer.getBilling().getLastName());
 				

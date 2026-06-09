@@ -21,7 +21,8 @@ import com.salesmanager.core.modules.integration.shipping.model.Packaging;
 
 public class DefaultPackagingImpl implements Packaging {
 
-	
+	private static final String PRODUCT_PREFIX = "Product ";
+	private static final String SHIPPING_PARAM = "shipping";
 	@Inject
 	private ShippingService shippingService;
 	
@@ -153,7 +154,7 @@ public class DefaultPackagingImpl implements Packaging {
 
 		if (maxVolume == 0 || maxweight == 0) {
 			
-			merchantLogService.save(new MerchantLog(store,"shipping","Check shipping box configuration, it has a volume of "
+			merchantLogService.save(new MerchantLog(store,SHIPPING_PARAM,"Check shipping box configuration, it has a volume of "
 							+ maxVolume + " and a maximum weight of "
 							+ maxweight
 							+ ". Those values must be greater than 0."));
@@ -193,7 +194,7 @@ public class DefaultPackagingImpl implements Packaging {
 					|| p.getProductHeight().doubleValue() > height
 					|| p.getProductLength().doubleValue() > length) {
 				// log message to customer
-				merchantLogService.save(new MerchantLog(store,"shipping","Product "
+				merchantLogService.save(new MerchantLog(store,SHIPPING_PARAM,PRODUCT_PREFIX
 						+ p.getSku()
 						+ " has a demension larger than the box size specified. Will use per item calculation."));
 				throw new ServiceException("Product configuration exceeds box configuraton");
@@ -201,7 +202,7 @@ public class DefaultPackagingImpl implements Packaging {
 			}
 
 			if (productWeight > maxweight) {
-				merchantLogService.save(new MerchantLog(store,"shipping","Product "
+				merchantLogService.save(new MerchantLog(store,SHIPPING_PARAM,PRODUCT_PREFIX
 						+ p.getSku()
 						+ " has a weight larger than the box maximum weight specified. Will use per item calculation."));
 				
@@ -215,7 +216,7 @@ public class DefaultPackagingImpl implements Packaging {
 
 			if (productVolume == 0) {
 				
-				merchantLogService.save(new MerchantLog(store,"shipping","Product "
+				merchantLogService.save(new MerchantLog(store,SHIPPING_PARAM,PRODUCT_PREFIX
 						+ p.getSku()
 						+ " has one of the dimension set to 0 and therefore cannot calculate the volume"));
 				

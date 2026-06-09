@@ -54,6 +54,9 @@ import springfox.documentation.annotations.ApiIgnore;
 public class OrderShippingApi {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(OrderShippingApi.class);
+  private static final String ERROR_WHILE_GETTING_SHIPPING_QUOTE = "Error while getting shipping quote";
+  private static final String CART_CODE = "Cart code ";
+  private static final String MODULE_SHIPPING = "module.shipping.";
 
   @Inject private CustomerService customerService;
 
@@ -106,15 +109,15 @@ public class OrderShippingApi {
       ShoppingCart cart = shoppingCartFacade.getShoppingCartModel(code, merchantStore);
 
       if (cart == null) {
-        response.sendError(404, "Cart code " + code + " does not exist");
+        response.sendError(404, CART_CODE + code + " does not exist");
       }
 
       if (cart.getCustomerId() == null) {
-        response.sendError(404, "Cart code " + code + " does not exist for exist for user " + userName);
+        response.sendError(404, CART_CODE + code + " does not exist for exist for user " + userName);
       }
 
       if (cart.getCustomerId().longValue() != customer.getId().longValue()) {
-        response.sendError(404, "Cart code " + code + " does not exist for exist for user " + userName);
+        response.sendError(404, CART_CODE + code + " does not exist for exist for user " + userName);
       }
 
       ShippingQuote quote = orderFacade.getShippingQuote(customer, cart, merchantStore, language);
@@ -133,7 +136,7 @@ public class OrderShippingApi {
         for (ShippingOption shipOption : options) {
 
           StringBuilder moduleName = new StringBuilder();
-          moduleName.append("module.shipping.").append(shipOption.getShippingModuleCode());
+          moduleName.append(MODULE_SHIPPING).append(shipOption.getShippingModuleCode());
 
           String carrier =
               messages.getMessage(
@@ -151,7 +154,7 @@ public class OrderShippingApi {
             try {
 
               optionCodeBuilder
-                  .append("module.shipping.")
+                  .append(MODULE_SHIPPING)
                   .append(shipOption.getShippingModuleCode());
               String optionName = messages.getMessage(optionCodeBuilder.toString(), locale);
               shipOption.setOptionName(optionName);
@@ -167,9 +170,9 @@ public class OrderShippingApi {
       return shippingSummary;
 
     } catch (Exception e) {
-      LOGGER.error("Error while getting shipping quote", e);
+      LOGGER.error(ERROR_WHILE_GETTING_SHIPPING_QUOTE, e);
       try {
-        response.sendError(503, "Error while getting shipping quote" + e.getMessage());
+        response.sendError(503, ERROR_WHILE_GETTING_SHIPPING_QUOTE + e.getMessage());
       } catch (Exception ignore) {
       }
       return null;
@@ -245,7 +248,7 @@ public class OrderShippingApi {
         for (ShippingOption shipOption : options) {
 
           StringBuilder moduleName = new StringBuilder();
-          moduleName.append("module.shipping.").append(shipOption.getShippingModuleCode());
+          moduleName.append(MODULE_SHIPPING).append(shipOption.getShippingModuleCode());
 
           String carrier =
               messages.getMessage(
@@ -263,7 +266,7 @@ public class OrderShippingApi {
             try {
 
               optionCodeBuilder
-                  .append("module.shipping.")
+                  .append(MODULE_SHIPPING)
                   .append(shipOption.getShippingModuleCode());
               String optionName = messages.getMessage(optionCodeBuilder.toString(), new String[]{merchantStore.getStorename()},locale);
               shipOption.setOptionName(optionName);
@@ -279,9 +282,9 @@ public class OrderShippingApi {
       return shippingSummary;
 
     } catch (Exception e) {
-      LOGGER.error("Error while getting shipping quote", e);
+      LOGGER.error(ERROR_WHILE_GETTING_SHIPPING_QUOTE, e);
       try {
-        response.sendError(503, "Error while getting shipping quote" + e.getMessage());
+        response.sendError(503, ERROR_WHILE_GETTING_SHIPPING_QUOTE + e.getMessage());
       } catch (Exception ignore) {
       }
       return null;

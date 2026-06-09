@@ -41,7 +41,9 @@ import com.salesmanager.shop.store.security.services.CredentialsServiceImpl;
 public class MultipleEntryPointsSecurityConfig {
 
 	private static final String API_VERSION = "/api/v*";
-
+	private static final String PRIVATE_ANT_PATH = "/private/**";
+	private static final String SHOP_PATH = "/shop/";
+	private static final String AUTH_ANT_PATH = "/auth/**";
 	@Bean
 	public AuthenticationTokenFilter authenticationTokenFilter() {
 		return new AuthenticationTokenFilter();
@@ -118,7 +120,7 @@ public class MultipleEntryPointsSecurityConfig {
 			.antMatcher("/shop/**")
 			.csrf().disable()			
 			.authorizeRequests()
-					.antMatchers("/shop/").permitAll()
+					.antMatchers(SHOP_PATH).permitAll()
 					.antMatchers("/shop/**").permitAll()
 					.antMatchers("/shop/customer/logon*").permitAll()
 					.antMatchers("/shop/customer/registration*").permitAll()
@@ -133,13 +135,13 @@ public class MultipleEntryPointsSecurityConfig {
 					.and()
 					.logout()
 					.logoutUrl("/shop/customer/logout")
-					.logoutSuccessUrl("/shop/")
+					.logoutSuccessUrl(SHOP_PATH)
 					.invalidateHttpSession(true)
 					.deleteCookies("JSESSIONID")
 
 					.invalidateHttpSession(false)
 					.and()
-					.exceptionHandling().accessDeniedPage("/shop/");
+					.exceptionHandling().accessDeniedPage(SHOP_PATH);
 
 		}
 
@@ -324,12 +326,12 @@ public class MultipleEntryPointsSecurityConfig {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http
-					.antMatcher(API_VERSION + "/private/**")
+					.antMatcher(API_VERSION + PRIVATE_ANT_PATH)
 					.authorizeRequests()
 					.antMatchers(API_VERSION + "/private/login*").permitAll()
 					.antMatchers(API_VERSION + "/private/refresh").permitAll()
-					.antMatchers(HttpMethod.OPTIONS, API_VERSION + "/private/**").permitAll()
-					.antMatchers(API_VERSION + "/private/**").hasRole("AUTH")
+					.antMatchers(HttpMethod.OPTIONS, API_VERSION + PRIVATE_ANT_PATH).permitAll()
+					.antMatchers(API_VERSION + PRIVATE_ANT_PATH).hasRole("AUTH")
 					.anyRequest().authenticated()
 					.and()
 					.httpBasic().authenticationEntryPoint(apiAdminAuthenticationEntryPoint())
@@ -392,13 +394,13 @@ public class MultipleEntryPointsSecurityConfig {
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 			
-				.antMatcher(API_VERSION + "/auth/**")
+				.antMatcher(API_VERSION + AUTH_ANT_PATH)
 				.authorizeRequests()
 					.antMatchers(API_VERSION + "/auth/refresh").permitAll()
 					.antMatchers(API_VERSION + "/auth/login").permitAll()
 					.antMatchers(API_VERSION + "/auth/register").permitAll()
-					.antMatchers(HttpMethod.OPTIONS, API_VERSION + "/auth/**").permitAll()
-					.antMatchers(API_VERSION + "/auth/**")
+					.antMatchers(HttpMethod.OPTIONS, API_VERSION + AUTH_ANT_PATH).permitAll()
+					.antMatchers(API_VERSION + AUTH_ANT_PATH)
 					.hasRole("AUTH_CUSTOMER").anyRequest().authenticated()
 					.and()
 					.httpBasic()

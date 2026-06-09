@@ -68,6 +68,10 @@ public class MerchantStoreApi {
 	private static final Map<String, String> MAPPING_FIELDS = ImmutableMap.<String, String>builder()
 			.put("name", "name").put("readableAudit.user", "auditSection.modifiedBy").build();
 
+
+	private static final String STREAM_SUPERADMIN = "SUPERADMIN";
+	private static final String STREAM_ADMIN_RETAILER = "ADMIN_RETAILER";
+
 	@Inject
 	private StoreFacade storeFacade;
 
@@ -95,7 +99,7 @@ public class MerchantStoreApi {
 			throw new UnauthorizedException();
 		}
 
-		userFacade.authorizedGroup(authenticatedUser, Stream.of("SUPERADMIN", "ADMIN_RETAILER").collect(Collectors.toList()));
+		userFacade.authorizedGroup(authenticatedUser, Stream.of(STREAM_SUPERADMIN, STREAM_ADMIN_RETAILER).collect(Collectors.toList()));
 		return storeFacade.getFullByCode(code, language);
 	}
 
@@ -111,7 +115,7 @@ public class MerchantStoreApi {
 			throw new UnauthorizedException();
 		}
 
-		userFacade.authorizedGroup(authenticatedUser, Stream.of("SUPERADMIN", "ADMIN_RETAILER").collect(Collectors.toList()));
+		userFacade.authorizedGroup(authenticatedUser, Stream.of(STREAM_SUPERADMIN, STREAM_ADMIN_RETAILER).collect(Collectors.toList()));
 
 		//ADMIN_RETAILER only see pertaining stores
 		
@@ -216,7 +220,7 @@ public class MerchantStoreApi {
 			throw new UnauthorizedException();
 		}
 		
-		userFacade.authorizedGroup(authenticatedUser, Stream.of("SUPERADMIN", "ADMIN_RETAILER").collect(Collectors.toList()));
+		userFacade.authorizedGroup(authenticatedUser, Stream.of(STREAM_SUPERADMIN, STREAM_ADMIN_RETAILER).collect(Collectors.toList()));
 
 		
 		storeFacade.create(store);

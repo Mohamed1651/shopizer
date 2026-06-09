@@ -50,7 +50,12 @@ import com.salesmanager.core.modules.integration.shipping.model.ShippingQuoteMod
 public class UPSShippingQuote implements ShippingQuoteModule {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UPSShippingQuote.class);
-
+	private static final String PASSWORD = "password";
+	private static final String PACKAGES = "packages";
+	private static final String CLOSE_CODE_TAG = "</Code>";
+	private static final String ACCESS_KEY = "accessKey";
+	private static final String OPEN_CODE_TAG = "<Code>";
+	private static final String USER_ID = "userId";
 
 	@Override
 	public void validateModuleConfiguration(
@@ -62,34 +67,34 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 		
 		//validate integrationKeys['accessKey']
 		Map<String,String> keys = integrationConfiguration.getIntegrationKeys();
-		if(keys==null || StringUtils.isBlank(keys.get("accessKey"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(ACCESS_KEY))) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("accessKey");
+			errorFields.add(ACCESS_KEY);
 		}
 		
-		if(keys==null || StringUtils.isBlank(keys.get("userId"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(USER_ID))) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("userId");
+			errorFields.add(USER_ID);
 		}
 		
-		if(keys==null || StringUtils.isBlank(keys.get("password"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(PASSWORD))) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("password");
+			errorFields.add(PASSWORD);
 		}
 
 		//validate at least one integrationOptions['packages']
 		Map<String,List<String>> options = integrationConfiguration.getIntegrationOptions();
 		if(options==null) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("packages");
+			errorFields.add(PACKAGES);
 		}
 		
-		List<String> packages = options.get("packages");
+		List<String> packages = options.get(PACKAGES);
 		if(packages==null || packages.size()==0) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("packages");
+			errorFields.add(PACKAGES);
 		}
 		
 /*		List<String> services = options.get("services");
@@ -159,12 +164,12 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 			language = Locale.ENGLISH.getLanguage();
 		}
 		
-		String pack = configuration.getIntegrationOptions().get("packages").get(0);
+		String pack = configuration.getIntegrationOptions().get(PACKAGES).get(0);
 		Map<String,String> keys = configuration.getIntegrationKeys();
 		
-		String accessKey = keys.get("accessKey");
-		String userId = keys.get("userId");
-		String password = keys.get("password");
+		String accessKey = keys.get(ACCESS_KEY);
+		String userId = keys.get(USER_ID);
+		String password = keys.get(PASSWORD);
 		
 		
 		String host = null;
@@ -325,17 +330,17 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 
 				xmldatabuffer.append("<Package>");
 				xmldatabuffer.append("<PackagingType>");
-				xmldatabuffer.append("<Code>");
+				xmldatabuffer.append(OPEN_CODE_TAG);
 				xmldatabuffer.append(pack);
-				xmldatabuffer.append("</Code>");
+				xmldatabuffer.append(CLOSE_CODE_TAG);
 				xmldatabuffer.append("</PackagingType>");
 
 				// weight
 				xmldatabuffer.append("<PackageWeight>");
 				xmldatabuffer.append("<UnitOfMeasurement>");
-				xmldatabuffer.append("<Code>");
+				xmldatabuffer.append(OPEN_CODE_TAG);
 				xmldatabuffer.append(weightCode);
-				xmldatabuffer.append("</Code>");
+				xmldatabuffer.append(CLOSE_CODE_TAG);
 				xmldatabuffer.append("</UnitOfMeasurement>");
 				xmldatabuffer.append("<Weight>");
 				xmldatabuffer.append(new BigDecimal(packageDetail.getShippingWeight())
@@ -346,9 +351,9 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 				// dimension
 				xmldatabuffer.append("<Dimensions>");
 				xmldatabuffer.append("<UnitOfMeasurement>");
-				xmldatabuffer.append("<Code>");
+				xmldatabuffer.append(OPEN_CODE_TAG);
 				xmldatabuffer.append(measureCode);
-				xmldatabuffer.append("</Code>");
+				xmldatabuffer.append(CLOSE_CODE_TAG);
 				xmldatabuffer.append("</UnitOfMeasurement>");
 				xmldatabuffer.append("<Length>");
 				xmldatabuffer.append(new BigDecimal(packageDetail.getShippingLength())

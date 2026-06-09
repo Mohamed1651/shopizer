@@ -52,7 +52,7 @@ public class ProductInventoryFacadeImpl implements ProductInventoryFacade {
 	@Autowired
 	private PersistableInventoryMapper productInventoryMapper;
 
-
+	private static final String CLOSE_BRACKET_NOT_FOUND = "] not found";
 
 	private void validateProductHasSameStore(MerchantStore store, Product product) {
 		if (!product.getMerchantStore().getId().equals(store.getId())) {
@@ -114,7 +114,7 @@ public class ProductInventoryFacadeImpl implements ProductInventoryFacade {
 	private MerchantStore getMerchantStore(String child) {
 		try {
 			return Optional.ofNullable(merchantStoreService.getByCode(child))
-					.orElseThrow(() -> new ResourceNotFoundException("MerchantStore [" + child + "] not found"));
+					.orElseThrow(() -> new ResourceNotFoundException("MerchantStore [" + child + CLOSE_BRACKET_NOT_FOUND));
 		} catch (ServiceException e) {
 			throw new ServiceRuntimeException("Error while getting inventory", e);
 		}
@@ -129,11 +129,11 @@ public class ProductInventoryFacadeImpl implements ProductInventoryFacade {
 	private Product getProductById(Long productId, MerchantStore store) {
 		return productService
 				.retrieveById(productId, store)
-				.orElseThrow(() -> new ResourceNotFoundException("Product with id [" + productId + "] not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Product with id [" + productId + CLOSE_BRACKET_NOT_FOUND));
 	}
 	
 	private ProductVariant getProductByInstance(Long instanceId, MerchantStore store) {
-		return productVariantService.getById(instanceId, store).orElseThrow(() -> new ResourceNotFoundException("Product with instance [" + instanceId + "] not found"));
+		return productVariantService.getById(instanceId, store).orElseThrow(() -> new ResourceNotFoundException("Product with instance [" + instanceId + CLOSE_BRACKET_NOT_FOUND));
 
 	}
 
@@ -168,7 +168,7 @@ public class ProductInventoryFacadeImpl implements ProductInventoryFacade {
 
 
 		ProductAvailability availability = productAvailabilityService.getById(inventoryId, store)
-				.orElseThrow(() -> new ResourceNotFoundException("Inventory with id [" + inventoryId + "] not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Inventory with id [" + inventoryId + CLOSE_BRACKET_NOT_FOUND));
 		return readableInventoryMapper.convert(availability, store, language);
 	}
 
@@ -199,7 +199,7 @@ public class ProductInventoryFacadeImpl implements ProductInventoryFacade {
 		
 		if (avail == null) {
 			throw new ResourceNotFoundException(
-					"Inventory with id [" + inventory.getId() + "] not found");
+					"Inventory with id [" + inventory.getId() + CLOSE_BRACKET_NOT_FOUND);
 		}
 
 

@@ -59,7 +59,8 @@ public class ContentAdministrationApi {
 	private static final String DEFAULT_PATH = "/";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContentAdministrationApi.class);
-
+	private static final String ERRORFILERENAME = "Error when renaming file";
+	private static final String IMAGES = "images";
 	@Inject
 	private ContentFacade contentFacade;
 	
@@ -177,7 +178,7 @@ public class ContentAdministrationApi {
 			return null;
 		} catch (Exception e) {
 			//throw new ServiceRuntimeException("Error while getting file bytes");
-			LOGGER.error("Error when renaming file",e);
+			LOGGER.error(ERRORFILERENAME,e);
 			throw new ServiceRuntimeException("Error while downloading file [" + fileName + "]");
 		}
 
@@ -201,7 +202,7 @@ public class ContentAdministrationApi {
 			return new FileStatus();
 		} catch (Exception e) {
 			//throw new ServiceRuntimeException("Error while getting file bytes");
-			LOGGER.error("Error when renaming file",e);
+			LOGGER.error(ERRORFILERENAME,e);
 			FileStatus fs = new FileStatus();
 			fs.setError(e.getMessage());
 			fs.setSuccess(false);
@@ -227,7 +228,7 @@ public class ContentAdministrationApi {
 			return new FileStatus();
 		} catch (Exception e) {
 			//throw new ServiceRuntimeException("Error while getting file bytes");
-			LOGGER.error("Error when renaming file",e);
+			LOGGER.error(ERRORFILERENAME,e);
 			FileStatus fs = new FileStatus();
 			fs.setError(e.getMessage());
 			fs.setSuccess(false);
@@ -252,9 +253,9 @@ public class ContentAdministrationApi {
 		ImageFile f = new ImageFile();
 		f.setDir(true);
 		f.setId(UUID.randomUUID().toString());
-		f.setName(DEFAULT_PATH + "images");
-		f.setUrl(DEFAULT_PATH + "images");
-		f.setPath(DEFAULT_PATH + "images");
+		f.setName(DEFAULT_PATH + IMAGES);
+		f.setUrl(DEFAULT_PATH + IMAGES);
+		f.setPath(DEFAULT_PATH + IMAGES);
 		return f;
 	}
 	

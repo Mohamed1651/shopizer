@@ -26,7 +26,7 @@ import freemarker.template.TemplateException;
  */
 @Component("sesEmailSender")
 public class SESEmailSenderImpl implements EmailModule {
-
+  private static final String UTF_8 = "UTF-8";
   @Inject
   private Configuration freemarkerMailConfiguration;
   
@@ -61,9 +61,9 @@ public class SESEmailSenderImpl implements EmailModule {
       SendEmailRequest request = new SendEmailRequest()
           .withDestination(new Destination().withToAddresses(email.getTo()))
           .withMessage(new Message()
-              .withBody(new Body().withHtml(new Content().withCharset("UTF-8").withData(prepareHtml(email)))
-                  .withText(new Content().withCharset("UTF-8").withData(TEXTBODY)))
-              .withSubject(new Content().withCharset("UTF-8").withData(email.getSubject())))
+              .withBody(new Body().withHtml(new Content().withCharset(UTF_8).withData(prepareHtml(email)))
+                  .withText(new Content().withCharset(UTF_8).withData(TEXTBODY)))
+              .withSubject(new Content().withCharset(UTF_8).withData(email.getSubject())))
           .withSource(email.getFromEmail());
           // Comment or remove the next line if you are not using a
           // configuration set

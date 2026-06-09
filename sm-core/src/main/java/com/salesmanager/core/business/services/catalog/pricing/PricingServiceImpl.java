@@ -30,7 +30,7 @@ import com.salesmanager.core.model.reference.currency.Currency;
 public class PricingServiceImpl implements PricingService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PricingServiceImpl.class);
-	
+	private static final String ERROR_FORMATTING_AMOUNT = "An error occured when trying to format an amount ";
 
 	@Inject
 	private ProductPriceUtils priceUtil;
@@ -67,7 +67,7 @@ public class PricingServiceImpl implements PricingService {
 		try {
 			return priceUtil.getStoreFormatedAmountWithCurrency(store,amount);
 		} catch (Exception e) {
-			LOGGER.error("An error occured when trying to format an amount " + amount.toString());
+			LOGGER.error(ERROR_FORMATTING_AMOUNT + amount.toString());
 			throw new ServiceException(e);
 		}
 	}
@@ -89,7 +89,7 @@ public class PricingServiceImpl implements PricingService {
 		try {
 			return priceUtil.getAdminFormatedAmount(store, amount);
 		} catch (Exception e) {
-			LOGGER.error("An error occured when trying to format an amount " + amount.toString());
+			LOGGER.error(ERROR_FORMATTING_AMOUNT + amount.toString());
 			throw new ServiceException(e);
 		}
 	}
@@ -100,7 +100,7 @@ public class PricingServiceImpl implements PricingService {
 		try {
 			return priceUtil.getAmount(amount);
 		} catch (Exception e) {
-			LOGGER.error("An error occured when trying to format an amount " + amount);
+			LOGGER.error(ERROR_FORMATTING_AMOUNT + amount);
 			throw new ServiceException(e);
 		}
 

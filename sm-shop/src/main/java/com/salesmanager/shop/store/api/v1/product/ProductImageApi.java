@@ -69,7 +69,7 @@ public class ProductImageApi {
 	private ReadableProductImageMapper readableProductImageMapper;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductImageApi.class);
-
+	private static final String ERROR_WHILE_DELETING_PRODUCT_IMAGE = "Error while deleting ProductImage";
 	/**
 	 * To be used with MultipartFile
 	 *
@@ -162,7 +162,7 @@ public class ProductImageApi {
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting ProductImage", e);
+			LOGGER.error(ERROR_WHILE_DELETING_PRODUCT_IMAGE, e);
 			try {
 				response.sendError(503, "Error while deleting ProductImage " + e.getMessage());
 			} catch (Exception ignore) {
@@ -182,7 +182,7 @@ public class ProductImageApi {
 				try {
 					productImageService.delete(productImage.get());
 				} catch (ServiceException e) {
-					LOGGER.error("Error while deleting ProductImage", e);
+					LOGGER.error(ERROR_WHILE_DELETING_PRODUCT_IMAGE, e);
 					throw new ServiceRuntimeException("ProductImage [" + imageId + "] cannot be deleted",e);
 					
 				}
@@ -299,7 +299,7 @@ public class ProductImageApi {
 			
 
 		} catch (Exception e) {
-			LOGGER.error("Error while deleting ProductImage", e);
+			LOGGER.error(ERROR_WHILE_DELETING_PRODUCT_IMAGE, e);
 			throw new ServiceRuntimeException("ProductImage [" + imageId + "] cannot be edited");
 		}
 	}

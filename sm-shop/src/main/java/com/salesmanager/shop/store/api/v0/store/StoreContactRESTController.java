@@ -42,7 +42,7 @@ import com.salesmanager.shop.utils.LocaleUtils;
 @Controller
 @RequestMapping("/services")
 public class StoreContactRESTController {
-	
+	private static final String MERCHANT_STORE_IS_NULL_FOR_CODE = "Merchant store is null for code ";
 	@Inject
 	private LanguageService languageService;
 	
@@ -80,8 +80,8 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code " + store);
-				response.sendError(503, "Merchant store is null for code " + store);
+				LOGGER.error(MERCHANT_STORE_IS_NULL_FOR_CODE + store);
+				response.sendError(503, MERCHANT_STORE_IS_NULL_FOR_CODE + store);
 				return null;
 			}
 			
@@ -126,8 +126,8 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code " + store);
-				response.sendError(503, "Merchant store is null for code " + store);
+				LOGGER.error(MERCHANT_STORE_IS_NULL_FOR_CODE + store);
+				response.sendError(503, MERCHANT_STORE_IS_NULL_FOR_CODE + store);
 				return null;
 			}
 			

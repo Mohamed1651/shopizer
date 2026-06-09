@@ -28,35 +28,49 @@ import com.salesmanager.core.modules.integration.IntegrationException;
 import com.salesmanager.core.modules.integration.payment.model.PaymentModule;
 
 public class BraintreePayment implements PaymentModule {
-
+	private static final String PUBLICKEY = "public_key";
+	private static final String MESSAGETEXT = "MESSAGETEXT";
+	private static final String MESSAGEPAYMENTERROR = "message.payment.error";
+	private static final String TRNORDERNUMBER = "TRNORDERNUMBER";
+	private static final String PRIVATEKEY = "private_key";
+	private static final String MERCHANTID = "merchant_id";
+	private static final String TRANSACTIONID = "TRANSACTIONID";
+	private static final String TRNAPPROVED = "TRNAPPROVED";
+	private static final String CONFIGURATIONMESSAGE = "Configuration cannot be null";
+	private static final String PRIVATEKEYMESSAGE = "private_key cannot be null";
+	private static final String PUBLICKEYMESSAGE = "public_key cannot be null";
+	private static final String MERCHANTIDMESSAGE = "merchant_id cannot be null";
+	private static final String ERRORMESSAGE = "Error: ";
 	@Override
 	public void validateModuleConfiguration(IntegrationConfiguration integrationConfiguration, MerchantStore store)
 			throws IntegrationException {
+
+
 		List<String> errorFields = null;
 		
 		
 		Map<String,String> keys = integrationConfiguration.getIntegrationKeys();
 		
 		//validate integrationKeys['merchant_id']
-		if(keys==null || StringUtils.isBlank(keys.get("merchant_id"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(MERCHANTID))) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("merchant_id");
+			errorFields.add(MERCHANTID);
 		}
 		
 		//validate integrationKeys['public_key']
-		if(keys==null || StringUtils.isBlank(keys.get("public_key"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(PUBLICKEY))) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("public_key");
+			errorFields.add(PUBLICKEY);
 		}
 		
 		//validate integrationKeys['private_key']
-		if(keys==null || StringUtils.isBlank(keys.get("private_key"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(PRIVATEKEY))) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("private_key");
+			errorFields.add(PRIVATEKEY);
 		}
 		
 		//validate integrationKeys['tokenization_key']
@@ -81,15 +95,15 @@ public class BraintreePayment implements PaymentModule {
 	public Transaction initTransaction(MerchantStore store, Customer customer, BigDecimal amount, Payment payment,
 			IntegrationConfiguration configuration, IntegrationModule module) throws IntegrationException {
 
-		Validate.notNull(configuration,"Configuration cannot be null");
+		Validate.notNull(configuration,CONFIGURATIONMESSAGE);
 		
-		String merchantId = configuration.getIntegrationKeys().get("merchant_id");
-		String publicKey = configuration.getIntegrationKeys().get("public_key");
-		String privateKey = configuration.getIntegrationKeys().get("private_key");
+		String merchantId = configuration.getIntegrationKeys().get(MERCHANTID);
+		String publicKey = configuration.getIntegrationKeys().get(PUBLICKEY);
+		String privateKey = configuration.getIntegrationKeys().get(PRIVATEKEY);
 		
-		Validate.notNull(merchantId,"merchant_id cannot be null");
-		Validate.notNull(publicKey,"public_key cannot be null");
-		Validate.notNull(privateKey,"private_key cannot be null");
+		Validate.notNull(merchantId,MERCHANTIDMESSAGE);
+		Validate.notNull(publicKey,PUBLICKEYMESSAGE);
+		Validate.notNull(privateKey,PRIVATEKEYMESSAGE);
 		
 		Environment environment= Environment.PRODUCTION;
 		if (configuration.getEnvironment().equals("TEST")) {// sandbox
@@ -121,15 +135,15 @@ public class BraintreePayment implements PaymentModule {
 			throws IntegrationException {
 
 
-		Validate.notNull(configuration,"Configuration cannot be null");
+		Validate.notNull(configuration,CONFIGURATIONMESSAGE);
 		
-		String merchantId = configuration.getIntegrationKeys().get("merchant_id");
-		String publicKey = configuration.getIntegrationKeys().get("public_key");
-		String privateKey = configuration.getIntegrationKeys().get("private_key");
+		String merchantId = configuration.getIntegrationKeys().get(MERCHANTID);
+		String publicKey = configuration.getIntegrationKeys().get(PUBLICKEY);
+		String privateKey = configuration.getIntegrationKeys().get(PRIVATEKEY);
 		
-		Validate.notNull(merchantId,"merchant_id cannot be null");
-		Validate.notNull(publicKey,"public_key cannot be null");
-		Validate.notNull(privateKey,"private_key cannot be null");
+		Validate.notNull(merchantId,MERCHANTIDMESSAGE);
+		Validate.notNull(publicKey,PUBLICKEYMESSAGE);
+		Validate.notNull(privateKey,PRIVATEKEYMESSAGE);
 		
 		String nonce = payment.getPaymentMetaData().get("paymentToken");
 		
@@ -137,7 +151,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 						"Can't process Braintree, missing authorization nounce");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 	    }
@@ -173,13 +187,13 @@ public class BraintreePayment implements PaymentModule {
         } else {
             String errorString = "";
             for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
+               errorString += ERRORMESSAGE + error.getCode() + ": " + error.getMessage() + "\n";
             }
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree authorization " + errorString);
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 
@@ -189,7 +203,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree, missing authorizationId");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
         }
@@ -199,10 +213,10 @@ public class BraintreePayment implements PaymentModule {
         trx.setTransactionDate(new Date());
         trx.setTransactionType(TransactionType.AUTHORIZE);
         trx.setPaymentType(PaymentType.CREDITCARD);
-        trx.getTransactionDetails().put("TRANSACTIONID", authorizationId);
-        trx.getTransactionDetails().put("TRNAPPROVED", null);
-        trx.getTransactionDetails().put("TRNORDERNUMBER", authorizationId);
-        trx.getTransactionDetails().put("MESSAGETEXT", null);
+        trx.getTransactionDetails().put(TRANSACTIONID, authorizationId);
+        trx.getTransactionDetails().put(TRNAPPROVED, null);
+        trx.getTransactionDetails().put(TRNORDERNUMBER, authorizationId);
+        trx.getTransactionDetails().put(MESSAGETEXT, null);
         
         return trx;
 		
@@ -211,23 +225,23 @@ public class BraintreePayment implements PaymentModule {
 	@Override
 	public Transaction capture(MerchantStore store, Customer customer, Order order, Transaction capturableTransaction,
 			IntegrationConfiguration configuration, IntegrationModule module) throws IntegrationException {
-		Validate.notNull(configuration,"Configuration cannot be null");
+		Validate.notNull(configuration,CONFIGURATIONMESSAGE);
 		
-		String merchantId = configuration.getIntegrationKeys().get("merchant_id");
-		String publicKey = configuration.getIntegrationKeys().get("public_key");
-		String privateKey = configuration.getIntegrationKeys().get("private_key");
+		String merchantId = configuration.getIntegrationKeys().get(MERCHANTID);
+		String publicKey = configuration.getIntegrationKeys().get(PUBLICKEY);
+		String privateKey = configuration.getIntegrationKeys().get(PRIVATEKEY);
 		
-		Validate.notNull(merchantId,"merchant_id cannot be null");
-		Validate.notNull(publicKey,"public_key cannot be null");
-		Validate.notNull(privateKey,"private_key cannot be null");
+		Validate.notNull(merchantId,MERCHANTIDMESSAGE);
+		Validate.notNull(publicKey,PUBLICKEYMESSAGE);
+		Validate.notNull(privateKey,PRIVATEKEYMESSAGE);
 		
-		String auth = capturableTransaction.getTransactionDetails().get("TRANSACTIONID");
+		String auth = capturableTransaction.getTransactionDetails().get(TRANSACTIONID);
 		
 	    if(StringUtils.isBlank(auth)) {
 			IntegrationException te = new IntegrationException(
 						"Can't process Braintree, missing authorization id");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 	    }
@@ -257,13 +271,13 @@ public class BraintreePayment implements PaymentModule {
         } else {
             String errorString = "";
             for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
+               errorString += ERRORMESSAGE + error.getCode() + ": " + error.getMessage() + "\n";
             }
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree refund " + errorString);
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 
@@ -273,7 +287,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree, missing original transaction");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
         }
@@ -283,10 +297,10 @@ public class BraintreePayment implements PaymentModule {
         trx.setTransactionDate(new Date());
         trx.setTransactionType(TransactionType.CAPTURE);
         trx.setPaymentType(PaymentType.CREDITCARD);
-        trx.getTransactionDetails().put("TRANSACTIONID", trxId);
-        trx.getTransactionDetails().put("TRNAPPROVED", null);
-        trx.getTransactionDetails().put("TRNORDERNUMBER", trxId);
-        trx.getTransactionDetails().put("MESSAGETEXT", null);
+        trx.getTransactionDetails().put(TRANSACTIONID, trxId);
+        trx.getTransactionDetails().put(TRNAPPROVED, null);
+        trx.getTransactionDetails().put(TRNORDERNUMBER, trxId);
+        trx.getTransactionDetails().put(MESSAGETEXT, null);
         
         return trx;
 		
@@ -298,15 +312,15 @@ public class BraintreePayment implements PaymentModule {
 			BigDecimal amount, Payment payment, IntegrationConfiguration configuration, IntegrationModule module)
 			throws IntegrationException {
 
-		Validate.notNull(configuration,"Configuration cannot be null");
+		Validate.notNull(configuration,CONFIGURATIONMESSAGE);
 		
-		String merchantId = configuration.getIntegrationKeys().get("merchant_id");
-		String publicKey = configuration.getIntegrationKeys().get("public_key");
-		String privateKey = configuration.getIntegrationKeys().get("private_key");
+		String merchantId = configuration.getIntegrationKeys().get(MERCHANTID);
+		String publicKey = configuration.getIntegrationKeys().get(PUBLICKEY);
+		String privateKey = configuration.getIntegrationKeys().get(PRIVATEKEY);
 		
-		Validate.notNull(merchantId,"merchant_id cannot be null");
-		Validate.notNull(publicKey,"public_key cannot be null");
-		Validate.notNull(privateKey,"private_key cannot be null");
+		Validate.notNull(merchantId,MERCHANTIDMESSAGE);
+		Validate.notNull(publicKey,PUBLICKEYMESSAGE);
+		Validate.notNull(privateKey,PRIVATEKEYMESSAGE);
 		
 		String nonce = payment.getPaymentMetaData().get("paymentToken");//paymentToken
 		
@@ -314,7 +328,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 						"Can't process Braintree, missing authorization nounce");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 	    }
@@ -347,13 +361,13 @@ public class BraintreePayment implements PaymentModule {
         } else {
             String errorString = "";
             for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
+               errorString += ERRORMESSAGE + error.getCode() + ": " + error.getMessage() + "\n";
             }
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree auth + capture " + errorString);
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 
@@ -363,7 +377,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree, missing trxId");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
         }
@@ -373,10 +387,10 @@ public class BraintreePayment implements PaymentModule {
         trx.setTransactionDate(new Date());
         trx.setTransactionType(TransactionType.AUTHORIZECAPTURE);
         trx.setPaymentType(PaymentType.CREDITCARD);
-        trx.getTransactionDetails().put("TRANSACTIONID", trxId);
-        trx.getTransactionDetails().put("TRNAPPROVED", null);
-        trx.getTransactionDetails().put("TRNORDERNUMBER", trxId);
-        trx.getTransactionDetails().put("MESSAGETEXT", null);
+        trx.getTransactionDetails().put(TRANSACTIONID, trxId);
+        trx.getTransactionDetails().put(TRNAPPROVED, null);
+        trx.getTransactionDetails().put(TRNORDERNUMBER, trxId);
+        trx.getTransactionDetails().put(MESSAGETEXT, null);
         
         return trx;
 		
@@ -389,21 +403,21 @@ public class BraintreePayment implements PaymentModule {
 			throws IntegrationException {
 
 		
-		String merchantId = configuration.getIntegrationKeys().get("merchant_id");
-		String publicKey = configuration.getIntegrationKeys().get("public_key");
-		String privateKey = configuration.getIntegrationKeys().get("private_key");
+		String merchantId = configuration.getIntegrationKeys().get(MERCHANTID);
+		String publicKey = configuration.getIntegrationKeys().get(PUBLICKEY);
+		String privateKey = configuration.getIntegrationKeys().get(PRIVATEKEY);
 		
-		Validate.notNull(merchantId,"merchant_id cannot be null");
-		Validate.notNull(publicKey,"public_key cannot be null");
-		Validate.notNull(privateKey,"private_key cannot be null");
+		Validate.notNull(merchantId,MERCHANTIDMESSAGE);
+		Validate.notNull(publicKey,PUBLICKEYMESSAGE);
+		Validate.notNull(privateKey,PRIVATEKEYMESSAGE);
 		
-		String auth = transaction.getTransactionDetails().get("TRANSACTIONID");
+		String auth = transaction.getTransactionDetails().get(TRANSACTIONID);
 		
 	    if(StringUtils.isBlank(auth)) {
 			IntegrationException te = new IntegrationException(
 						"Can't process Braintree refund, missing transaction id");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 	    }
@@ -431,13 +445,13 @@ public class BraintreePayment implements PaymentModule {
         } else {
             String errorString = "";
             for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-               errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
+               errorString += ERRORMESSAGE + error.getCode() + ": " + error.getMessage() + "\n";
             }
             
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree refund " + errorString);
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
 
@@ -447,7 +461,7 @@ public class BraintreePayment implements PaymentModule {
 			IntegrationException te = new IntegrationException(
 					"Can't process Braintree refund, missing original transaction");
 			te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
-			te.setMessageCode("message.payment.error");
+			te.setMessageCode(MESSAGEPAYMENTERROR);
 			te.setErrorCode(IntegrationException.TRANSACTION_EXCEPTION);
 			throw te;
         }
@@ -457,10 +471,10 @@ public class BraintreePayment implements PaymentModule {
         trx.setTransactionDate(new Date());
         trx.setTransactionType(TransactionType.REFUND);
         trx.setPaymentType(PaymentType.CREDITCARD);
-        trx.getTransactionDetails().put("TRANSACTIONID", trxId);
-        trx.getTransactionDetails().put("TRNAPPROVED", null);
-        trx.getTransactionDetails().put("TRNORDERNUMBER", trxId);
-        trx.getTransactionDetails().put("MESSAGETEXT", null);
+        trx.getTransactionDetails().put(TRANSACTIONID, trxId);
+        trx.getTransactionDetails().put(TRNAPPROVED, null);
+        trx.getTransactionDetails().put(TRNORDERNUMBER, trxId);
+        trx.getTransactionDetails().put(MESSAGETEXT, null);
         
         return trx;
 		

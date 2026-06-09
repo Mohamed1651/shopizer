@@ -49,8 +49,22 @@ public class BeanStreamPayment implements PaymentModule {
 	
 	@Inject
 	private MerchantLogService merchantLogService;
-	
-
+	private static final String MERCHANT_ID_PARAM = "merchant_id=";
+	private static final String MERCHANT_ID = "merchantid";
+	private static final String USERNAME_ID_PARAM = "username=";
+	private static final String USERNAME_PARAM = "username";
+	private static final String PASSWORD_PARAM = "password";
+	private static final String MESSAGETEXT_PARAM = "MESSAGETEXT";
+	private static final String INTERNALORDERID_PARAM = "INTERNALORDERID";
+	private static final String TRNAMOUNT_PARAM = "trnAmount=";
+	private static final String TRNORDERNUMBER_PARAM = "trnOrderNumber=";
+	private static final String TRNORDERNUMBER = "TRNORDERNUMBER";
+	private static final String TRANSACTIONID = "TRANSACTIONID";
+	private static final String REQUESTSENTMESSAGE = "REQUEST SENT TO BEANSTREAM -> ";
+	private static final String PASSWORD = "password=";
+	private static final String TRNTYPEPARAM = "trnType=";
+	private static final String TRNAPPROVED = "TRNAPPROVED";
+	private static final String REQUESTTYPEBACKEND = "requestType=BACKEND&";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(BeanStreamPayment.class);
 
@@ -89,7 +103,7 @@ public class BeanStreamPayment implements PaymentModule {
 				//authorize a preauth 
 
 		
-				String trnID = capturableTransaction.getTransactionDetails().get("TRANSACTIONID");
+				String trnID = capturableTransaction.getTransactionDetails().get(TRANSACTIONID);
 				
 				String amnt = productPriceUtils.getAdminFormatedAmount(store, order.getTotal());
 				
@@ -100,16 +114,16 @@ public class BeanStreamPayment implements PaymentModule {
 				**/
 				
 				StringBuilder messageString = new StringBuilder();
-				messageString.append("requestType=BACKEND&");
-				messageString.append("merchant_id=").append(configuration.getIntegrationKeys().get("merchantid")).append("&");
-				messageString.append("trnType=").append("PAC").append("&");
-				messageString.append("username=").append(configuration.getIntegrationKeys().get("username")).append("&");
-				messageString.append("password=").append(configuration.getIntegrationKeys().get("password")).append("&");
-				messageString.append("trnAmount=").append(amnt).append("&");
+				messageString.append(REQUESTTYPEBACKEND);
+				messageString.append(MERCHANT_ID_PARAM).append(configuration.getIntegrationKeys().get(MERCHANT_ID)).append("&");
+				messageString.append(TRNTYPEPARAM).append("PAC").append("&");
+				messageString.append(USERNAME_ID_PARAM).append(configuration.getIntegrationKeys().get(USERNAME_PARAM)).append("&");
+				messageString.append(PASSWORD).append(configuration.getIntegrationKeys().get(PASSWORD_PARAM)).append("&");
+				messageString.append(TRNAMOUNT_PARAM).append(amnt).append("&");
 				messageString.append("adjId=").append(trnID).append("&");
 				messageString.append("trnID=").append(trnID);
 				
-				LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageString.toString());
+				LOGGER.debug(REQUESTSENTMESSAGE + messageString.toString());
 
 
 
@@ -178,7 +192,7 @@ public class BeanStreamPayment implements PaymentModule {
 							.append(configs.getPort())
 							.append(configs.getUri()).toString();
 
-			String trnID = transaction.getTransactionDetails().get("TRANSACTIONID");
+			String trnID = transaction.getTransactionDetails().get(TRANSACTIONID);
 			
 			String amnt = productPriceUtils.getAdminFormatedAmount(store, amount);
 			
@@ -192,16 +206,16 @@ public class BeanStreamPayment implements PaymentModule {
 
 
 
-			messageString.append("requestType=BACKEND&");
-			messageString.append("merchant_id=").append(configuration.getIntegrationKeys().get("merchantid")).append("&");
-			messageString.append("trnType=").append("R").append("&");
-			messageString.append("username=").append(configuration.getIntegrationKeys().get("username")).append("&");
-			messageString.append("password=").append(configuration.getIntegrationKeys().get("password")).append("&");
-			messageString.append("trnOrderNumber=").append(transaction.getTransactionDetails().get("TRNORDERNUMBER")).append("&");
-			messageString.append("trnAmount=").append(amnt).append("&");
+			messageString.append(REQUESTTYPEBACKEND);
+			messageString.append(MERCHANT_ID_PARAM).append(configuration.getIntegrationKeys().get(MERCHANT_ID)).append("&");
+			messageString.append(TRNTYPEPARAM).append("R").append("&");
+			messageString.append(USERNAME_ID_PARAM).append(configuration.getIntegrationKeys().get(USERNAME_PARAM)).append("&");
+			messageString.append(PASSWORD).append(configuration.getIntegrationKeys().get(PASSWORD_PARAM)).append("&");
+			messageString.append(TRNORDERNUMBER_PARAM).append(transaction.getTransactionDetails().get(TRNORDERNUMBER)).append("&");
+			messageString.append(TRNAMOUNT_PARAM).append(amnt).append("&");
 			messageString.append("adjId=").append(trnID);
 			
-			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageString.toString());
+			LOGGER.debug(REQUESTSENTMESSAGE + messageString.toString());
 	
 			
 		
@@ -372,16 +386,16 @@ public class BeanStreamPayment implements PaymentModule {
 			//check
 			//trnApproved=1&trnId=10003067&messageId=1&messageText=Approved&trnOrderNumber=E40089&authCode=TEST&errorType=N&errorFields=
 
-			String transactionApproved = nvp.get("TRNAPPROVED");
+			String transactionApproved = nvp.get(TRNAPPROVED);
 			String transactionId = nvp.get("TRNID");
 			String messageId = nvp.get("MESSAGEID");
-			String messageText = (String)nvp.get("MESSAGETEXT");
-			String orderId = (String)nvp.get("TRNORDERNUMBER");
+			String messageText = (String)nvp.get(MESSAGETEXT_PARAM);
+			String orderId = (String)nvp.get(TRNORDERNUMBER);
 			String authCode = (String)nvp.get("AUTHCODE");
 			String errorType = (String)nvp.get("ERRORTYPE");
 			String errorFields = (String)nvp.get("ERRORFIELDS");
 			if(!StringUtils.isBlank(orderNumber)) {
-				nvp.put("INTERNALORDERID", orderNumber);
+				nvp.put(INTERNALORDERID_PARAM, orderNumber);
 			}
 			
 			if(StringUtils.isBlank(transactionApproved)) {
@@ -511,18 +525,18 @@ public class BeanStreamPayment implements PaymentModule {
 		
 		CreditCardPayment creditCardPayment = (CreditCardPayment)payment;
 
-		messageString.append("requestType=BACKEND&");
-		messageString.append("merchant_id=").append(configuration.getIntegrationKeys().get("merchantid")).append("&");
-		messageString.append("trnType=").append(transactionType).append("&");
-		messageString.append("username=").append(configuration.getIntegrationKeys().get("username")).append("&");
-		messageString.append("password=").append(configuration.getIntegrationKeys().get("password")).append("&");
+		messageString.append(REQUESTTYPEBACKEND);
+		messageString.append(MERCHANT_ID_PARAM).append(configuration.getIntegrationKeys().get(MERCHANT_ID)).append("&");
+		messageString.append(TRNTYPEPARAM).append(transactionType).append("&");
+		messageString.append(USERNAME_ID_PARAM).append(configuration.getIntegrationKeys().get(USERNAME_PARAM)).append("&");
+		messageString.append(PASSWORD).append(configuration.getIntegrationKeys().get(PASSWORD_PARAM)).append("&");
 		messageString.append("orderNumber=").append(orderNumber).append("&");
 		messageString.append("trnCardOwner=").append(creditCardPayment.getCardOwner()).append("&");
 		messageString.append("trnCardNumber=").append(creditCardPayment.getCreditCardNumber()).append("&");
 		messageString.append("trnExpMonth=").append(creditCardPayment.getExpirationMonth()).append("&");
 		messageString.append("trnExpYear=").append(creditCardPayment.getExpirationYear().substring(2)).append("&");
 		messageString.append("trnCardCvd=").append(creditCardPayment.getCredidCardValidationNumber()).append("&");
-		messageString.append("trnAmount=").append(amnt).append("&");
+		messageString.append(TRNAMOUNT_PARAM).append(amnt).append("&");
 		
 		StringBuilder nm = new StringBuilder();
 		nm.append(customer.getBilling().getFirstName()).append(" ").append(customer.getBilling().getLastName());
@@ -588,16 +602,16 @@ public class BeanStreamPayment implements PaymentModule {
 			StringBuilder messageLogString = new StringBuilder();
 			
 			
-			messageLogString.append("requestType=BACKEND&");
-			messageLogString.append("merchant_id=").append(configuration.getIntegrationKeys().get("merchantid")).append("&");
-			messageLogString.append("trnType=").append(type).append("&");
+			messageLogString.append(REQUESTTYPEBACKEND);
+			messageLogString.append(MERCHANT_ID_PARAM).append(configuration.getIntegrationKeys().get(MERCHANT_ID)).append("&");
+			messageLogString.append(TRNTYPEPARAM).append(type).append("&");
 			messageLogString.append("orderNumber=").append(orderNumber).append("&");
 			messageLogString.append("trnCardOwner=").append(creditCardPayment.getCardOwner()).append("&");
 			messageLogString.append("trnCardNumber=").append(CreditCardUtils.maskCardNumber(creditCardPayment.getCreditCardNumber())).append("&");
 			messageLogString.append("trnExpMonth=").append(creditCardPayment.getExpirationMonth()).append("&");
 			messageLogString.append("trnExpYear=").append(creditCardPayment.getExpirationYear()).append("&");
 			messageLogString.append("trnCardCvd=").append(creditCardPayment.getCredidCardValidationNumber()).append("&");
-			messageLogString.append("trnAmount=").append(amnt).append("&");
+			messageLogString.append(TRNAMOUNT_PARAM).append(amnt).append("&");
 
 			messageLogString.append("ordName=").append(nm.toString()).append("&");
 			messageLogString.append("ordAddress1=").append(customer.getBilling().getAddress()).append("&");
@@ -617,7 +631,7 @@ public class BeanStreamPayment implements PaymentModule {
 			/** debug **/
 	
 	
-			LOGGER.debug("REQUEST SENT TO BEANSTREAM -> " + messageLogString.toString());
+			LOGGER.debug(REQUESTSENTMESSAGE + messageLogString.toString());
 
 			
 			URL postURL = new URL(server);
@@ -658,12 +672,12 @@ public class BeanStreamPayment implements PaymentModule {
 		transaction.setTransactionDate(new Date());
 		transaction.setTransactionType(transactionType);
 		transaction.setPaymentType(PaymentType.CREDITCARD);
-		transaction.getTransactionDetails().put("TRANSACTIONID", (String)nvp.get("TRNID"));
-		transaction.getTransactionDetails().put("TRNAPPROVED", (String)nvp.get("TRNAPPROVED"));
-		transaction.getTransactionDetails().put("TRNORDERNUMBER", (String)nvp.get("TRNORDERNUMBER"));
-		transaction.getTransactionDetails().put("MESSAGETEXT", (String)nvp.get("MESSAGETEXT"));
-		if(nvp.get("INTERNALORDERID")!=null) {
-			transaction.getTransactionDetails().put("INTERNALORDERID", (String)nvp.get("INTERNALORDERID"));
+		transaction.getTransactionDetails().put(TRANSACTIONID, (String)nvp.get("TRNID"));
+		transaction.getTransactionDetails().put(TRNAPPROVED, (String)nvp.get(TRNAPPROVED));
+		transaction.getTransactionDetails().put(TRNORDERNUMBER, (String)nvp.get(TRNORDERNUMBER));
+		transaction.getTransactionDetails().put(MESSAGETEXT_PARAM, (String)nvp.get(MESSAGETEXT_PARAM));
+		if(nvp.get(INTERNALORDERID_PARAM)!=null) {
+			transaction.getTransactionDetails().put(INTERNALORDERID_PARAM, (String)nvp.get(INTERNALORDERID_PARAM));
 		}
 		return transaction;
 		
@@ -698,26 +712,26 @@ public class BeanStreamPayment implements PaymentModule {
 		Map<String,String> keys = integrationConfiguration.getIntegrationKeys();
 		
 		//validate integrationKeys['merchantid']
-		if(keys==null || StringUtils.isBlank(keys.get("merchantid"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(MERCHANT_ID))) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("merchantid");
+			errorFields.add(MERCHANT_ID);
 		}
 		
 		//validate integrationKeys['username']
-		if(keys==null || StringUtils.isBlank(keys.get("username"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(USERNAME_PARAM))) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("username");
+			errorFields.add(USERNAME_PARAM);
 		}
 		
 		
 		//validate integrationKeys['password']
-		if(keys==null || StringUtils.isBlank(keys.get("password"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(PASSWORD_PARAM))) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("password");
+			errorFields.add(PASSWORD_PARAM);
 		}
 
 

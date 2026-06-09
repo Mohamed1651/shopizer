@@ -25,7 +25,8 @@ import com.salesmanager.shop.store.controller.product.facade.ProductTypeFacade;
 
 @Service
 public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
-
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+	private static final String LANGUAGE_CANNOT_BE_NULL = "Language cannot be null";
 	@Autowired
 	private PersistableProductOptionSetMapper persistableProductOptionSetMapper;
 
@@ -40,8 +41,8 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public ReadableProductOptionSet get(Long id, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		ProductOptionSet optionSet = productOptionSetService.getById(store, id, language);
 		if (optionSet == null) {
 			throw new ResourceNotFoundException(
@@ -53,8 +54,8 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public List<ReadableProductOptionSet> list(MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 
 		try {
 			List<ProductOptionSet> optionSets = productOptionSetService.listByStore(store, language);
@@ -71,8 +72,8 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public void create(PersistableProductOptionSet optionSet, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Validate.notNull(optionSet, "PersistableProductOptionSet cannot be null");
 
 		if (this.exists(optionSet.getCode(), store)) {
@@ -91,8 +92,8 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public void update(Long id, PersistableProductOptionSet optionSet, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Validate.notNull(optionSet, "PersistableProductOptionSet cannot be null");
 
 		ProductOptionSet opt = productOptionSetService.getById(store, id, language);
@@ -115,7 +116,7 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public void delete(Long id, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(id, "id cannot be null");
 		ProductOptionSet opt = productOptionSetService.getById(id);
 		if (opt == null) {
@@ -136,7 +137,7 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public boolean exists(String code, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(code, "code cannot be null");
 		ProductOptionSet optionSet = productOptionSetService.getCode(store, code);
 		if (optionSet != null) {
@@ -148,8 +149,8 @@ public class ProductOptionSetFacadeImpl implements ProductOptionSetFacade {
 
 	@Override
 	public List<ReadableProductOptionSet> list(MerchantStore store, Language language, String type) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Validate.notNull(type, "Product type cannot be null");
 
 		// find product type by id

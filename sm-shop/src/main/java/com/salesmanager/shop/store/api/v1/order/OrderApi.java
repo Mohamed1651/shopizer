@@ -99,6 +99,7 @@ public class OrderApi {
 	private CredentialsService credentialsService;
 
 	private static final String DEFAULT_ORDER_LIST_COUNT = "25";
+	private static final String ORDER_NULL_CUSTOMER = "Order is null for customer ";
 
 	/**
 	 * Get a list of orders for a given customer accept request parameter
@@ -315,15 +316,15 @@ public class OrderApi {
 		}
 
 		if (order.getCustomer() == null) {
-			LOGGER.error("Order is null for customer " + principal);
-			response.sendError(404, "Order is null for customer " + principal);
+			LOGGER.error(ORDER_NULL_CUSTOMER + principal);
+			response.sendError(404, ORDER_NULL_CUSTOMER + principal);
 			return null;
 		}
 
 		if (order.getCustomer().getId() != null
 				&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {
-			LOGGER.error("Order is null for customer " + principal);
-			response.sendError(404, "Order is null for customer " + principal);
+			LOGGER.error(ORDER_NULL_CUSTOMER + principal);
+			response.sendError(404, ORDER_NULL_CUSTOMER + principal);
 			return null;
 		}
 

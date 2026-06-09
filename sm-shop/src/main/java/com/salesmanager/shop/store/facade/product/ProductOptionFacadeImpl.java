@@ -48,6 +48,8 @@ import com.salesmanager.shop.store.controller.product.facade.ProductOptionFacade
 @Service
 public class ProductOptionFacadeImpl implements ProductOptionFacade {
 
+	private static final String STORE_CANNOT_BE_NULL = "Store cannot be null";
+	private static final String STORE_CODE_MUST_NOT_BE_NULL = "Store code must not be null";
 	@Autowired
 	private ProductOptionService productOptionService;
 
@@ -181,7 +183,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 	public ReadableProductOptionEntity getOption(Long optionId, MerchantStore store, Language language) {
 
 		Validate.notNull(optionId, "Option id cannot be null");
-		Validate.notNull(store, "Store cannot be null");
+		Validate.notNull(store, STORE_CANNOT_BE_NULL);
 
 		ProductOption option = productOptionService.getById(store, optionId);
 
@@ -195,7 +197,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 	@Override
 	public boolean optionExists(String code, MerchantStore store) {
 		Validate.notNull(code, "Option code must not be null");
-		Validate.notNull(store, "Store code must not be null");
+		Validate.notNull(store, STORE_CODE_MUST_NOT_BE_NULL);
 		boolean exists = false;
 		ProductOption option = productOptionService.getByCode(store, code);
 		if (option != null) {
@@ -207,7 +209,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 	@Override
 	public boolean optionValueExists(String code, MerchantStore store) {
 		Validate.notNull(code, "Option value code must not be null");
-		Validate.notNull(store, "Store code must not be null");
+		Validate.notNull(store, STORE_CODE_MUST_NOT_BE_NULL);
 		boolean exists = false;
 		ProductOptionValue optionValue = productOptionValueService.getByCode(store, code);
 		if (optionValue != null) {
@@ -220,7 +222,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 	public ReadableProductOptionValue saveOptionValue(PersistableProductOptionValue optionValue,
 			MerchantStore store, Language language) {
 		Validate.notNull(optionValue, "Option value code must not be null");
-		Validate.notNull(store, "Store code must not be null");
+		Validate.notNull(store, STORE_CODE_MUST_NOT_BE_NULL);
 
 		ProductOptionValue value = new ProductOptionValue();
 		if (optionValue.getId() != null && optionValue.getId().longValue() > 0) {
@@ -254,7 +256,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 	public ReadableProductOptionValue getOptionValue(Long optionValueId, MerchantStore store, Language language) {
 
 		Validate.notNull(optionValueId, "OptionValue id cannot be null");
-		Validate.notNull(store, "Store cannot be null");
+		Validate.notNull(store, STORE_CANNOT_BE_NULL);
 
 		ProductOptionValue optionValue = productOptionValueService.getById(store, optionValueId);
 
@@ -272,7 +274,7 @@ public class ProductOptionFacadeImpl implements ProductOptionFacade {
 		Validate.notNull(attribute, "ProductAttribute cannot be null");
 		Validate.notNull(attribute.getOption(), "ProductAttribute option cannot be null");
 		Validate.notNull(attribute.getOptionValue(), "ProductAttribute option value cannot be null");
-		Validate.notNull(store, "Store cannot be null");
+		Validate.notNull(store, STORE_CANNOT_BE_NULL);
 
 		attribute.setProductId(productId);
 		ProductAttribute attr = new ProductAttribute();

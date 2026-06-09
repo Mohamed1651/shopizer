@@ -60,7 +60,7 @@ public class OrderTotalApi {
   @Inject private OrderService orderService;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(OrderTotalApi.class);
-
+  private static final String CART_ID = "Cart id ";
   /**
    * This service calculates order total for a given shopping cart This method takes in
    * consideration any applicable sales tax An optional request parameter accepts a quote id that
@@ -101,19 +101,19 @@ public class OrderTotalApi {
       ShoppingCart shoppingCart = shoppingCartFacade.getShoppingCartModel(id, merchantStore);
 
       if (shoppingCart == null) {
-        response.sendError(404, "Cart id " + id + " does not exist");
+        response.sendError(404, CART_ID + id + " does not exist");
         return null;
       }
 
       if (shoppingCart.getCustomerId() == null) {
         response.sendError(
-            404, "Cart id " + id + " does not exist for exist for user " + userName);
+            404, CART_ID + id + " does not exist for exist for user " + userName);
         return null;
       }
 
       if (shoppingCart.getCustomerId().longValue() != customer.getId().longValue()) {
         response.sendError(
-            404, "Cart id " + id + " does not exist for exist for user " + userName);
+            404, CART_ID + id + " does not exist for exist for user " + userName);
         return null;
       }
 
