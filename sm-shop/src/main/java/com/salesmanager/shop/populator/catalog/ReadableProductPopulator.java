@@ -272,18 +272,14 @@ public class ReadableProductPopulator extends
 
 				//split read only and options
 				//Map<Long,ReadableProductAttribute> readOnlyAttributes = null;
-				Map<Long,ReadableProductProperty> properties = null;
 				Map<Long,ReadableProductOption> selectableOptions = null;
 
 				if(!CollectionUtils.isEmpty(attributes)) {
 
 					for(ProductAttribute attribute : attributes) {
 							ReadableProductOption opt = null;
-							ReadableProductAttribute attr = null;
 							ReadableProductProperty property = null;
-							ReadableProductPropertyValue propertyValue = null;
 							ReadableProductOptionValue optValue = new ReadableProductOptionValue();
-							ReadableProductAttributeValue attrValue = new ReadableProductAttributeValue();
 
 							ProductOptionValue optionValue = attribute.getProductOptionValue();
 

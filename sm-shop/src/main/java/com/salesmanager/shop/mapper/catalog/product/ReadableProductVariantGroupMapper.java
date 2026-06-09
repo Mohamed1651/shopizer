@@ -64,7 +64,7 @@ public class ReadableProductVariantGroupMapper implements Mapper<ProductVariantG
 		
 		Map<Long,ReadableImage> finalList = new HashMap<Long, ReadableImage>();
 		
-		List<ReadableImage> originalList = source.getImages().stream()
+		source.getImages().stream()
 				.map(i -> this.image(finalList, i, store, language))
 				.collect(Collectors.toList());
 		

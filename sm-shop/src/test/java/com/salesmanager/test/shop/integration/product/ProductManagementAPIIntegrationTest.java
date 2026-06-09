@@ -295,7 +295,6 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 		final String image = "/Users/carlsamson/Documents/csti/IMG_4626.jpg";
 		// String image = "C:/personal/em/pictures-misc/IMG_2675.JPG";
 
-		final File imgPath = new File(image);
 
 		// PersistableImage persistableImage = new PersistableImage();
 
@@ -366,8 +365,6 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 		// post to create category web service
 		final ResponseEntity response = restTemplate.postForEntity("http://localhost:8080/api/v1/product", entity,
 				PersistableProduct.class);
-
-		final PersistableProduct prod = (PersistableProduct) response.getBody();
 
 		System.out.println("---------------------");
 

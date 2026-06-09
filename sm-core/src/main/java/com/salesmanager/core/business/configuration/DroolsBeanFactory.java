@@ -79,12 +79,6 @@ public class DroolsBeanFactory {
     }
 
     public KieSession getKieSession(Resource dt) {
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem()
-            .write(dt);
-
-       KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem)
-            .buildAll();
-
         KieRepository kieRepository = kieServices.getRepository();
 
         ReleaseId krDefaultReleaseId = kieRepository.getDefaultReleaseId();

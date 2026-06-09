@@ -137,8 +137,6 @@ public class ProductV2ManagementAPIIntegrationTest extends ServicesTestSupport {
 		white.getDescriptions().add(mediumEn);
 		
 		//create variantions
-		PersistableProductVariation whiteVariation = new PersistableProductVariation();
-		PersistableProductVariation mediumVariation = new PersistableProductVariation();
 		// toto
 		//create variants
 	}

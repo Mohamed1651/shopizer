@@ -167,10 +167,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 
 				for (ProductAttribute attribute : attributes) {
 					ReadableProductOption opt = null;
-					ReadableProductAttribute attr = null;
 					ReadableProductProperty property = null;
-					ReadableProductPropertyValue propertyValue = null;
-					ReadableProductAttributeValue attrValue = new ReadableProductAttributeValue();
 
 					ProductOptionValue optionValue = attribute.getProductOptionValue();
 
@@ -288,8 +285,6 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 				}
 			}
 		}
-		
-		ReadableProductVariant defaultInstance = null;
 
 		// variants
 		if (!CollectionUtils.isEmpty(source.getVariants()))
@@ -309,7 +304,7 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 			 */
 			
 			//get default instance
-			defaultInstance = instances.stream().filter(i -> i.isDefaultSelection()).findAny().orElse(null);
+			instances.stream().filter(i -> i.isDefaultSelection()).findAny().orElse(null);
 			
 
 			/**

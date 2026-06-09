@@ -118,7 +118,6 @@ public class ProductCommonFacadeImpl implements ProductCommonFacade {
 		Validate.notNull(product.getId(), "Product id must not be null");
 
 		// get original product
-		Product productModel = productService.getById(product.getId());
 
 
 	}

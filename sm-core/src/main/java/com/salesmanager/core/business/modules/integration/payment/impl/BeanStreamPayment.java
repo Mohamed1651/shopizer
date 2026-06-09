@@ -387,13 +387,8 @@ public class BeanStreamPayment implements PaymentModule {
 			//trnApproved=1&trnId=10003067&messageId=1&messageText=Approved&trnOrderNumber=E40089&authCode=TEST&errorType=N&errorFields=
 
 			String transactionApproved = nvp.get(TRNAPPROVED);
-			String transactionId = nvp.get("TRNID");
 			String messageId = nvp.get("MESSAGEID");
 			String messageText = (String)nvp.get(MESSAGETEXT_PARAM);
-			String orderId = (String)nvp.get(TRNORDERNUMBER);
-			String authCode = (String)nvp.get("AUTHCODE");
-			String errorType = (String)nvp.get("ERRORTYPE");
-			String errorFields = (String)nvp.get("ERRORFIELDS");
 			if(!StringUtils.isBlank(orderNumber)) {
 				nvp.put(INTERNALORDERID_PARAM, orderNumber);
 			}

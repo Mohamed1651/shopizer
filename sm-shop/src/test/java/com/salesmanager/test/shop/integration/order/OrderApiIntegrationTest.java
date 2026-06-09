@@ -17,7 +17,7 @@ public class OrderApiIntegrationTest extends ServicesTestSupport {
     public void createOrder() throws Exception {
     	
     	//create cart
-    	ReadableShoppingCart cart = super.sampleCart();
+    	super.sampleCart();
     	
     	//create order
     }

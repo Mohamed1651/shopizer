@@ -99,8 +99,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     	if(requestUrl.contains("/api/v1/private") || requestUrl.contains("/api/v2/private")) {
     		
     		//setHeader(request,response);  
-    		
-    		Enumeration<String> headers = request.getHeaderNames();
+
     		//while(headers.hasMoreElements()) {
     			//LOGGER.debug(headers.nextElement());
     		//}

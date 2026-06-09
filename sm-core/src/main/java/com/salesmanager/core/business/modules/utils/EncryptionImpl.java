@@ -65,7 +65,6 @@ public final class EncryptionImpl implements Encryption {
 		if (data == null) {
 			return null;
 		} else {
-			int len = data.length;
 			String str = "";
 			for (byte datum : data) {
 				if ((datum & 0xFF) < 16) {

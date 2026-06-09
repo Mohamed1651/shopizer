@@ -236,7 +236,7 @@ public class OrderFacadeImpl implements OrderFacade {
 		populator.setShoppingCartService(shoppingCartService);
 
 		for (PersistableOrderProduct orderProduct : orderProducts) {
-			ShoppingCartItem item = populator.populate(orderProduct, new ShoppingCartItem(), store, language);
+			populator.populate(orderProduct, new ShoppingCartItem(), store, language);
 		}
 
 		Customer customer = customer(order.getCustomer(), store, language);
@@ -1296,7 +1296,6 @@ public class OrderFacadeImpl implements OrderFacade {
 
 			BigDecimal formattedSubmittedAmount = productPriceUtils.getAmount(submitedAmount);
 
-			BigDecimal submitedAmountFormat = productPriceUtils.getAmount(submitedAmount);
 
 			BigDecimal calculatedAmount = orderTotalSummary.getTotal();
 			String strCalculatedTotal = calculatedAmount.toPlainString();

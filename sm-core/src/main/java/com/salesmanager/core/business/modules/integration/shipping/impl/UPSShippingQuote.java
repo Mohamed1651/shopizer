@@ -139,13 +139,10 @@ public class UPSShippingQuote implements ShippingQuoteModule {
 			return null;
 		}
 
-		BigDecimal total = orderTotal;
 
 		if (packages == null) {
 			return null;
 		}
-		
-		List<ShippingOption> options = null;
 
 		// only applies to Canada and US
 		Country country = delivery.getCountry();

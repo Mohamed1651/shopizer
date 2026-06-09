@@ -20,8 +20,6 @@ public class ShippingDistanceProcessorTest {
 	@Ignore
 	public void testDistance() throws Exception {
 		
-		ShippingQuote shippingQuote = new ShippingQuote();
-		
 		Delivery delivery = new Delivery();
 		delivery.setAddress("2055 Peel Street");
 		delivery.setCity("Montreal");

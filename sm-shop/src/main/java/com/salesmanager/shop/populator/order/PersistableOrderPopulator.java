@@ -62,10 +62,6 @@ public class PersistableOrderPopulator extends
 		Validate.notNull(currencyService,"currencyService must be set");
 
 		try {
-			
-
-			Map<String,Country> countriesMap = countryService.getCountriesMap(language);
-			Map<String,Zone> zonesMap = zoneService.getZones(language);
 			/** customer **/
 			PersistableCustomer customer = source.getCustomer();
 			if(customer!=null) {

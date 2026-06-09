@@ -715,7 +715,6 @@ public class ProductPriceUtils {
 		finalPrice.setDiscountPercent(percent);
 
 		// calculate percent
-		BigDecimal price = finalPrice.getOriginalPrice();
 		finalPrice.setDiscountedPrice(finalPrice.getProductPrice().getProductPriceSpecialAmount());
 	}
 

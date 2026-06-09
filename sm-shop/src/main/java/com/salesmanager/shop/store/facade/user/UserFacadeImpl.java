@@ -229,7 +229,7 @@ public class UserFacadeImpl implements UserFacade {
 
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-			Set<String> roles = authentication.getAuthorities().stream().map(r -> r.getAuthority())
+			authentication.getAuthorities().stream().map(r -> r.getAuthority())
 					.collect(Collectors.toSet());
 
 			ReadableUser readableUser = findByUserName(userName, languageService.defaultLanguage());

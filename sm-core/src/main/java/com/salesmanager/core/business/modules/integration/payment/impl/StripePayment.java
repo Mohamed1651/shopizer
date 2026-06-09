@@ -507,7 +507,7 @@ public class StripePayment implements PaymentModule {
 		  
 	} else if (ex instanceof InvalidRequestException) {
 		LOGGER.error("InvalidRequest error with stripe", ex.getMessage());
-		InvalidRequestException e =(InvalidRequestException)ex;
+
 		IntegrationException te = new IntegrationException(
 				"Can't process Stripe, missing invalid payment parameters");
 		te.setExceptionType(IntegrationException.TRANSACTION_EXCEPTION);
@@ -517,7 +517,6 @@ public class StripePayment implements PaymentModule {
 		
 	} else if (ex instanceof AuthenticationException) {
 		LOGGER.error("Authentication error with stripe", ex.getMessage());
-		AuthenticationException e = (AuthenticationException)ex;
 		  // Authentication with Stripe's API failed
 		  // (maybe you changed API keys recently)
 		IntegrationException te = new IntegrationException(
@@ -539,7 +538,6 @@ public class StripePayment implements PaymentModule {
 		return te;
 	} */else if (ex instanceof StripeException) {
 		LOGGER.error("Error with stripe", ex.getMessage());
-		StripeException e = (StripeException)ex;
 		  // Display a very generic error to the user, and maybe send
 		  // yourself an email
 		IntegrationException te = new IntegrationException(
