@@ -2,6 +2,7 @@ package com.salesmanager.core.business.modules.cms.product.infinispan;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.FileNameMap;
 import java.net.URLConnection;
@@ -189,20 +190,23 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
       for (String key : merchantNode.getKeys()) {
 
         byte[] imageBytes = (byte[]) merchantNode.get(key);
-
-        OutputContentFile contentImage = new OutputContentFile();
-
-        InputStream input = new ByteArrayInputStream(imageBytes);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        IOUtils.copy(input, output);
-
         String contentType = fileNameMap.getContentTypeFor(key);
 
-        contentImage.setFile(output);
-        contentImage.setMimeType(contentType);
-        contentImage.setFileName(key);
+        try (InputStream input = new ByteArrayInputStream(imageBytes);
+             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
 
-        images.add(contentImage);
+          IOUtils.copy(input, output);
+
+          OutputContentFile contentImage = new OutputContentFile();
+          contentImage.setFile(output);
+          contentImage.setMimeType(contentType);
+          contentImage.setFileName(key);
+
+          images.add(contentImage);
+        }catch (IOException e) {
+          // Handle the potential IO exception appropriately for your application
+          LOGGER.error("Error processing image file: " + key, e);
+        }
 
 
       }
@@ -334,22 +338,24 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
 
 
           byte[] imageBytes = (byte[]) merchantNode.get(key);
-
           OutputContentFile contentImage = new OutputContentFile();
 
-          InputStream input = new ByteArrayInputStream(imageBytes);
-          ByteArrayOutputStream output = new ByteArrayOutputStream();
-          IOUtils.copy(input, output);
+          try (InputStream input = new ByteArrayInputStream(imageBytes);
+               ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            IOUtils.copy(input, output);
 
-          String contentType = fileNameMap.getContentTypeFor(key);
+            String contentType = fileNameMap.getContentTypeFor(key);
 
-          contentImage.setFile(output);
-          contentImage.setMimeType(contentType);
-          contentImage.setFileName(key);
+            contentImage.setFile(output);
+            contentImage.setMimeType(contentType);
+            contentImage.setFileName(key);
 
-          images.add(contentImage);
+            images.add(contentImage);
 
-
+          }catch (IOException e) {
+            // Log the error and decide if the loop should continue or break
+            LOGGER.error("Failed to process image for key: {}", key, e);
+          }
         }
 
       }
@@ -385,7 +391,6 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
       throw new ServiceException(
           "CmsImageFileManagerInfinispan has a null cacheManager.getTreeCache()");
     }
-    InputStream input = null;
     OutputContentFile contentImage = new OutputContentFile();
     try {
 
@@ -394,7 +399,7 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
       // SMALL by default
       StringBuilder nodePath = new StringBuilder();
       nodePath.append(merchantStoreCode).append(Constants.SLASH).append(productCode)
-          .append(Constants.SLASH).append(size);
+              .append(Constants.SLASH).append(size);
 
       Node<String, Object> productNode = this.getNode(nodePath.toString());
 
@@ -406,27 +411,24 @@ public class CmsImageFileManagerImpl implements ProductAssetsManager {
         return null;// no post processing will occur
       }
 
-      input = new ByteArrayInputStream(imageBytes);
-      ByteArrayOutputStream output = new ByteArrayOutputStream();
-      IOUtils.copy(input, output);
+      try (ByteArrayInputStream input = new ByteArrayInputStream(imageBytes);
+           ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+        IOUtils.copy(input, output);
 
-      String contentType = fileNameMap.getContentTypeFor(imageName);
+        String contentType = fileNameMap.getContentTypeFor(imageName);
 
-      contentImage.setFile(output);
-      contentImage.setMimeType(contentType);
-      contentImage.setFileName(imageName);
+        contentImage.setFile(output);
+        contentImage.setMimeType(contentType);
+        contentImage.setFileName(imageName);
 
 
+      } catch (IOException e) {
+        LOGGER.error("Error processing image: " + imageName, e);
 
-    } catch (Exception e) {
-      throw new ServiceException(e);
-    } finally {
-      if (input != null) {
-        try {
-          input.close();
-        } catch (Exception ignore) {
-        }
       }
+    }
+      catch (Exception e) {
+      throw new ServiceException(e);
     }
 
     return contentImage;

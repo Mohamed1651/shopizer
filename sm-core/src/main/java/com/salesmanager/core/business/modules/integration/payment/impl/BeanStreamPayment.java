@@ -252,9 +252,7 @@ public class BeanStreamPayment implements PaymentModule {
 		String agent = "Mozilla/4.0";
 		String respText = "";
 		Map<String,String> nvp = null;
-		DataOutputStream output = null;
 		DataInputStream in = null;
-		BufferedReader is = null;
 		HttpURLConnection conn =null;
 		try {
 			
@@ -346,28 +344,28 @@ public class BeanStreamPayment implements PaymentModule {
 			conn.setRequestMethod("POST");
 
 			// get the output stream to POST to.
-			output = new DataOutputStream(conn.getOutputStream());
-			output.writeBytes(transaction);
-			output.flush();
+			try (DataOutputStream output = new DataOutputStream(conn.getOutputStream())) {
+				output.writeBytes(transaction);
+				output.flush();
+			}
 
 
 			// Read input from the input stream.
-			in = new DataInputStream(conn.getInputStream());
 			int rc = conn.getResponseCode();
-			if (rc != -1) {
-				is = new BufferedReader(new InputStreamReader(conn
-						.getInputStream()));
+			if(rc == -1){
+				throw new IntegrationException("Invalid response from BeanStream, return code is " + rc);
+			}
+
+			try (BufferedReader is = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
 				String _line = null;
 				while (((_line = is.readLine()) != null)) {
 					respText = respText + _line;
 				}
-				
-				LOGGER.debug("BeanStream response -> " + respText.trim());
-				
-				nvp = formatUrlResponse(respText.trim());
-			} else {
-				throw new IntegrationException("Invalid response from BeanStream, return code is " + rc);
 			}
+				LOGGER.debug("BeanStream response -> " + respText.trim());
+
+				nvp = formatUrlResponse(respText.trim());
+
 			
 			//check
 			//trnApproved=1&trnId=10003067&messageId=1&messageText=Approved&trnOrderNumber=E40089&authCode=TEST&errorType=N&errorFields=
@@ -417,42 +415,7 @@ public class BeanStreamPayment implements PaymentModule {
 			
 			throw new IntegrationException("Error while processing BeanStream transaction",e);
 
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (Exception ignore) {
-					// TODO: handle exception
-				}
-			}
-
-			if (in != null) {
-				try {
-					in.close();
-				} catch (Exception ignore) {
-					// TODO: handle exception
-				}
-			}
-
-			if (output != null) {
-				try {
-					output.close();
-				} catch (Exception ignore) {
-					// TODO: handle exception
-				}
-			}
-			
-			if (conn != null) {
-				try {
-					conn.disconnect();
-				} catch (Exception ignore) {
-					// TODO: handle exception
-				}
-			}
-
 		}
-
-		
 	}
 	
 	
