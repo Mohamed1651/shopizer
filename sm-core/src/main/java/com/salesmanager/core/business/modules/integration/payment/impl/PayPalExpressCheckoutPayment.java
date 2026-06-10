@@ -316,6 +316,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			//https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5LL13394G30048922
 			
 		} catch(Exception e) {
+			Thread.currentThread().interrupt();
 			e.printStackTrace();
 			throw new IntegrationException(e);
 		}
@@ -418,6 +419,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			
 		} catch(Exception e) {
 			if(e instanceof IntegrationException) {
+				Thread.currentThread().interrupt();
 				throw (IntegrationException)e;
 			} else {
 				throw new IntegrationException(e);
@@ -549,6 +551,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			
 			
 		} catch(Exception e) {
+			Thread.currentThread().interrupt();
 			throw new IntegrationException(e);
 		}
 
@@ -661,6 +664,7 @@ public class PayPalExpressCheckoutPayment implements PaymentModule {
 			
 			
 		} catch(Exception e) {
+			Thread.currentThread().interrupt();
 			throw new IntegrationException(e);
 		}
 		
