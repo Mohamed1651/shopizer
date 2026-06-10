@@ -132,8 +132,7 @@ public class ShippingDecisionPreProcessorImpl implements ShippingQuotePrePostPro
 			inputParameters.setVolume((long)volume.doubleValue());
 		}
 		
-		LOGGER.debug("Setting input parameters " + inputParameters.toString());
-		System.out.println(inputParameters.toString());
+		LOGGER.debug("Setting input parameters {}" , inputParameters.toString());
 		
 		
 		/**

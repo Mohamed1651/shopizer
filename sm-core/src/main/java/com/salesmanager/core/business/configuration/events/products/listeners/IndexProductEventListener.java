@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.salesmanager.core.business.modules.integration.shipping.impl.DefaultPackagingImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -38,7 +41,7 @@ import com.salesmanager.core.model.merchant.MerchantStore;
  */
 @Component
 public class IndexProductEventListener implements ApplicationListener<ProductEvent> {
-
+	private static final Logger LOG = LoggerFactory.getLogger(IndexProductEventListener.class);
 	@Autowired
 	private SearchService searchService;
 
@@ -110,7 +113,7 @@ public class IndexProductEventListener implements ApplicationListener<ProductEve
 			if(fullProduct != null) {
 				product = fullProduct;
 			} else {
-				System.out.println("Product not loaded");
+				LOG.info("Product not loaded");
 			}
 			
 		return product;
