@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.salesmanager.shop.store.controller.customer.facade.CustomerFacadeImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -25,6 +28,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  */
 @Component
 public class JWTTokenUtil implements Serializable {
+	private static final Logger LOG = LoggerFactory.getLogger(JWTTokenUtil.class);
 
 	/**
 	 * 
@@ -125,8 +129,7 @@ public class JWTTokenUtil implements Serializable {
 	        final Date createdDate = DateUtil.getDate();
 	        final Date expirationDate = calculateExpirationDate(createdDate);
 
-	        System.out.println("doGenerateToken " + createdDate);
-
+			LOG.info("doGenerateToken {}" , createdDate);
 	        return Jwts.builder()
 	                .setClaims(claims)
 	                .setSubject(subject)
@@ -142,9 +145,11 @@ public class JWTTokenUtil implements Serializable {
           boolean t = isCreatedBeforeLastPasswordResetWithGrace(created, lastPasswordReset);
           boolean u = isTokenExpiredWithGrace(token);
           boolean v =  ignoreTokenExpiration(token);
-          System.out.println(t + " " +  u + " " + v);
+		  LOG.info("{} {} {}", t, u, v);
           System.out.println(!isCreatedBeforeLastPasswordResetWithGrace(created, lastPasswordReset)
                   && (!isTokenExpiredWithGrace(token) || ignoreTokenExpiration(token)));
+
+
           //return !isCreatedBeforeLastPasswordResetWithGrace(created, lastPasswordReset)
           //        && (!isTokenExpired(token) || ignoreTokenExpiration(token));
           return true;

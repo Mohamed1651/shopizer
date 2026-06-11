@@ -252,13 +252,13 @@ public class S3StaticContentAssetsManagerImpl implements ContentAssetsManager {
 		final AmazonS3 s3 = s3Client();
 		Bucket b = null;
 		if (s3.doesBucketExistV2(bucket_name)) {
-			System.out.format("Bucket %s already exists.\n", bucket_name);
+			LOGGER.info("Bucket {} already exists.", bucket_name);
 			b = getBucket(bucket_name);
 		} else {
 			try {
 				b = s3.createBucket(bucket_name);
 			} catch (AmazonS3Exception e) {
-				System.err.println(e.getErrorMessage());
+				LOGGER.error(e.getErrorMessage());
 			}
 		}
 		return b;

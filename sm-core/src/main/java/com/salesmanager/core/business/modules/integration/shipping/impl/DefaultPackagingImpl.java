@@ -18,8 +18,12 @@ import com.salesmanager.core.model.shipping.ShippingConfiguration;
 import com.salesmanager.core.model.shipping.ShippingProduct;
 import com.salesmanager.core.model.system.MerchantLog;
 import com.salesmanager.core.modules.integration.shipping.model.Packaging;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultPackagingImpl implements Packaging {
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultPackagingImpl.class);
+	
 
 	private static final String PRODUCT_PREFIX = "Product ";
 	private static final String SHIPPING_PARAM = "shipping";
@@ -292,9 +296,9 @@ public class DefaultPackagingImpl implements Packaging {
 
 		//Iterator ubIt = usedBoxesList.iterator();
 
-		System.out.println("###################################");
-		System.out.println("Number of boxes " + boxesList.size());
-		System.out.println("###################################");
+		LOG.info("###################################");
+		LOG.info("Number of boxes {}", boxesList.size());
+		LOG.info("###################################");
 
 		for(PackingBox pb : boxesList) {
 			PackageDetails details = new PackageDetails();

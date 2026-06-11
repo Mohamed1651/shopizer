@@ -75,7 +75,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
   @Override
   public OutputContentFile getProductImage(String merchantStoreCode, String productCode,
       String imageName, ProductImageSize size) throws ServiceException {
-    InputStream inputStream = null;
+
     try {
       Storage storage = StorageOptions.getDefaultInstance().getService();
       
@@ -87,31 +87,22 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
 
       Blob blob = storage.get(BlobId.of(bucketName, filePath(merchantStoreCode,productCode, size.name(), imageName)));
 
-      ReadChannel reader = blob.reader();
-      
-      inputStream = Channels.newInputStream(reader);
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      IOUtils.copy(inputStream, outputStream);
-      OutputContentFile ct = new OutputContentFile();
-      ct.setFile(outputStream);
-      ct.setFileName(blob.getName());
 
-      
 
-      return ct;
+      try (ReadChannel reader = blob.reader();
+           InputStream inputStream = Channels.newInputStream(reader);
+           ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+        IOUtils.copy(inputStream, outputStream);
+        OutputContentFile ct = new OutputContentFile();
+        ct.setFile(outputStream);
+        ct.setFileName(blob.getName());
+        return ct;
+      }
     } catch (final Exception e) {
       LOGGER.error("Error while getting files", e);
       throw new ServiceException(e);
   
-    } finally {
-      if(inputStream!=null) {
-        try {
-          inputStream.close();
-        } catch(Exception ignore) {}
-      }
-      
     }
-  
   }
 
   @Override
@@ -133,8 +124,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
   @Override
   public List<OutputContentFile> getImages(String merchantStoreCode,
       FileContentType imageContentType) throws ServiceException {
-    
-    InputStream inputStream = null;
+
     try {
       Storage storage = StorageOptions.getDefaultInstance().getService();
       
@@ -150,14 +140,15 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
 
       List<OutputContentFile> files = new ArrayList<OutputContentFile>();
       for (Blob blob : blobs.iterateAll()) {
-        blob.getName();
-        ReadChannel reader = blob.reader();
-        inputStream = Channels.newInputStream(reader);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        IOUtils.copy(inputStream, outputStream);
-        OutputContentFile ct = new OutputContentFile();
-        ct.setFile(outputStream);
-        files.add(ct);
+        try (ReadChannel reader = blob.reader();
+             InputStream inputStream = Channels.newInputStream(reader);
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+          blob.getName();
+          IOUtils.copy(inputStream, outputStream);
+          OutputContentFile ct = new OutputContentFile();
+          ct.setFile(outputStream);
+          files.add(ct);
+        }
       }
 
       return files;
@@ -165,13 +156,6 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
       LOGGER.error("Error while getting files", e);
       throw new ServiceException(e);
   
-    } finally {
-      if(inputStream!=null) {
-        try {
-          inputStream.close();
-        } catch(Exception ignore) {}
-      }
-      
     }
   }
 

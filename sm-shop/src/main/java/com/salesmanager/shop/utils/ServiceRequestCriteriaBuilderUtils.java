@@ -58,7 +58,7 @@ public class ServiceRequestCriteriaBuilderUtils {
 			// set the property directly, bypassing the mutator (if any)
 			//String setterName = "set" + WordUtils.capitalize(setterValue);
 			String setterName = setterValue;
-			System.out.println("Trying to do this binding " + setterName + "('" + parameterValue + "') on " + criteria.getClass());
+			LOGGER.debug("Trying to do this binding {}( '{}' ) on {}", setterName, parameterValue, criteria.getClass().getName());
 			criteriaAccessor.setPropertyValue(setterName, parameterValue);
 		
 		} catch(Exception e) {
