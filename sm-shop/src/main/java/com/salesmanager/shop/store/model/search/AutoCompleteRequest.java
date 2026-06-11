@@ -7,15 +7,11 @@ public class AutoCompleteRequest {
 	private String merchantCode;
 	private String languageCode;
 	
-	
-	private final static String WILDCARD_QUERY = "wildcard";
+
 	private final static String KEYWORD = "keyword";
 	private final static String UNDERSCORE = "_";
-	private final static String ALL = "*";
-	private final static String TYPE = "type";
 	private final static String ANALYZER = "analyzer";
 	private final static String STD_ANALYZER = "standard";
-	private final static String TYPE_PHRASE = "phrase_prefix";
 	private final static String QUERY = "query";
 	private final static String MATCH = "match";
 	

@@ -20,7 +20,7 @@ public class ConfigurationModulesLoader {
 	
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationModulesLoader.class);
-	
+	private static final String INTEGRATIONKEYS = "integrationKeys";
 
 	
 	public static String toJSONString(Map<String,IntegrationConfiguration> configurations) throws Exception {
@@ -79,12 +79,12 @@ public class ConfigurationModulesLoader {
 
 				modules.put(moduleCode, configuration);
 
-				if (object.get("integrationKeys") != null) {
-					Map<String, String> confs = (Map<String, String>) object.get("integrationKeys");
+				if (object.get(INTEGRATIONKEYS) != null) {
+					Map<String, String> confs = (Map<String, String>) object.get(INTEGRATIONKEYS);
 					configuration.setIntegrationKeys(confs);
 				}
 
-				if (object.get("integrationKeys") != null) {
+				if (object.get(INTEGRATIONKEYS) != null) {
 					Map<String, List<String>> options = (Map<String, List<String>>) object.get("integrationOptions");
 					configuration.setIntegrationOptions(options);
 				}

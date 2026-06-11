@@ -99,6 +99,19 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 	public boolean isEmpty() {
 		return languageService.count() == 0;
 	}
+
+	private static final String AUTH_PARAM = "AUTH";
+	private static final String SUPERADMIN_PARAM = "SUPERADMIN";
+	private static final String ADMIN_PARAM = "ADMIN";
+	private static final String PRODUCTS_PARAM = "PRODUCTS";
+	private static final String ORDER_PARAM = "ORDER";
+	private static final String CONTENT_PARAM = "CONTENT";
+	private static final String STORE_PARAM = "STORE";
+	private static final String TAX_PARAM = "TAX";
+	private static final String PAYMENT_PARAM = "PAYMENT";
+	private static final String CUSTOMER_PARAM = "CUSTOMER";
+	private static final String SHIPPING_PARAM = "SHIPPING";
+	private static final String DEFAULT_PARAM = "DEFAULT";
 	
 	@Transactional
 	public void populate(String contextName) throws ServiceException {
@@ -121,47 +134,47 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 		  //create permissions
 		  //Map name object
 		  Map<String, Permission> permissionKeys = new HashMap<String, Permission>();
-		  Permission AUTH = new Permission("AUTH");
+		  Permission AUTH = new Permission(AUTH_PARAM);
 		  permissionService.create(AUTH);
 		  permissionKeys.put(AUTH.getPermissionName(), AUTH);
 		  
-		  Permission SUPERADMIN = new Permission("SUPERADMIN");
+		  Permission SUPERADMIN = new Permission(SUPERADMIN_PARAM);
 		  permissionService.create(SUPERADMIN);
 		  permissionKeys.put(SUPERADMIN.getPermissionName(), SUPERADMIN);
 		  
-		  Permission ADMIN = new Permission("ADMIN");
+		  Permission ADMIN = new Permission(ADMIN_PARAM);
 		  permissionService.create(ADMIN);
 		  permissionKeys.put(ADMIN.getPermissionName(), ADMIN);
 		  
-		  Permission PRODUCTS = new Permission("PRODUCTS");
+		  Permission PRODUCTS = new Permission(PRODUCTS_PARAM);
 		  permissionService.create(PRODUCTS);
 		  permissionKeys.put(PRODUCTS.getPermissionName(), PRODUCTS);
 		  
-		  Permission ORDER = new Permission("ORDER");
+		  Permission ORDER = new Permission(ORDER_PARAM);
 		  permissionService.create(ORDER);
 		  permissionKeys.put(ORDER.getPermissionName(), ORDER);
 		  
-		  Permission CONTENT = new Permission("CONTENT");
+		  Permission CONTENT = new Permission(CONTENT_PARAM);
 		  permissionService.create(CONTENT);
 		  permissionKeys.put(CONTENT.getPermissionName(), CONTENT);
 		  
-		  Permission STORE = new Permission("STORE");
+		  Permission STORE = new Permission(STORE_PARAM);
 		  permissionService.create(STORE);
 		  permissionKeys.put(STORE.getPermissionName(), STORE);
 		  
-		  Permission TAX = new Permission("TAX");
+		  Permission TAX = new Permission(TAX_PARAM);
 		  permissionService.create(TAX);
 		  permissionKeys.put(TAX.getPermissionName(), TAX);
 		  
-		  Permission PAYMENT = new Permission("PAYMENT");
+		  Permission PAYMENT = new Permission(PAYMENT_PARAM);
 		  permissionService.create(PAYMENT);
 		  permissionKeys.put(PAYMENT.getPermissionName(), PAYMENT);
 		  
-		  Permission CUSTOMER = new Permission("CUSTOMER");
+		  Permission CUSTOMER = new Permission(CUSTOMER_PARAM);
 		  permissionService.create(CUSTOMER);
 		  permissionKeys.put(CUSTOMER.getPermissionName(), CUSTOMER);
 		  
-		  Permission SHIPPING = new Permission("SHIPPING");
+		  Permission SHIPPING = new Permission(SHIPPING_PARAM);
 		  permissionService.create(SHIPPING);
 		  permissionKeys.put(SHIPPING.getPermissionName(), SHIPPING);
 		  
@@ -171,65 +184,65 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 		
 		  SecurityGroupsBuilder groupBuilder = new SecurityGroupsBuilder();
 		  groupBuilder
-		  .addGroup("SUPERADMIN", GroupType.ADMIN)
+		  .addGroup(SUPERADMIN_PARAM, GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("SUPERADMIN"))
-		  .addPermission(permissionKeys.get("ADMIN"))
-		  .addPermission(permissionKeys.get("PRODUCTS"))
-		  .addPermission(permissionKeys.get("ORDER"))
-		  .addPermission(permissionKeys.get("CONTENT"))
-		  .addPermission(permissionKeys.get("STORE"))
+		  .addPermission(permissionKeys.get(SUPERADMIN_PARAM))
+		  .addPermission(permissionKeys.get(ADMIN_PARAM))
+		  .addPermission(permissionKeys.get(PRODUCTS_PARAM))
+		  .addPermission(permissionKeys.get(ORDER_PARAM))
+		  .addPermission(permissionKeys.get(CONTENT_PARAM))
+		  .addPermission(permissionKeys.get(STORE_PARAM))
 		  .addPermission(permissionKeys.get("TAX"))
-		  .addPermission(permissionKeys.get("PAYMENT"))
-		  .addPermission(permissionKeys.get("CUSTOMER"))
-		  .addPermission(permissionKeys.get("SHIPPING"))
+		  .addPermission(permissionKeys.get(PAYMENT_PARAM))
+		  .addPermission(permissionKeys.get(CUSTOMER_PARAM))
+		  .addPermission(permissionKeys.get(SHIPPING_PARAM))
 		  
-		  .addGroup("ADMIN", GroupType.ADMIN)
+		  .addGroup(ADMIN_PARAM, GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("ADMIN"))
-		  .addPermission(permissionKeys.get("PRODUCTS"))
-		  .addPermission(permissionKeys.get("ORDER"))
-		  .addPermission(permissionKeys.get("CONTENT"))
-		  .addPermission(permissionKeys.get("STORE"))
+		  .addPermission(permissionKeys.get(ADMIN_PARAM))
+		  .addPermission(permissionKeys.get(PRODUCTS_PARAM))
+		  .addPermission(permissionKeys.get(ORDER_PARAM))
+		  .addPermission(permissionKeys.get(CONTENT_PARAM))
+		  .addPermission(permissionKeys.get(STORE_PARAM))
 		  .addPermission(permissionKeys.get("TAX"))
-		  .addPermission(permissionKeys.get("PAYMENT"))
-		  .addPermission(permissionKeys.get("CUSTOMER"))
-		  .addPermission(permissionKeys.get("SHIPPING"))
+		  .addPermission(permissionKeys.get(PAYMENT_PARAM))
+		  .addPermission(permissionKeys.get(CUSTOMER_PARAM))
+		  .addPermission(permissionKeys.get(SHIPPING_PARAM))
 		  
 		  .addGroup("ADMIN_RETAILER", GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("ADMIN"))
-		  .addPermission(permissionKeys.get("PRODUCTS"))
-		  .addPermission(permissionKeys.get("ORDER"))
-		  .addPermission(permissionKeys.get("CONTENT"))
-		  .addPermission(permissionKeys.get("STORE"))
+		  .addPermission(permissionKeys.get(ADMIN_PARAM))
+		  .addPermission(permissionKeys.get(PRODUCTS_PARAM))
+		  .addPermission(permissionKeys.get(ORDER_PARAM))
+		  .addPermission(permissionKeys.get(CONTENT_PARAM))
+		  .addPermission(permissionKeys.get(STORE_PARAM))
 		  .addPermission(permissionKeys.get("TAX"))
-		  .addPermission(permissionKeys.get("PAYMENT"))
-		  .addPermission(permissionKeys.get("CUSTOMER"))
-		  .addPermission(permissionKeys.get("SHIPPING"))
+		  .addPermission(permissionKeys.get(PAYMENT_PARAM))
+		  .addPermission(permissionKeys.get(CUSTOMER_PARAM))
+		  .addPermission(permissionKeys.get(SHIPPING_PARAM))
 		  
 		  .addGroup("ADMIN_STORE", GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("CONTENT"))
-		  .addPermission(permissionKeys.get("STORE"))
+		  .addPermission(permissionKeys.get(CONTENT_PARAM))
+		  .addPermission(permissionKeys.get(STORE_PARAM))
 		  .addPermission(permissionKeys.get("TAX"))
-		  .addPermission(permissionKeys.get("PAYMENT"))
-		  .addPermission(permissionKeys.get("CUSTOMER"))
-		  .addPermission(permissionKeys.get("SHIPPING"))
+		  .addPermission(permissionKeys.get(PAYMENT_PARAM))
+		  .addPermission(permissionKeys.get(CUSTOMER_PARAM))
+		  .addPermission(permissionKeys.get(SHIPPING_PARAM))
 		  
 		  .addGroup("ADMIN_CATALOGUE", GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("PRODUCTS"))
+		  .addPermission(permissionKeys.get(PRODUCTS_PARAM))
 		  
 		  .addGroup("ADMIN_ORDER", GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("ORDER"))
+		  .addPermission(permissionKeys.get(ORDER_PARAM))
 		  
 		  .addGroup("ADMIN_CONTENT", GroupType.ADMIN)
 		  .addPermission(permissionKeys.get("AUTH"))
-		  .addPermission(permissionKeys.get("CONTENT"))
+		  .addPermission(permissionKeys.get(CONTENT_PARAM))
 		  
-		  .addGroup("CUSTOMER", GroupType.CUSTOMER)
+		  .addGroup(CUSTOMER_PARAM, GroupType.CUSTOMER)
 		  .addPermission(permissionKeys.get("AUTH"))
 		  .addPermission(permissionKeys.get("AUTH_CUSTOMER"));
 		  
@@ -416,14 +429,14 @@ public class InitializationDatabaseImpl implements InitializationDatabase {
 		
 		//create default manufacturer
 		Manufacturer defaultManufacturer = new Manufacturer();
-		defaultManufacturer.setCode("DEFAULT");
+		defaultManufacturer.setCode(DEFAULT_PARAM);
 		defaultManufacturer.setMerchantStore(store);
 		
 		ManufacturerDescription manufacturerDescription = new ManufacturerDescription();
 		manufacturerDescription.setLanguage(en);
-		manufacturerDescription.setName("DEFAULT");
+		manufacturerDescription.setName(DEFAULT_PARAM);
 		manufacturerDescription.setManufacturer(defaultManufacturer);
-		manufacturerDescription.setDescription("DEFAULT");
+		manufacturerDescription.setDescription(DEFAULT_PARAM);
 		defaultManufacturer.getDescriptions().add(manufacturerDescription);
 		
 		manufacturerService.create(defaultManufacturer);

@@ -20,6 +20,7 @@ public class MerchantUtils {
 		if(!StringUtils.isBlank(prefix)) {
 			footerMessage.append(prefix).append(" ");
 		}
+
 		return null;
 	}
 

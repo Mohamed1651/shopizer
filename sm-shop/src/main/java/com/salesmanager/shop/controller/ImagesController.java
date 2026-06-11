@@ -33,7 +33,7 @@ import com.salesmanager.core.model.content.OutputContentFile;
 public class ImagesController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImagesController.class);
-	
+	private static final String CANNOT_RETRIEVE_IMAGE_ERROR = "Cannot retrieve image ";
 
 	
 	@Inject
@@ -137,7 +137,7 @@ public class ImagesController {
 		try {
 			image = productImageService.getProductImage(storeCode, productCode, new StringBuilder().append(imageName).append(".").append(extension).toString(), size);
 		} catch (ServiceException e) {
-			LOGGER.error("Cannot retrieve image " + imageName, e);
+			LOGGER.error(CANNOT_RETRIEVE_IMAGE_ERROR + imageName, e);
 		}
 		if(image!=null) {
 			return image.getFile().toByteArray();
@@ -187,7 +187,7 @@ public class ImagesController {
 		try {
 			image = productImageService.getProductImage(storeCode, productCode, new StringBuilder().append(imageName).append(".").append(extension).toString(), size);
 		} catch (ServiceException e) {
-			LOGGER.error("Cannot retrieve image " + imageName, e);
+			LOGGER.error(CANNOT_RETRIEVE_IMAGE_ERROR + imageName, e);
 		}
 		if(image!=null) {
 			return image.getFile().toByteArray();
@@ -242,7 +242,7 @@ public class ImagesController {
 		try {
 			image = productImageService.getProductImage(storeCode, productCode, new StringBuilder().append(imageName).append(".").append(extension).toString(), size);
 		} catch (ServiceException e) {
-			LOGGER.error("Cannot retrieve image " + imageName, e);
+			LOGGER.error(CANNOT_RETRIEVE_IMAGE_ERROR + imageName, e);
 		}
 		if(image!=null) {
 			return image.getFile().toByteArray();

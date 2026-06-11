@@ -41,7 +41,8 @@ import com.salesmanager.shop.store.controller.product.facade.ProductVariantFacad
  */
 @Component
 public class ProductVariantFacadeImpl implements ProductVariantFacade {
-	
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+	private static final String PRODUCT_ID_CANNOT_BE_NULL = "Product id cannot be null";
 	
 	@Autowired
 	private ReadableProductVariantMapper readableProductVariantMapper; 
@@ -92,9 +93,9 @@ public class ProductVariantFacadeImpl implements ProductVariantFacade {
 	@Override
 	public Long create(PersistableProductVariant productVariant, Long productId, MerchantStore store,
 			Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(productVariant, "productVariant cannot be null");
-		Validate.notNull(productId, "Product id cannot be null");
+		Validate.notNull(productId, PRODUCT_ID_CANNOT_BE_NULL);
 
 		//variation and variation value should not be of same product option code
 		if(
@@ -128,9 +129,9 @@ public class ProductVariantFacadeImpl implements ProductVariantFacade {
 
 	@Override
 	public void update(Long instanceId, PersistableProductVariant productVariant, Long productId, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(productVariant, "productVariant cannot be null");
-		Validate.notNull(productId, "Product id cannot be null");
+		Validate.notNull(productId, PRODUCT_ID_CANNOT_BE_NULL);
 		Validate.notNull(instanceId, "Product instance id cannot be null");
 		
 		Optional<ProductVariant> instanceModel = this.getproductVariant(instanceId, productId, store);
@@ -156,9 +157,9 @@ public class ProductVariantFacadeImpl implements ProductVariantFacade {
 
 	@Override
 	public void delete(Long productVariant, Long productId, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(productVariant, "productVariant id cannot be null");
-		Validate.notNull(productId, "Product id cannot be null");
+		Validate.notNull(productId, PRODUCT_ID_CANNOT_BE_NULL);
 
 		
 		Optional<ProductVariant> instanceModel = this.getproductVariant(productVariant, productId, store);
@@ -177,8 +178,8 @@ public class ProductVariantFacadeImpl implements ProductVariantFacade {
 	@Override
 	public ReadableEntityList<ReadableProductVariant> list(Long productId, MerchantStore store, Language language,
 			int page, int count) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(productId, "Product id cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(productId, PRODUCT_ID_CANNOT_BE_NULL);
 		
 		Product product = productFacade.getProduct(productId, store);
 		

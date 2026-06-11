@@ -99,6 +99,7 @@ public class OrderApi {
 	private CredentialsService credentialsService;
 
 	private static final String DEFAULT_ORDER_LIST_COUNT = "25";
+	private static final String ORDER_NULL_CUSTOMER = "Order is null for customer ";
 
 	/**
 	 * Get a list of orders for a given customer accept request parameter
@@ -122,16 +123,16 @@ public class OrderApi {
 		Customer customer = customerService.getById(id);
 
 		if (customer == null) {
-			LOGGER.error("Customer is null for id {}", id);
+			LOGGER.error("Customer is null for id " + id);
 			response.sendError(404, "Customer is null for id " + id);
 			return null;
 		}
 
 		if (start == null) {
-			start = new Integer(0);
+			start = 0;
 		}
 		if (count == null) {
-			count = new Integer(100);
+			count = 100;
 		}
 
 		ReadableCustomer readableCustomer = new ReadableCustomer();
@@ -182,10 +183,10 @@ public class OrderApi {
 		}
 
 		if (page == null) {
-			page = new Integer(0);
+			page = 0;
 		}
 		if (count == null) {
-			count = new Integer(100);
+			count = 100;
 		}
 
 		ReadableCustomer readableCustomer = new ReadableCustomer();
@@ -309,21 +310,21 @@ public class OrderApi {
 		ReadableOrder order = orderFacade.getReadableOrder(id, merchantStore, language);
 
 		if (order == null) {
-			LOGGER.error("Order is null for id {}", id);
+			LOGGER.error("Order is null for id " + id);
 			response.sendError(404, "Order is null for id " + id);
 			return null;
 		}
 
 		if (order.getCustomer() == null) {
-			LOGGER.error("Order is null for customer {} ", principal);
-			response.sendError(404, "Order is null for customer " + principal);
+			LOGGER.error(ORDER_NULL_CUSTOMER + principal);
+			response.sendError(404, ORDER_NULL_CUSTOMER + principal);
 			return null;
 		}
 
 		if (order.getCustomer().getId() != null
 				&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {
-			LOGGER.error("Order is null for customer {} ", principal);
-			response.sendError(404, "Order is null for customer " + principal);
+			LOGGER.error(ORDER_NULL_CUSTOMER + principal);
+			response.sendError(404, ORDER_NULL_CUSTOMER + principal);
 			return null;
 		}
 

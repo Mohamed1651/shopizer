@@ -93,7 +93,7 @@ public class FilePathUtils {
 					+ FileContentType.STATIC_FILE + SLASH + fileName;
 		} else {
 			String scheme = this.getScheme(store);
-			return scheme + SLASH + coreConfiguration.getProperty("CONTEXT_PATH")
+			return scheme + SLASH + coreConfiguration.getProperty(CONTEXT_PATH)
 					+ buildStaticFilePath(store.getCode(), fileName);
 		}
 	}

@@ -100,7 +100,7 @@ public class CustomWeightBasedShippingQuote implements ShippingQuoteModule {
 		
 		//get configuration
 		CustomShippingQuotesConfiguration customConfiguration = (CustomShippingQuotesConfiguration)this.getCustomModuleConfiguration(store);
-		
+
 
 
 		ShippingOption shippingOption = null;

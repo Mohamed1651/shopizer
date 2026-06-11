@@ -70,7 +70,8 @@ import com.salesmanager.core.model.tax.TaxItem;
 public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order> implements OrderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
-
+    private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+    private static final String ORDER_SUMMARY_CANNOT_BE_NULL = "Order summary cannot be null";
     @Inject
     private InvoiceModule invoiceModule;
 
@@ -131,7 +132,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     	Validate.notNull(customer, "Customer cannot be null (even if anonymous order)");
     	Validate.notEmpty(items, "ShoppingCart items cannot be null");
     	Validate.notNull(payment, "Payment cannot be null");
-    	Validate.notNull(store, "MerchantStore cannot be null");
+    	Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
     	Validate.notNull(summary, "Order total Summary cannot be null");
 
     	UserContext context = UserContext.getCurrentInstance();
@@ -399,9 +400,9 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 
     @Override
     public OrderTotalSummary caculateOrderTotal(final OrderSummary orderSummary, final Customer customer, final MerchantStore store, final Language language) throws ServiceException {
-        Validate.notNull(orderSummary,"Order summary cannot be null");
+        Validate.notNull(orderSummary,ORDER_SUMMARY_CANNOT_BE_NULL);
         Validate.notNull(orderSummary.getProducts(),"Order summary.products cannot be null");
-        Validate.notNull(store,"MerchantStore cannot be null");
+        Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
         Validate.notNull(customer,"Customer cannot be null");
 
         try {
@@ -416,9 +417,9 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
 
     @Override
     public OrderTotalSummary caculateOrderTotal(final OrderSummary orderSummary, final MerchantStore store, final Language language) throws ServiceException {
-        Validate.notNull(orderSummary,"Order summary cannot be null");
+        Validate.notNull(orderSummary,ORDER_SUMMARY_CANNOT_BE_NULL);
         Validate.notNull(orderSummary.getProducts(),"Order summary.products cannot be null");
-        Validate.notNull(store,"MerchantStore cannot be null");
+        Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 
         try {
             return caculateOrder(orderSummary, null, store, language);
@@ -480,7 +481,7 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     public OrderTotalSummary calculateShoppingCartTotal(
                                                         final ShoppingCart shoppingCart, final Customer customer, final MerchantStore store,
                                                         final Language language) throws ServiceException {
-        Validate.notNull(shoppingCart,"Order summary cannot be null");
+        Validate.notNull(shoppingCart,ORDER_SUMMARY_CANNOT_BE_NULL);
         Validate.notNull(customer,"Customery cannot be null");
         Validate.notNull(store,"MerchantStore cannot be null.");
         try {
@@ -510,8 +511,8 @@ public class OrderServiceImpl  extends SalesManagerEntityServiceImpl<Long, Order
     public OrderTotalSummary calculateShoppingCartTotal(
                                                         final ShoppingCart shoppingCart, final MerchantStore store, final Language language)
                                                                         throws ServiceException {
-        Validate.notNull(shoppingCart,"Order summary cannot be null");
-        Validate.notNull(store,"MerchantStore cannot be null");
+        Validate.notNull(shoppingCart,ORDER_SUMMARY_CANNOT_BE_NULL);
+        Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 
         try {
             return caculateShoppingCart(shoppingCart, null, store, language);

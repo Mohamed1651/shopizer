@@ -32,7 +32,6 @@ import java.util.Optional;
 })
 public class CatalogApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CatalogApi.class);
 
   @Autowired
   private CatalogFacade catalogFacade;

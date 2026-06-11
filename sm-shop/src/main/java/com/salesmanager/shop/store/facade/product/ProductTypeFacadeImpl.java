@@ -24,7 +24,7 @@ import com.salesmanager.shop.store.controller.product.facade.ProductTypeFacade;
 
 @Service("productTypeFacade")
 public class ProductTypeFacadeImpl implements ProductTypeFacade {
-
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
 	@Autowired
 	private ProductTypeService productTypeService;
 
@@ -37,7 +37,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 	@Override
 	public ReadableProductTypeList getByMerchant(MerchantStore store, Language language,  int count, int page) {
 
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		ReadableProductTypeList returnList = new ReadableProductTypeList();
 
 		try {
@@ -62,7 +62,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 	@Override
 	public ReadableProductType get(MerchantStore store, Long id, Language language) {
 
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(id, "ProductType code cannot be empty");
 		try {
 
@@ -93,7 +93,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 	public Long save(PersistableProductType type, MerchantStore store, Language language) {
 
 		Validate.notNull(type,"ProductType cannot be null");
-		Validate.notNull(store,"MerchantStore cannot be null");
+		Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(type.getCode(),"ProductType code cannot be empty");
 
 		try {
@@ -118,7 +118,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 	@Override
 	public void update(PersistableProductType type, Long id, MerchantStore store, Language language) {
 		Validate.notNull(type,"ProductType cannot be null");
-		Validate.notNull(store,"MerchantStore cannot be null");
+		Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(id,"id cannot be empty");
 
 		try {
@@ -145,7 +145,7 @@ public class ProductTypeFacadeImpl implements ProductTypeFacade {
 
 	@Override
 	public void delete(Long id, MerchantStore store, Language language) {
-		Validate.notNull(store,"MerchantStore cannot be null");
+		Validate.notNull(store,MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(id,"id cannot be empty");
 
 		try {

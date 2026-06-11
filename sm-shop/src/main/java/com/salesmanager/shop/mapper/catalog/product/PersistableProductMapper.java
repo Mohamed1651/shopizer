@@ -153,7 +153,6 @@ public class PersistableProductMapper implements Mapper<PersistableProduct, Prod
 			/**
 			 * descriptions
 			 */
-			List<Language> languages = new ArrayList<Language>();
 			Set<ProductDescription> descriptions = new HashSet<ProductDescription>();
 			if(!CollectionUtils.isEmpty(source.getDescriptions())) {
 				for(com.salesmanager.shop.model.catalog.product.ProductDescription description : source.getDescriptions()) {
@@ -182,8 +181,7 @@ public class PersistableProductMapper implements Mapper<PersistableProduct, Prod
 					productDescription.setMetatagKeywords(description.getKeyWords());
 					productDescription.setMetatagDescription(description.getMetaDescription());
 					productDescription.setTitle(description.getTitle());
-					
-					languages.add(lang);
+
 					productDescription.setLanguage(lang);
 					descriptions.add(productDescription);
 				}

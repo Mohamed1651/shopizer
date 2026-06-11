@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice("com.salesmanager.shop.store.controller")
 public class ShopErrorController {
-	
+	private static final String ERROR_GENERIC_ERROR = "error/generic_error";
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShopErrorController.class);
 	
@@ -37,7 +37,7 @@ public class ShopErrorController {
 			
 		} else {
 			
-			model = new ModelAndView("error/generic_error");
+			model = new ModelAndView(ERROR_GENERIC_ERROR);
 			model.addObject("stackError", ExceptionUtils.getStackTrace(ex));
 			model.addObject("errMsg", ex.getMessage());
 			
@@ -59,7 +59,7 @@ public class ShopErrorController {
 		ModelAndView model = null;
 
 			
-		model = new ModelAndView("error/generic_error");
+		model = new ModelAndView(ERROR_GENERIC_ERROR);
 		model.addObject("stackError", ExceptionUtils.getStackTrace(ex));
 		model.addObject("errMsg", ex.getMessage());
 
@@ -82,7 +82,7 @@ public class ShopErrorController {
 		ModelAndView modelAndView = null;
 
 			
-		modelAndView = new ModelAndView("error/generic_error");
+		modelAndView = new ModelAndView(ERROR_GENERIC_ERROR);
  
 		return modelAndView;
  

@@ -12,7 +12,6 @@ public class CloudFilePathUtils extends AbstractimageFilePath {
 
 	private String basePath = Constants.STATIC_URI;
 	private String contentUrl = null;
-
 	@Override
 	public String getBasePath(MerchantStore store) {
 		//store has no incidence, basepath drives the url

@@ -70,7 +70,6 @@ public class ShoppingCartApi {
 	@Autowired
 	private com.salesmanager.shop.store.controller.customer.facade.CustomerFacade customerFacade;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingCartApi.class);
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = "/cart")

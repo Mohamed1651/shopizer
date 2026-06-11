@@ -149,9 +149,6 @@ public class ServicesTestSupport {
 		productPrice.setPrice(new BigDecimal(250));
 		productPrice.setDiscountedPrice(new BigDecimal(125));
 
-		final List<PersistableProductPrice> productPriceList = new ArrayList<>();
-		productPriceList.add(productPrice);
-
 		inventory.setPrice(productPrice);
 		product.setInventory(inventory);
 

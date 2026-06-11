@@ -79,9 +79,6 @@ public class DroolsBeanFactory {
     }
 
     public KieSession getKieSession(Resource dt) {
-
-
-
         KieRepository kieRepository = kieServices.getRepository();
 
         ReleaseId krDefaultReleaseId = kieRepository.getDefaultReleaseId();

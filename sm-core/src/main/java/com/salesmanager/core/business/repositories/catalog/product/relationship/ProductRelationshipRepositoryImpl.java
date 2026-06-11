@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 
 
 public class ProductRelationshipRepositoryImpl implements ProductRelationshipRepositoryCustom {
-
+    private static final String STORE_ID = "storeId";
   private static final String HQL_GET_BY_CODE_AND_STORE_ID_AND_PRODUCT_ID =
       "select distinct pr from ProductRelationship as pr "
           + "left join fetch pr.product p "
@@ -135,7 +135,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
     return entityManager.createQuery(HQL_GET_BY_CODE_AND_STORE_ID_AND_PRODUCT_ID)
         .setParameter("code", type)
         .setParameter("id", product.getId())
-        .setParameter("storeId", store.getId())
+        .setParameter(STORE_ID, store.getId())
         .setParameter("langId", language.getId())
         .getResultList();
   }
@@ -145,7 +145,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
   public List<ProductRelationship> getGroupByType(MerchantStore store, String type) {
     return entityManager.createQuery(HQL_GET_PRODUCT_RELATIONSHIP_BY_CODE_AND_STORE_ID)
         .setParameter("code", type)
-        .setParameter("storeId", store.getId())
+        .setParameter(STORE_ID, store.getId())
         .getResultList();
   }
 
@@ -155,7 +155,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
     return entityManager.createQuery(HQL_GET_PRODUCT_BY_CODE_AND_STORE_ID_AND_LANG_ID)
         .setParameter("code", type)
         .setParameter("langId", language.getId())
-        .setParameter("storeId", store.getId())
+        .setParameter(STORE_ID, store.getId())
         .getResultList();
   }
 
@@ -164,7 +164,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
   public List<ProductRelationship> getByGroup(MerchantStore store, String group) {
     return entityManager.createQuery(HQL_GET_GROUP_BY_CODE_AND_STORE_ID)
         .setParameter("code", group)
-        .setParameter("storeId", store.getId())
+        .setParameter(STORE_ID, store.getId())
         .getResultList();
   }
 
@@ -185,7 +185,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
   public List<ProductRelationship> getByType(MerchantStore store, String type) {
     return entityManager.createQuery(HQL_GET_PRODUCT_BY_CODE_AND_STORE_ID)
         .setParameter("code", type)
-        .setParameter("storeId", store.getId())
+        .setParameter(STORE_ID, store.getId())
         .getResultList();
   }
 
@@ -214,7 +214,7 @@ public class ProductRelationshipRepositoryImpl implements ProductRelationshipRep
 	            .setParameter("code", type)
 	            .setParameter("available", true)
 	            .setParameter("rpid", product.getId())
-	            .setParameter("storeId", store.getId())
+	            .setParameter(STORE_ID, store.getId())
 	            .getResultList();
 	}
 }

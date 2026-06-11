@@ -48,7 +48,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @SwaggerDefinition(tags = { @Tag(name = "Tax class management resource", description = "Manage tax classes") })
 public class TaxClassApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TaxClassApi.class);
 
 	@Autowired
 	private TaxFacade taxFacade;

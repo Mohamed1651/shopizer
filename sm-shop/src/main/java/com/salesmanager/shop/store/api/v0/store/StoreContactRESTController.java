@@ -62,6 +62,7 @@ public class StoreContactRESTController {
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	@ResponseBody
 	public AjaxResponse store(@PathVariable final String store, HttpServletRequest request, HttpServletResponse response) {
+
 		try {
 			
 			/** default routine **/
@@ -76,12 +77,11 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code {}", store);
-				response.sendError(503, "Merchant store is null for code " + store);
+				LOGGER.error(MERCHANT_STORE_IS_NULL_FOR_CODE + store);
+				response.sendError(503, MERCHANT_STORE_IS_NULL_FOR_CODE + store);
 				return null;
 			}
 
-			
 			return null;
 
 		
@@ -116,8 +116,8 @@ public class StoreContactRESTController {
 			}
 			
 			if(merchantStore==null) {
-				LOGGER.error("Merchant store is null for code {}", store);
-				response.sendError(503, "Merchant store is null for code " + store);
+				LOGGER.error(MERCHANT_STORE_IS_NULL_FOR_CODE + store);
+				response.sendError(503, MERCHANT_STORE_IS_NULL_FOR_CODE + store);
 				return null;
 			}
 			

@@ -57,7 +57,11 @@ import com.salesmanager.core.modules.integration.shipping.model.ShippingQuoteMod
 public class USPSShippingQuote implements ShippingQuoteModule {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(USPSShippingQuote.class);
-
+	private static final String PACKAGES = "packages";
+	private static final String SET_ERROR = "setError";
+	private static final String INTL_RATE_RESPONSE_PACKAGE_SERVICE = "IntlRateResponse/Package/Service";
+	private static final String RATE_V3_RESPONSE_PACKAGE_POSTAGE = "RateV3Response/Package/Postage";
+	private static final String ACCOUNT = "account";
 	
 	@Inject
 	private ProductPriceUtils productPriceUtils;
@@ -76,7 +80,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 		
 		//validate integrationKeys['account']
 		Map<String,String> keys = integrationConfiguration.getIntegrationKeys();
-		if(keys==null || StringUtils.isBlank(keys.get("account"))) {
+		if(keys==null || StringUtils.isBlank(keys.get(ACCOUNT))) {
 			errorFields = new ArrayList<String>();
 			errorFields.add("identifier");
 		}
@@ -88,12 +92,12 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			errorFields.add("identifier");
 		}
 		
-		List<String> packages = options.get("packages");
-		if(packages==null || packages.isEmpty()) {
+		List<String> packages = options.get(PACKAGES);
+		if(packages==null || packages.size()==0) {
 			if(errorFields==null) {
 				errorFields = new ArrayList<String>();
 			}
-			errorFields.add("packages");
+			errorFields.add(PACKAGES);
 		}
 		
 /*		List<String> services = options.get("services");
@@ -171,7 +175,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 		
 		HttpGet  httpget = null;
 		Reader xmlreader = null;
-		String pack = configuration.getIntegrationOptions().get("packages").get(0);
+		String pack = configuration.getIntegrationOptions().get(PACKAGES).get(0);
 
 		try {
 			
@@ -182,7 +186,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 		
 			
 			Map<String,String> keys = configuration.getIntegrationKeys();
-			if(keys==null || StringUtils.isBlank(keys.get("account"))) {
+			if(keys==null || StringUtils.isBlank(keys.get(ACCOUNT))) {
 				return null;//TODO can we return null
 			}
 
@@ -217,9 +221,9 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 
 			StringBuilder xmlheader = new StringBuilder();
 			if(store.getCountry().getIsoCode().equals(delivery.getCountry().getIsoCode())) {
-				xmlheader.append("<RateV3Request USERID=\"").append(keys.get("account")).append("\">");
+				xmlheader.append("<RateV3Request USERID=\"").append(keys.get(ACCOUNT)).append("\">");
 			} else {
-				xmlheader.append("<IntlRateRequest USERID=\"").append(keys.get("account")).append("\">");
+				xmlheader.append("<IntlRateRequest USERID=\"").append(keys.get(ACCOUNT)).append("\">");
 			}
 
 
@@ -477,14 +481,14 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 			if(store.getCountry().getIsoCode().equals(delivery.getCountry().getIsoCode())) {
 
 				digester.addCallMethod("Error/Description",
-						"setError", 0);
+						SET_ERROR, 0);
 				digester.addCallMethod("RateV3Response/Package/Error/Description",
-						"setError", 0);
+						SET_ERROR, 0);
 				digester
 						.addObjectCreate(
-								"RateV3Response/Package/Postage",
+								RATE_V3_RESPONSE_PACKAGE_POSTAGE,
 								ShippingOption.class);
-				digester.addSetProperties("RateV3Response/Package/Postage",
+				digester.addSetProperties(RATE_V3_RESPONSE_PACKAGE_POSTAGE,
 						"CLASSID", "optionId");
 				digester.addCallMethod(
 						"RateV3Response/Package/Postage/MailService",
@@ -498,20 +502,20 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 				//		.addCallMethod(
 				//				"RateV3Response/Package/Postage/Commitment/CommitmentDate",
 				//				"estimatedNumberOfDays", 0);
-				digester.addSetNext("RateV3Response/Package/Postage",
+				digester.addSetNext(RATE_V3_RESPONSE_PACKAGE_POSTAGE,
 						"addOption");
 
 			} else {
 
 				digester.addCallMethod("Error/Description",
-						"setError", 0);
+						SET_ERROR, 0);
 				digester.addCallMethod("IntlRateResponse/Package/Error/Description",
-						"setError", 0);
+						SET_ERROR, 0);
 				digester
 						.addObjectCreate(
-								"IntlRateResponse/Package/Service",
+								INTL_RATE_RESPONSE_PACKAGE_SERVICE,
 								ShippingOption.class);
-				digester.addSetProperties("IntlRateResponse/Package/Service",
+				digester.addSetProperties(INTL_RATE_RESPONSE_PACKAGE_SERVICE,
 						"ID", "optionId");
 				digester.addCallMethod(
 						"IntlRateResponse/Package/Service/SvcDescription",
@@ -525,7 +529,7 @@ public class USPSShippingQuote implements ShippingQuoteModule {
 				//digester.addCallMethod(
 				//		"IntlRateResponse/Package/Service/SvcCommitments",
 				//		"setEstimatedNumberOfDays", 0);
-				digester.addSetNext("IntlRateResponse/Package/Service",
+				digester.addSetNext(INTL_RATE_RESPONSE_PACKAGE_SERVICE,
 						"addOption");
 
 			}

@@ -39,7 +39,6 @@ import springfox.documentation.annotations.ApiIgnore;
 		@Tag(name = "Customer password management resource", description = "Customer password management") })
 public class ResetCustomerPasswordApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ResetCustomerPasswordApi.class);
 
 	@Inject
 	private com.salesmanager.shop.store.controller.customer.facade.v1.CustomerFacade customerFacade;

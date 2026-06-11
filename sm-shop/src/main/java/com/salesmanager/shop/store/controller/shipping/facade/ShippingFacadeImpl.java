@@ -39,7 +39,10 @@ import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 
 @Service("shippingFacade")
 public class ShippingFacadeImpl implements ShippingFacade {
-	
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+	private static final String PACKAGE_DETAILS_CANNOT_BE_NULL = "PackageDetails cannot be null";
+	private static final String PACKAGING_UNIQUE_CODE_CANNOT_BE_EMPTY = "Packaging unique code cannot be empty";
+	private static final String ERROR_WHILE_GETTING_EXPEDITION_CONFIGURATION = "Error while getting expedition configuration";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShippingFacadeImpl.class);
 
 	@Autowired
@@ -80,7 +83,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 			}
 
 		} catch (ServiceException e) {
-			LOGGER.error("Error while getting expedition configuration", e);
+			LOGGER.error(ERROR_WHILE_GETTING_EXPEDITION_CONFIGURATION, e);
 			throw new ServiceRuntimeException("Error while getting Expedition configuration for store[" + store.getCode() + "]", e);
 		}
 		return expeditionConfiguration;
@@ -101,7 +104,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 
 		} catch (ServiceException e) {
-			LOGGER.error("Error while getting expedition configuration", e);
+			LOGGER.error(ERROR_WHILE_GETTING_EXPEDITION_CONFIGURATION, e);
 			throw new ServiceRuntimeException("Error while getting Expedition configuration for store[" + store.getCode() + "]", e);
 		}
 
@@ -188,7 +191,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 			return config;
 		} catch (ServiceException e) {
-			LOGGER.error("Error while getting expedition configuration", e);
+			LOGGER.error(ERROR_WHILE_GETTING_EXPEDITION_CONFIGURATION, e);
 			throw new ServiceRuntimeException("Error while getting Expedition configuration for store[" + store.getCode() + "]", e);
 		}
 		
@@ -196,8 +199,8 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 	@Override
 	public void createPackage(PackageDetails packaging, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(packaging, "PackageDetails cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(packaging, PACKAGE_DETAILS_CANNOT_BE_NULL);
 		ShippingConfiguration config = getDbConfig(store);
 		
 		if(this.packageExists(config, packaging)) {
@@ -216,7 +219,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 	private boolean packageExists(ShippingConfiguration configuration, PackageDetails packageDetails) {
 		
 		Validate.notNull(configuration,"ShippingConfiguration cannot be null");
-		Validate.notNull(packageDetails, "PackageDetails cannot be null");
+		Validate.notNull(packageDetails, PACKAGE_DETAILS_CANNOT_BE_NULL);
 		Validate.notEmpty(packageDetails.getCode(), "PackageDetails code cannot be empty");
 		
 		List<com.salesmanager.core.model.shipping.Package> packages = configuration.getPackages().stream().filter(p -> p.getCode().equalsIgnoreCase(packageDetails.getCode())).collect(Collectors.toList());
@@ -244,8 +247,8 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 	@Override
 	public PackageDetails getPackage(String code, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notEmpty(code,"Packaging unique code cannot be empty");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notEmpty(code,PACKAGING_UNIQUE_CODE_CANNOT_BE_EMPTY);
 		
 		ShippingConfiguration config = getDbConfig(store);
 		
@@ -260,7 +263,7 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 	@Override
 	public List<PackageDetails> listPackages(MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		ShippingConfiguration config = getDbConfig(store);
 		
 		return config.getPackages().stream().map(p -> this.toPackageDetails(p)).collect(Collectors.toList());
@@ -269,9 +272,9 @@ public class ShippingFacadeImpl implements ShippingFacade {
 
 	@Override
 	public void updatePackage(String code, PackageDetails packaging, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(packaging, "PackageDetails cannot be null");
-		Validate.notEmpty(code,"Packaging unique code cannot be empty");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(packaging, PACKAGE_DETAILS_CANNOT_BE_NULL);
+		Validate.notEmpty(code,PACKAGING_UNIQUE_CODE_CANNOT_BE_EMPTY);
 		
 		ShippingConfiguration config = getDbConfig(store);
 		
@@ -296,8 +299,8 @@ public class ShippingFacadeImpl implements ShippingFacade {
 	@Override
 	public void deletePackage(String code, MerchantStore store) {
 		
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notEmpty(code,"Packaging unique code cannot be empty");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notEmpty(code,PACKAGING_UNIQUE_CODE_CANNOT_BE_EMPTY);
 		
 		ShippingConfiguration config = getDbConfig(store);
 		

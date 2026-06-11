@@ -198,6 +198,7 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
         BlobId blobId = BlobId.of(bucketName, fileName.toString());
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
         storage.create(blobInfo, targetArray);
+        storage.createAcl(blobId, Acl.of(User.ofAllUsers(), Role.READER));
       } catch (IOException ioe) {
         throw new ServiceException(ioe);
       }
@@ -216,13 +217,13 @@ public class GCPProductContentFileManager implements ProductAssetsManager {
       String filePath = filePath(productImage.getProduct().getMerchantStore().getCode(), productImage.getProduct().getSku(), size, productImage.getProductImage());
       BlobId blobId = BlobId.of(bucketName(), filePath);
       if(blobId==null) {
-        LOGGER.info("Image path {} does not exist", filePath);
+        LOGGER.info("Image path " + filePath + " does not exist");
         return;
         //throw new ServiceException("Image not found " + productImage.getProductImage());
       }
       boolean deleted = storage.delete(blobId);
       if (!deleted) {
-        LOGGER.error("Cannot delete image [{}]", productImage.getProductImage());
+        LOGGER.error("Cannot delete image [" + productImage.getProductImage() + "]");
       }
     }
   

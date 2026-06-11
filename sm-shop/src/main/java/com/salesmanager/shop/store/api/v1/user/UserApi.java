@@ -60,8 +60,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @SwaggerDefinition(tags = { @Tag(name = "User management resource", description = "Manage administration users") })
 public class UserApi {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserApi.class);
-
 
 	@Inject
 	private UserFacade userFacade;

@@ -62,7 +62,7 @@ public class PersistableOrderPopulator extends
 		Validate.notNull(currencyService,"currencyService must be set");
 
 		try {
-			
+
 
 			/** customer **/
 			PersistableCustomer customer = source.getCustomer();

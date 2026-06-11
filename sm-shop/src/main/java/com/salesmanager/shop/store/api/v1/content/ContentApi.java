@@ -60,10 +60,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @SwaggerDefinition(tags = {
 		@Tag(name = "Content management resource", description = "Add pages, content boxes, manage images and files") })
 public class ContentApi {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContentApi.class);
-
-	private static final String DEFAULT_PATH = "/";
 	
 	private final static String BOX = "BOX";
 	private final static String PAGE = "PAGE";

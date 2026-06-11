@@ -108,7 +108,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
   private final static String RESET_PASSWORD_TPL = "email_template_password_reset_customer.ftl";
 
   public final static String ROLE_PREFIX = "ROLE_";// Spring Security 4
-
+  private static final String NO_CUSTOMER_FOUND_ERROR = "No Customer found for ID : ";
 
   @Inject
   private CustomerService customerService;
@@ -305,7 +305,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
   private Customer getCustomerByNickAndStoreId(String userName, MerchantStore merchantStore) {
     return Optional.ofNullable(customerService.getByNick(userName, merchantStore.getId()))
-        .orElseThrow(() -> new ResourceNotFoundException("No Customer found for ID : " + userName));
+        .orElseThrow(() -> new ResourceNotFoundException(NO_CUSTOMER_FOUND_ERROR + userName));
   }
 
 
@@ -558,7 +558,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
       final Language language) {
 
     Customer customerModel = Optional.ofNullable(customerService.getById(id))
-        .orElseThrow(() -> new ResourceNotFoundException("No Customer found for ID : " + id));
+        .orElseThrow(() -> new ResourceNotFoundException(NO_CUSTOMER_FOUND_ERROR + id));
 
     return convertCustomerToReadableCustomer(customerModel, merchantStore, language);
   }
@@ -933,7 +933,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
   private Customer getByNick(String userName) {
     return Optional.ofNullable(customerService.getByNick(userName))
-        .orElseThrow(() -> new ResourceNotFoundException("No Customer found for ID : " + userName));
+        .orElseThrow(() -> new ResourceNotFoundException(NO_CUSTOMER_FOUND_ERROR + userName));
   }
 
   @Override

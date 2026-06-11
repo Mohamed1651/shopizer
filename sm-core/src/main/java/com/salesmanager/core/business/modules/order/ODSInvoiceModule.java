@@ -20,19 +20,6 @@ import com.salesmanager.core.model.reference.language.Language;
 
 public class ODSInvoiceModule implements InvoiceModule {
 	
-	private final static String INVOICE_TEMPLATE = "templates/invoice/Invoice";
-	private final static String INVOICE_TEMPLATE_EXTENSION = ".ods";
-	private final static String TEMP_INVOICE_SUFFIX_NAME = "_invoice.ods";
-	private final static int ADDRESS_ROW_START = 2;
-	private final static int ADDRESS_ROW_END = 5;
-	
-	private final static int BILLTO_ROW_START = 8;
-	private final static int BILLTO_ROW_END = 13;
-	
-	private final static int PRODUCT_ROW_START = 16;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger( ODSInvoiceModule.class );
-	
 	@Inject
 	private ZoneService zoneService;
 	

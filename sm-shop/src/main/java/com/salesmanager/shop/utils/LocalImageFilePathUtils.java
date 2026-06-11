@@ -20,8 +20,8 @@ public class LocalImageFilePathUtils extends AbstractimageFilePath{
 	
 	private static final String SCHEME = "http://";
 	private String contentUrl = null;
-
-	
+	private static final String SIZE_LARGE = "LARGE";
+	private static final String PRODUCTS_URL_PATH = "/products/";
 	@Autowired
 	private ServerConfig serverConfig;
 
@@ -96,8 +96,8 @@ public class LocalImageFilePathUtils extends AbstractimageFilePath{
 	 * @return
 	 */
 	public String buildProductimageUtils(MerchantStore store, Product product, String imageName) {
-		return new StringBuilder().append(getBasePath(store)).append("/products/").append(store.getCode()).append("/")
-				.append(product.getSku()).append("/").append("LARGE").append("/").append(imageName).toString();
+		return new StringBuilder().append(getBasePath(store)).append(PRODUCTS_URL_PATH).append(store.getCode()).append("/")
+				.append(product.getSku()).append("/").append(SIZE_LARGE).append("/").append(imageName).toString();
 	}
 	
 	/**
@@ -109,8 +109,8 @@ public class LocalImageFilePathUtils extends AbstractimageFilePath{
 	 * @return
 	 */
 	public String buildProductimageUtils(MerchantStore store, String sku, String imageName) {
-		return new StringBuilder().append(getBasePath(store)).append("/products/").append(store.getCode()).append("/")
-				.append(sku).append("/").append("LARGE").append("/").append(imageName).toString();
+		return new StringBuilder().append(getBasePath(store)).append(PRODUCTS_URL_PATH).append(store.getCode()).append("/")
+				.append(sku).append("/").append(SIZE_LARGE).append("/").append(imageName).toString();
 	}
 	
 	/**
@@ -121,8 +121,8 @@ public class LocalImageFilePathUtils extends AbstractimageFilePath{
 	 * @return
 	 */
 	public String buildLargeProductimageUtils(MerchantStore store, String sku, String imageName) {
-		return new StringBuilder().append(getBasePath(store)).append("/products/").append(store.getCode()).append("/")
-				.append(sku).append("/").append("LARGE").append("/").append(imageName).toString();
+		return new StringBuilder().append(getBasePath(store)).append(PRODUCTS_URL_PATH).append(store.getCode()).append("/")
+				.append(sku).append("/").append(SIZE_LARGE).append("/").append(imageName).toString();
 	}
 
 

@@ -286,10 +286,16 @@ public class ProductTest extends com.salesmanager.test.common.AbstractSalesManag
 			for(Category c : categories) {
 				ids.add(c.getId());
 			}
+		} 
+		
+		List<Object[]> objs = categoryService.countProductsByCategories(store, ids);
+
+		for(Object[] ob : objs) {
+			//System.out.println("Category " + c.getCode() + " has " + ob[1] + " items");
 		}
 
-
 		//get manufacturer for given categories
+		manufacturerService.listByProductsByCategoriesId(store, ids, en);
 	    
 		//System.out.println("Number of manufacturer for all category " + manufacturers.size());
 		

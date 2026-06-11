@@ -20,7 +20,7 @@ public class IntegrationModulesLoader {
 	
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationModulesLoader.class);
-	
+	private static final String CUSTOM_MODULE = "customModule";
 
 	public List<IntegrationModule> loadIntegrationModules(String jsonFilePath) throws Exception {
 		
@@ -70,14 +70,14 @@ public class IntegrationModulesLoader {
 	    		module.setType((String)object.get("type"));
 	    	}
 	    	
-	    	if(object.get("customModule")!=null) {
-	    		Object o = object.get("customModule");
+	    	if(object.get(CUSTOM_MODULE)!=null) {
+	    		Object o = object.get(CUSTOM_MODULE);
 	    		Boolean b = false;
 	    		if(o instanceof Boolean) {
-	    			b = (Boolean)object.get("customModule");
+	    			b = (Boolean)object.get(CUSTOM_MODULE);
 	    		} else {
 	    			try {
-	    				b = Boolean.valueOf((String) object.get("customModule"));
+	    				b = Boolean.valueOf((String) object.get(CUSTOM_MODULE));
 	    			} catch(Exception e) {
 	    				LOGGER.error("Cannot cast " + o.getClass() + " tp a boolean value");
 	    			}

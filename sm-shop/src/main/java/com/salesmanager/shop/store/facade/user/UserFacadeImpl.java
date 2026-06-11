@@ -127,7 +127,7 @@ public class UserFacadeImpl implements UserFacade {
 	@Override
 	public ReadableUser findByUserName(String userName, String storeCode, Language lang) {
 		ReadableUser user = findByUserName(userName, lang);
-		if (user.getUserName() == null) {
+		if (user == null) {
 			throw new ResourceNotFoundException("User [" + userName + "] not found");
 		}
 
@@ -226,6 +226,11 @@ public class UserFacadeImpl implements UserFacade {
 	public boolean authorizedStore(String userName, String merchantStoreCode) {
 
 		try {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+			authentication.getAuthorities().stream().map(r -> r.getAuthority())
+					.collect(Collectors.toSet());
 
 			ReadableUser readableUser = findByUserName(userName, languageService.defaultLanguage());
 
@@ -656,7 +661,7 @@ public class UserFacadeImpl implements UserFacade {
 
 				ReadableUser readableUser = findByUserName(currentPrincipalName, languageService.defaultLanguage());
 				//ReadableUser readableUser =	  findByUserName(currentPrincipalName, store.getCode(), store.getDefaultLanguage());
-				if (readableUser.getUserName() == null) {
+				if (readableUser == null) {
 					return false;
 				}
 

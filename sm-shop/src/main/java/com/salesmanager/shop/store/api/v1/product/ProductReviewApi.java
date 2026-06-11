@@ -44,6 +44,9 @@ public class ProductReviewApi {
   @Inject private ProductReviewService productReviewService;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ProductReviewApi.class);
+  private static final String DOES_NOT_EXIST = " does not exist";
+  private static final String PRODUCT_REVIEW_WITH_ID = "Product review with id ";
+  private static final String ERROR_WHILE_SAVING_PRODUCT_REVIEW = "Error while saving product review";
 
   @RequestMapping(
       value = {
@@ -90,9 +93,9 @@ public class ProductReviewApi {
       return review;
 
     } catch (Exception e) {
-      LOGGER.error("Error while saving product review", e);
+      LOGGER.error(ERROR_WHILE_SAVING_PRODUCT_REVIEW, e);
       try {
-        response.sendError(503, "Error while saving product review" + e.getMessage());
+        response.sendError(503, ERROR_WHILE_SAVING_PRODUCT_REVIEW + e.getMessage());
       } catch (Exception ignore) {
       }
 
@@ -162,12 +165,12 @@ public class ProductReviewApi {
     try {
       ProductReview prodReview = productReviewService.getById(reviewId);
       if (prodReview == null) {
-        response.sendError(404, "Product review with id " + reviewId + " does not exist");
+        response.sendError(404, PRODUCT_REVIEW_WITH_ID + reviewId + DOES_NOT_EXIST);
         return null;
       }
 
       if (prodReview.getCustomer().getId().longValue() != review.getCustomerId().longValue()) {
-        response.sendError(404, "Product review with id " + reviewId + " does not exist");
+        response.sendError(404, PRODUCT_REVIEW_WITH_ID + reviewId + DOES_NOT_EXIST);
         return null;
       }
 
@@ -184,9 +187,9 @@ public class ProductReviewApi {
       return review;
 
     } catch (Exception e) {
-      LOGGER.error("Error while saving product review", e);
+      LOGGER.error(ERROR_WHILE_SAVING_PRODUCT_REVIEW, e);
       try {
-        response.sendError(503, "Error while saving product review" + e.getMessage());
+        response.sendError(503, ERROR_WHILE_SAVING_PRODUCT_REVIEW + e.getMessage());
       } catch (Exception ignore) {
       }
 
@@ -216,12 +219,12 @@ public class ProductReviewApi {
     try {
       ProductReview prodReview = productReviewService.getById(reviewId);
       if (prodReview == null) {
-        response.sendError(404, "Product review with id " + reviewId + " does not exist");
+        response.sendError(404, PRODUCT_REVIEW_WITH_ID + reviewId + DOES_NOT_EXIST);
         return;
       }
 
       if (prodReview.getProduct().getId().longValue() != id.longValue()) {
-        response.sendError(404, "Product review with id " + reviewId + " does not exist");
+        response.sendError(404, PRODUCT_REVIEW_WITH_ID + reviewId + DOES_NOT_EXIST);
         return;
       }
 

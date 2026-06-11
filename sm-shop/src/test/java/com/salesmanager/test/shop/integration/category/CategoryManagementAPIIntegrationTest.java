@@ -319,6 +319,7 @@ public class CategoryManagementAPIIntegrationTest extends ServicesTestSupport {
 
         final HttpEntity<String> entity = new HttpEntity<>(json, getHeader());
 
+
         final ResponseEntity response = testRestTemplate.postForEntity("/api/v1/private/category", entity, PersistableCategory.class);
 
         final PersistableCategory cat = (PersistableCategory) response.getBody();
@@ -413,9 +414,6 @@ public class CategoryManagementAPIIntegrationTest extends ServicesTestSupport {
       @SuppressWarnings("rawtypes")
       ResponseEntity<List> manufacturers = testRestTemplate.exchange(String.format("/api/v1/category/" + id + "/manufacturer"), HttpMethod.GET, entity, List.class);  
       assertThat(manufacturers.getStatusCode(), is(OK));
-      
-      @SuppressWarnings("unchecked")
-      List<ReadableManufacturer> manufacturerList = manufacturers.getBody();
 
       
       //assertFalse(manufacturerList.isEmpty());

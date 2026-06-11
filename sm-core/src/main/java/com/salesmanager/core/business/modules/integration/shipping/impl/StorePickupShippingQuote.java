@@ -38,7 +38,7 @@ import com.salesmanager.core.modules.integration.shipping.model.ShippingQuotePre
  *
  */
 public class StorePickupShippingQuote implements ShippingQuoteModule, ShippingQuotePrePostProcessModule {
-	
+	private static final String PRICE = "price";
 	
 	public final static String MODULE_CODE = "storePickUp";
 
@@ -64,14 +64,14 @@ public class StorePickupShippingQuote implements ShippingQuoteModule, ShippingQu
 		//if(keys==null || StringUtils.isBlank(keys.get("price"))) {
 		if(keys==null) {
 			errorFields = new ArrayList<String>();
-			errorFields.add("price");
+			errorFields.add(PRICE);
 		} else {
 			//validate it can be parsed to BigDecimal
 			try {
-				BigDecimal price;
+				new BigDecimal(keys.get(PRICE));
 			} catch(Exception e) {
 				errorFields = new ArrayList<String>();
-				errorFields.add("price");
+				errorFields.add(PRICE);
 			}
 		}
 		
@@ -133,7 +133,7 @@ public class StorePickupShippingQuote implements ShippingQuoteModule, ShippingQu
 
 			String region = null;
 			
-			String price = globalShippingConfiguration.getIntegrationKeys().get("price");
+			String price = globalShippingConfiguration.getIntegrationKeys().get(PRICE);
 	
 	
 			if(delivery.getZone()!=null) {

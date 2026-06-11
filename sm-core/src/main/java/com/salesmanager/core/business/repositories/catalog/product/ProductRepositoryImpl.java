@@ -31,7 +31,30 @@ import com.salesmanager.core.model.tax.taxclass.TaxClass;
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepositoryImpl.class);
-
+	private static final String LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD = "left join fetch po.descriptions pod ";
+	private static final String LEFT_JOIN_FETCH_P_TAX_CLASS_TX = "left join fetch p.taxClass tx ";
+	private static final String LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF = "left join fetch p.manufacturer manuf ";
+	private static final String SELECT_P_FROM_PRODUCT_AS_P = "select p from Product as p ";
+	private static final String LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD = "left join fetch pov.descriptions povd ";
+	private static final String LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO = "left join fetch pattr.productOption po ";
+	private static final String LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD = "left join fetch pap.descriptions papd ";
+	private static final String LEFT_JOIN_FETCH_P_IMAGES_IMAGES = "left join fetch p.images images ";
+	private static final String JOIN_FETCH_P_CATEGORIES_CATEGS = "join fetch p.categories categs ";
+	private static final String SELECT_DISTINCT_P_FROM_PRODUCT_AS_P = "select distinct p from Product as p ";
+	private static final String AND_P_AVAILABLE_TRUE_AND_P_DATE_AVAILABLE_LE_DT = "and p.available=true and p.dateAvailable<=:dt ";
+	private static final String LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD = "left join fetch categs.descriptions categsd ";
+	private static final String LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR = "left join fetch p.relationships pr ";
+	private static final String JOIN_FETCH_P_MERCHANT_STORE_MERCH = "join fetch p.merchantStore merch ";
+	private static final String LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR = "left join fetch p.attributes pattr ";
+	private static final String LEFT_JOIN_FETCH_PA_PRICES_PAP = "left join fetch pa.prices pap ";
+	private static final String LEFT_JOIN_FETCH_P_TYPE_TYPE = "left join fetch p.type type ";
+	private static final String LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD = "left join fetch manuf.descriptions manufd ";
+	private static final String LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS = "left join fetch p.categories categs ";
+	private static final String JOIN_FETCH_P_MERCHANT_STORE_PM = "join fetch p.merchantStore pm ";
+	private static final String LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV = "left join fetch pattr.productOptionValue pov ";
+	private static final String JOIN_FETCH_P_DESCRIPTIONS_PD = "join fetch p.descriptions pd ";
+	private static final String LEFT_JOIN_FETCH_PV_PRODUCT_OPTION_PVPO = "left join fetch pv.productOption pvpo ";
+	private static final String JOIN_FETCH_P_AVAILABILITIES_PA = "join fetch p.availabilities pa ";
 	@PersistenceContext
 	private EntityManager em;
 
@@ -48,8 +71,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
 	@Override
 	public Product getProductWithOnlyMerchantStoreById(Long productId) {
-		final String hql = "select distinct p from Product as p " +
-				"join fetch p.merchantStore merch " +
+		final String hql = SELECT_DISTINCT_P_FROM_PRODUCT_AS_P +
+				JOIN_FETCH_P_MERCHANT_STORE_MERCH +
 				"where p.id=:pid";
 
 		final Query q = this.em.createQuery(hql);
@@ -115,30 +138,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		try {
 
 			StringBuilder qs = new StringBuilder();
-			qs.append("select distinct p from Product as p ");
-			qs.append("join fetch p.availabilities pa ");
-			qs.append("join fetch p.descriptions pd ");
-			qs.append("join fetch p.merchantStore pm ");
-			qs.append("left join fetch pa.prices pap ");
-			qs.append("left join fetch pap.descriptions papd ");
+			qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+			qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+			qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+			qs.append(JOIN_FETCH_P_MERCHANT_STORE_PM);
+			qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
+			qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
-			qs.append("left join fetch p.categories categs ");
-			qs.append("left join fetch categs.descriptions categsd ");
+			qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+			qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
 			// images
-			qs.append("left join fetch p.images images ");
+			qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 			// options
-			qs.append("left join fetch p.attributes pattr ");
-			qs.append("left join fetch pattr.productOption po ");
-			qs.append("left join fetch po.descriptions pod ");
-			qs.append("left join fetch pattr.productOptionValue pov ");
-			qs.append("left join fetch pov.descriptions povd ");
-			qs.append("left join fetch p.relationships pr ");
+			qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+			qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+			qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+			qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 			// other lefts
-			qs.append("left join fetch p.manufacturer manuf ");
-			qs.append("left join fetch manuf.descriptions manufd ");
-			qs.append("left join fetch p.type type ");
-			qs.append("left join fetch p.taxClass tx ");
+			qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+			qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+			qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+			qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 			// RENTAL
 			//qs.append("left join fetch p.owner owner ");
@@ -168,24 +191,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		try {
 
 			StringBuilder qs = new StringBuilder();
-			qs.append("select distinct p from Product as p ");
-			qs.append("join fetch p.descriptions pd ");
-			qs.append("join fetch p.merchantStore pm ");
+			qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+			qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+			qs.append(JOIN_FETCH_P_MERCHANT_STORE_PM);
 
-			qs.append("left join fetch p.categories categs ");
-			qs.append("left join fetch categs.descriptions categsd ");
+			qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+			qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
 			// options
-			qs.append("left join fetch p.attributes pattr ");
-			qs.append("left join fetch pattr.productOption po ");
-			qs.append("left join fetch po.descriptions pod ");
-			qs.append("left join fetch pattr.productOptionValue pov ");
-			qs.append("left join fetch pov.descriptions povd ");
-			qs.append("left join fetch p.relationships pr ");
+			qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+			qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+			qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+			qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 			// other lefts
-			qs.append("left join fetch p.manufacturer manuf ");
-			qs.append("left join fetch manuf.descriptions manufd ");
-			qs.append("left join fetch p.type type ");
+			qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+			qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+			qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
 
 
 			qs.append("where p.sku=:code and pm.id=:id");
@@ -211,37 +234,37 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		regionList.add(locale.getCountry());
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.merchantStore pm ");
-		qs.append("left join fetch pa.prices pap ");
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_PM);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
-		qs.append("left join fetch p.categories categs ");
-		qs.append("left join fetch categs.descriptions categsd ");
+		qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+		qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 		// options
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
-		qs.append("left join fetch p.relationships pr ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+		qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
 
 		qs.append("where pa.region in (:lid) ");
 		qs.append("and pd.seUrl=:seUrl ");
-		qs.append("and p.available=true and p.dateAvailable<=:dt ");
+		qs.append(AND_P_AVAILABLE_TRUE_AND_P_DATE_AVAILABLE_LE_DT);
 		qs.append("order by pattr.productOptionSortOrder ");
 
 		String hql = qs.toString();
@@ -285,34 +308,34 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		regionList.add(locale.getCountry());
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.merchantStore pm ");
-		qs.append("left join fetch pa.prices pap ");
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_PM);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 		// options
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
-		qs.append("left join fetch p.relationships pr ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+		qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
 
 		qs.append("where p.id=:pid and pa.region in (:lid) ");
 		qs.append("and pd.language.id=:lang and papd.language.id=:lang ");
-		qs.append("and p.available=true and p.dateAvailable<=:dt ");
+		qs.append(AND_P_AVAILABLE_TRUE_AND_P_DATE_AVAILABLE_LE_DT);
 		// this cannot be done on child elements from left join
 		// qs.append("and pod.languageId=:lang and povd.languageId=:lang");
 
@@ -349,30 +372,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		 */
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
 
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.categories categs ");
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_CATEGORIES_CATEGS);
 
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// options (do not need attributes for listings)
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -406,30 +429,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		 */
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
 
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.categories categs ");
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_CATEGORIES_CATEGS);
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// options (do not need attributes for listings)
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -439,7 +462,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		// qs.append("and pd.language.id=:lang and papd.language.id=:lang and
 		// manufd.language.id=:lang ");
 		qs.append("and pd.language.id=:lang and papd.language.id=:lang ");
-		qs.append("and p.available=true and p.dateAvailable<=:dt ");
+		qs.append(AND_P_AVAILABLE_TRUE_AND_P_DATE_AVAILABLE_LE_DT);
 
 		String hql = qs.toString();
 		Query q = this.em.createQuery(hql);
@@ -460,7 +483,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		StringBuilder qs = new StringBuilder();
 		qs.append(productQueryV2());
 		qs.append("where p.id in (:pid) ");
-		qs.append("and p.available=true and p.dateAvailable<=:dt ");
+		qs.append(AND_P_AVAILABLE_TRUE_AND_P_DATE_AVAILABLE_LE_DT);
 
 		String hql = qs.toString();
 		Query q = this.em.createQuery(hql);
@@ -504,32 +527,32 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 			return productList;
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
+		qs.append(SELECT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
 
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.categories categs ");
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_CATEGORIES_CATEGS);
 
 		// not necessary
 		// qs.append("join fetch pap.descriptions papd ");
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// options (do not need attributes for listings)
-		// qs.append("left join fetch p.attributes pattr ");
+		// qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
 		// qs.append("left join fetch pattr.productOption po ");
 		// qs.append("left join fetch po.descriptions pod ");
-		// qs.append("left join fetch pattr.productOptionValue pov ");
+		// qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
 		// qs.append("left join fetch pov.descriptions povd ");
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -748,25 +771,25 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 			return productList;
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		qs.append("left join fetch p.descriptions pd ");
-		qs.append("left join fetch p.categories categs ");
+		qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
 		qs.append("left join fetch categs.descriptions cd ");
 		
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -795,7 +818,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		if(criteria.getOrigin().equals(ProductCriteria.ORIGIN_SHOP)) {
 			qs.append(" left join fetch p.variants pinst ");
 			qs.append(" left join fetch pinst.variation pv ");
-			qs.append( "left join fetch pv.productOption pvpo ");
+			qs.append( LEFT_JOIN_FETCH_PV_PRODUCT_OPTION_PVPO);
 			qs.append(" left join fetch pv.productOptionValue pvpov ");
 			qs.append(" left join fetch pvpo.descriptions pvpod ");
 			qs.append(" left join fetch pvpov.descriptions pvpovd ");
@@ -979,31 +1002,31 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		 */
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
+		qs.append(SELECT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
 
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("left join fetch p.categories categs ");
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
 
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// options (do not need attributes for listings)
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -1032,31 +1055,31 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		 */
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select p from Product as p ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("left join fetch pa.prices pap ");
+		qs.append(SELECT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
 
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.categories categs ");
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_CATEGORIES_CATEGS);
 
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 
 		// options (do not need attributes for listings)
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL
 		//qs.append("left join fetch p.owner owner ");
@@ -1080,38 +1103,38 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 	private String productQueryV1() {
 
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.availabilities pa ");
-		qs.append("join fetch p.merchantStore merch ");
-		qs.append("join fetch p.descriptions pd ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_AVAILABILITIES_PA);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
 
-		qs.append("left join fetch p.categories categs ");
-		qs.append("left join fetch categs.descriptions categsd ");
+		qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+		qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
-		qs.append("left join fetch pa.prices pap ");
-		qs.append("left join fetch pap.descriptions papd ");
+		qs.append(LEFT_JOIN_FETCH_PA_PRICES_PAP);
+		qs.append(LEFT_JOIN_FETCH_PAP_DESCRIPTIONS_PAPD);
 
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 		// options
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
 
 		//relations
-		qs.append("left join fetch p.relationships pr ");
+		qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 
 		// variants
 		//qs.append("left join fetch pa.variants pav ");
 		//qs.append("left join fetch pav.attribute pavattr ");
 
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
-		qs.append("left join fetch p.taxClass tx ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
+		qs.append(LEFT_JOIN_FETCH_P_TAX_CLASS_TX);
 
 		// RENTAL REMOVED
 		//qs.append("left join fetch p.owner owner ");
@@ -1121,35 +1144,35 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 	
 	private String productQueryV2() {
 		StringBuilder qs = new StringBuilder();
-		qs.append("select distinct p from Product as p ");
-		qs.append("join fetch p.descriptions pd ");
-		qs.append("join fetch p.merchantStore merch ");
+		qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+		qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+		qs.append(JOIN_FETCH_P_MERCHANT_STORE_MERCH);
 		qs.append("left join fetch p.availabilities pavail ");
-		qs.append("left join fetch p.type type ");
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
 		// images
-		qs.append("left join fetch p.images images ");
+		qs.append(LEFT_JOIN_FETCH_P_IMAGES_IMAGES);
 		qs.append("left join fetch pavail.prices pavailpr ");
 		qs.append("left join fetch pavailpr.descriptions pavailprdesc ");
 
-		qs.append("left join fetch p.categories categs ");
-		qs.append("left join fetch categs.descriptions categsd ");
+		qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+		qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
 		// options
-		qs.append("left join fetch p.attributes pattr ");
-		qs.append("left join fetch pattr.productOption po ");
-		qs.append("left join fetch po.descriptions pod ");
-		qs.append("left join fetch pattr.productOptionValue pov ");
-		qs.append("left join fetch pov.descriptions povd ");
-		qs.append("left join fetch p.relationships pr ");
+		qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+		qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+		qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+		qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+		qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 		// other lefts
-		qs.append("left join fetch p.manufacturer manuf ");
-		qs.append("left join fetch manuf.descriptions manufd ");
-		qs.append("left join fetch p.type type ");
+		qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+		qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+		qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
 		
 		//variants
 		qs.append("left join fetch p.variants pinst ");
 		qs.append("left join fetch pinst.variation pv ");
-		qs.append("left join fetch pv.productOption pvpo ");
+		qs.append(LEFT_JOIN_FETCH_PV_PRODUCT_OPTION_PVPO);
 		qs.append("left join fetch pv.productOptionValue pvpov ");
 		qs.append("left join fetch pvpo.descriptions pvpod ");
 		qs.append("left join fetch pvpov.descriptions pvpovd ");
@@ -1180,33 +1203,33 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 		try {
 
 			StringBuilder qs = new StringBuilder();
-			qs.append("select distinct p from Product as p ");
-			qs.append("join fetch p.descriptions pd ");
-			qs.append("join fetch p.merchantStore pm ");
+			qs.append(SELECT_DISTINCT_P_FROM_PRODUCT_AS_P);
+			qs.append(JOIN_FETCH_P_DESCRIPTIONS_PD);
+			qs.append(JOIN_FETCH_P_MERCHANT_STORE_PM);
 			qs.append("left join fetch p.availabilities pavail ");
-			qs.append("left join fetch p.type type ");
+			qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
 			qs.append("left join fetch pavail.prices pavailpr ");
 			qs.append("left join fetch pavailpr.descriptions pavailprdesc ");
 
-			qs.append("left join fetch p.categories categs ");
-			qs.append("left join fetch categs.descriptions categsd ");
+			qs.append(LEFT_JOIN_FETCH_P_CATEGORIES_CATEGS);
+			qs.append(LEFT_JOIN_FETCH_CATEGS_DESCRIPTIONS_CATEGSD);
 
 			// options
-			qs.append("left join fetch p.attributes pattr ");
-			qs.append("left join fetch pattr.productOption po ");
-			qs.append("left join fetch po.descriptions pod ");
-			qs.append("left join fetch pattr.productOptionValue pov ");
-			qs.append("left join fetch pov.descriptions povd ");
-			qs.append("left join fetch p.relationships pr ");
+			qs.append(LEFT_JOIN_FETCH_P_ATTRIBUTES_PATTR);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_PO);
+			qs.append(LEFT_JOIN_FETCH_PO_DESCRIPTIONS_POD);
+			qs.append(LEFT_JOIN_FETCH_PATTR_PRODUCT_OPTION_VALUE_POV);
+			qs.append(LEFT_JOIN_FETCH_POV_DESCRIPTIONS_POVD);
+			qs.append(LEFT_JOIN_FETCH_P_RELATIONSHIPS_PR);
 			// other lefts
-			qs.append("left join fetch p.manufacturer manuf ");
-			qs.append("left join fetch manuf.descriptions manufd ");
-			qs.append("left join fetch p.type type ");
+			qs.append(LEFT_JOIN_FETCH_P_MANUFACTURER_MANUF);
+			qs.append(LEFT_JOIN_FETCH_MANUF_DESCRIPTIONS_MANUFD);
+			qs.append(LEFT_JOIN_FETCH_P_TYPE_TYPE);
 			
 			//variants
 			qs.append("left join fetch p.variants pinst ");
 			qs.append("left join fetch pinst.variation pv ");
-			qs.append("left join fetch pv.productOption pvpo ");
+			qs.append(LEFT_JOIN_FETCH_PV_PRODUCT_OPTION_PVPO);
 			qs.append("left join fetch pv.productOptionValue pvpov ");
 			qs.append("left join fetch pvpo.descriptions pvpod ");
 			qs.append("left join fetch pvpov.descriptions pvpovd ");

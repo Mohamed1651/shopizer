@@ -114,15 +114,13 @@ public class ShoppingCartModelPopulator
         }
 
         List<ShoppingCartItem> items = shoppingCart.getShoppingCartItems();
-        Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> newItems =
-            new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartItem>();
-        if ( items != null && !items.isEmpty() )
+        if ( items != null && items.size() > 0 )
         {
             for ( ShoppingCartItem item : items )
             {
 
                 Set<com.salesmanager.core.model.shoppingcart.ShoppingCartItem> cartItems = cartMdel.getLineItems();
-                if ( cartItems != null && !cartItems.isEmpty() )
+                if ( cartItems != null && cartItems.size() > 0 )
                 {
 
                     for ( com.salesmanager.core.model.shoppingcart.ShoppingCartItem dbItem : cartItems )
@@ -155,7 +153,6 @@ public class ShoppingCartModelPopulator
                             {
                                 dbItem.removeAllAttributes();
                             }
-                            newItems.add( dbItem );
                         }
                     }
                 }
@@ -223,6 +220,8 @@ public class ShoppingCartModelPopulator
         List<ShoppingCartAttribute> cartAttributes = shoppingCartItem.getShoppingCartAttributes();
         if ( !CollectionUtils.isEmpty( cartAttributes ) )
         {
+            //Set<com.salesmanager.core.model.shoppingcart.ShoppingCartAttributeItem> newAttributes =
+                //new HashSet<com.salesmanager.core.model.shoppingcart.ShoppingCartAttributeItem>();
             for ( ShoppingCartAttribute attribute : cartAttributes )
             {
                 ProductAttribute productAttribute = productAttributeService.getById( attribute.getAttributeId() );

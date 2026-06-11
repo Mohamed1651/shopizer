@@ -45,7 +45,7 @@ public class S3ProductContentFileManager
   private static final long serialVersionUID = 1L;
 
 
-
+  private static final String ERROR_WHILE_REMOVING_FILE = "Error while removing file";
   private static final Logger LOGGER = LoggerFactory.getLogger(S3ProductContentFileManager.class);
 
 
@@ -145,7 +145,7 @@ public class S3ProductContentFileManager
 
       LOGGER.info("Remove file");
     } catch (final Exception e) {
-      LOGGER.error("Error while removing file", e);
+      LOGGER.error(ERROR_WHILE_REMOVING_FILE, e);
       throw new ServiceException(e);
 
     }
@@ -163,7 +163,7 @@ public class S3ProductContentFileManager
 
       LOGGER.info("Remove file");
     } catch (final Exception e) {
-      LOGGER.error("Error while removing file", e);
+      LOGGER.error(ERROR_WHILE_REMOVING_FILE, e);
       throw new ServiceException(e);
 
     }
@@ -223,7 +223,7 @@ public class S3ProductContentFileManager
       LOGGER.info("Product add file");
 
     } catch (final Exception e) {
-      LOGGER.error("Error while removing file", e);
+      LOGGER.error(ERROR_WHILE_REMOVING_FILE, e);
       throw new ServiceException(e);
 
     }

@@ -14,7 +14,7 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 
 @Service("productVariantImageService")
 public class ProductVariantImageServiceImpl extends SalesManagerEntityServiceImpl<Long, ProductVariantImage> implements ProductVariantImageService {
-
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
 	@Autowired
 	private ProductVariantImageRepository productVariantImageRepository;
 	
@@ -25,19 +25,19 @@ public class ProductVariantImageServiceImpl extends SalesManagerEntityServiceImp
 
 	@Override
 	public List<ProductVariantImage> list(Long productVariantId, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		return productVariantImageRepository.finByProductVariant(productVariantId, store.getCode());
 	}
 
 	@Override
 	public List<ProductVariantImage> listByProduct(Long productId, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		return productVariantImageRepository.finByProduct(productId, store.getCode());
 	}
 
 	@Override
 	public List<ProductVariantImage> listByProductVariantGroup(Long productVariantGroupId, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		return productVariantImageRepository.finByProductVariantGroup(productVariantGroupId, store.getCode());
 	}
 

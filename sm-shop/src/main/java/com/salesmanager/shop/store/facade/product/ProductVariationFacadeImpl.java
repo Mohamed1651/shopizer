@@ -26,7 +26,8 @@ import com.salesmanager.shop.store.controller.product.facade.ProductVariationFac
 
 @Service
 public class ProductVariationFacadeImpl implements ProductVariationFacade {
-	
+	private static final String MERCHANT_STORE_CANNOT_BE_NULL = "MerchantStore cannot be null";
+	private static final String LANGUAGE_CANNOT_BE_NULL = "Language cannot be null";
 	@Autowired
 	private PersistableProductVariationMapper persistableProductVariationMapper;
 	
@@ -40,8 +41,8 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public ReadableProductVariation get(Long variationId, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Optional<ProductVariation> variation =  productVariationService.getById(store, variationId, language);
 		if(variation.isEmpty()) {
 			throw new ResourceNotFoundException("ProductVariation not found for id [" + variationId +"] and store [" + store.getCode() + "]");
@@ -52,8 +53,8 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public ReadableEntityList<ReadableProductVariation> list(MerchantStore store, Language language, int page, int count) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		
 
 			Page<ProductVariation> vars = productVariationService.getByMerchant(store, language, null, page, count);
@@ -74,8 +75,8 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public Long create(PersistableProductVariation var, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Validate.notNull(var, "PersistableProductVariation cannot be null");
 		
 		if(this.exists(var.getCode(), store)) {
@@ -97,8 +98,8 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public void update(Long variationId, PersistableProductVariation var, MerchantStore store, Language language) {
-		Validate.notNull(store, "MerchantStore cannot be null");
-		Validate.notNull(language, "Language cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
+		Validate.notNull(language, LANGUAGE_CANNOT_BE_NULL);
 		Validate.notNull(var, "PersistableProductVariation cannot be null");
 		
 		Optional<ProductVariation> p =  productVariationService.getById(store, variationId, language);
@@ -122,7 +123,7 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public void delete(Long variationId, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(variationId, "variationId cannot be null");
 		ProductVariation opt =  productVariationService.getById(variationId);
 		if(opt == null) {
@@ -141,7 +142,7 @@ public class ProductVariationFacadeImpl implements ProductVariationFacade {
 
 	@Override
 	public boolean exists(String code, MerchantStore store) {
-		Validate.notNull(store, "MerchantStore cannot be null");
+		Validate.notNull(store, MERCHANT_STORE_CANNOT_BE_NULL);
 		Validate.notNull(code, "code cannot be null");
 		Optional<ProductVariation> var =  productVariationService.getByCode(store, code);
 		

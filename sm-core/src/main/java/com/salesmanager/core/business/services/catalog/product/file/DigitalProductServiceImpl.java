@@ -19,8 +19,8 @@ import com.salesmanager.core.model.merchant.MerchantStore;
 @Service("digitalProductService")
 public class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Long, DigitalProduct> 
 	implements DigitalProductService {
-	
 
+	private static final String DIGITAL_PRODUCT_NULL_ERROR = "DigitalProduct cannot be null";
 	private DigitalProductRepository digitalProductRepository;
 	
     @Inject
@@ -38,7 +38,7 @@ public class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Lon
 	@Override
 	public void addProductFile(Product product, DigitalProduct digitalProduct, InputContentFile inputFile) throws ServiceException {
 	
-		Assert.notNull(digitalProduct,"DigitalProduct cannot be null");
+		Assert.notNull(digitalProduct,DIGITAL_PRODUCT_NULL_ERROR);
 		Assert.notNull(product,"Product cannot be null");
 		digitalProduct.setProduct(product);
 
@@ -80,7 +80,7 @@ public class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Lon
 	@Override
 	public void delete(DigitalProduct digitalProduct) throws ServiceException {
 		
-		Assert.notNull(digitalProduct,"DigitalProduct cannot be null");
+		Assert.notNull(digitalProduct,DIGITAL_PRODUCT_NULL_ERROR);
 		Assert.notNull(digitalProduct.getProduct(),"DigitalProduct.product cannot be null");
 		//refresh file
 		digitalProduct = this.getById(digitalProduct.getId());
@@ -97,7 +97,7 @@ public class DigitalProductServiceImpl extends SalesManagerEntityServiceImpl<Lon
 	@Override
 	public void saveOrUpdate(DigitalProduct digitalProduct) throws ServiceException {
 		
-		Assert.notNull(digitalProduct,"DigitalProduct cannot be null");
+		Assert.notNull(digitalProduct,DIGITAL_PRODUCT_NULL_ERROR);
 		Assert.notNull(digitalProduct.getProduct(),"DigitalProduct.product cannot be null");
 		if(digitalProduct.getId()==null || digitalProduct.getId() ==0) {
 			super.save(digitalProduct);

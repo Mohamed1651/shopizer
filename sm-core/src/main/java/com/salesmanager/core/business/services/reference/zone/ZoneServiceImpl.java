@@ -28,7 +28,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 		ZoneService {
 	
 	private final static String ZONE_CACHE_PREFIX = "ZONES_";
-
+	private static final String GET_ZONES = "getZones()";
 	private ZoneRepository zoneRepository;
 	
 	@Inject
@@ -98,7 +98,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("getZones()", e);
+			LOGGER.error(GET_ZONES, e);
 		}
 		return zones;
 		
@@ -136,7 +136,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("getZones()", e);
+			LOGGER.error(GET_ZONES, e);
 		}
 		return zones;
 		
@@ -171,7 +171,7 @@ public class ZoneServiceImpl extends SalesManagerEntityServiceImpl<Long, Zone> i
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("getZones()", e);
+			LOGGER.error(GET_ZONES, e);
 		}
 		return zones;
 		
