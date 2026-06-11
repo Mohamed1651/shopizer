@@ -1,6 +1,6 @@
 # Shopizer 3 (for java 17 +) (tested with Java 11, 17)
 
-3.2.7
+3.2.7 combined
 
 execution-wastev2 :)
 

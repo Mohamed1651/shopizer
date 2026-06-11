@@ -42,7 +42,7 @@ import com.salesmanager.shop.utils.LocaleUtils;
 @Controller
 @RequestMapping("/services")
 public class StoreContactRESTController {
-	
+	private static final String MERCHANT_STORE_IS_NULL_FOR_CODE = "Merchant store is null for code ";
 	@Inject
 	private LanguageService languageService;
 	
